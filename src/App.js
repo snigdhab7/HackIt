@@ -2,19 +2,23 @@ import logo from "./logo.svg";
 import "./App.css";
 import LoginHome from "./Login";
 import Dashboard from "./Dashboard";
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  HashRouter,
+} from "react-router-dom";
+import SignUpUser from "./Login/SignUpUser/SignUpUser";
 function App() {
   return (
-    <HashRouter>
-      <div className="App">
-      <Routes>
-          <Route path="/" element={<Navigate to="loginhome" />} />
-          <Route path="/loginhome" element={<LoginHome />} />
+    <div className="App">
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<LoginHome />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/signup" element={<SignUpUser />} />
         </Routes>
-        {/* <LoginHome /> */}
-      </div>
-    </HashRouter>
+      </HashRouter>
+    </div>
   );
 }
 

@@ -43,25 +43,27 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="app-container">
-      {/* Main Content */}
-      <div className="main-content">
-        {/* Horizontal Navbar */}
-        <div className="navbar-horizontal">
-          <Navbar />
-        </div>
+    <div className="entire-page">
+      <div className="app-container">
+        {/* Main Content */}
+        <div className="main-content">
+          {/* Horizontal Navbar */}
+          <div className="navbar-horizontal">
+            <Navbar />
+          </div>
 
-        {/* Search Bar */}
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          {/* Search Bar */}
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-        {/* List of Events as Cards */}
-        <div className="event-list">
-          {filteredEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
+          {/* List of Events as Cards */}
+          <div className="event-list">
+            {filteredEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
 
-          {/* Organizer Card for Adding Events */}
-          <OrganizerCard isAddCard={true} />
+            {/* Organizer Card for Adding Events */}
+            <OrganizerCard isAddCard={true} />
+          </div>
         </div>
       </div>
     </div>
