@@ -59,7 +59,7 @@ const LoginHome = () => {
           </button>
         </div>
         <br/>
-          <p style={{fontSize:'1em'}}><a href="#">Continue without Logging in</a></p>
+          <p style={{fontSize:'1em'}}><a href="#dashboard">Continue without Logging in</a></p>
       </div>
       
     </div>
