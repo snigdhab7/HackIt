@@ -2,13 +2,9 @@
 import { FaCalendar, FaLocationArrow, FaClock} from "react-icons/fa";
 import React from "react";
 import "./EventDetails.css";
-import Heart from "react-animated-heart";
-import { useState } from "react";
 import profileImage from './Home.jpeg';
 
 function EventDetails() {
-  const [isClick, setClick] = useState(false);
-
   return (
     <div>
       <header className="header-background">
@@ -44,11 +40,6 @@ function EventDetails() {
           </p>
         </div>
         <div className="event-heading">
-         <h5 class="event-heading-color">Refund Policy</h5>
-         <p className="medium-text">Contact the organizer to request a refund.
-          HackIt's fee is nonrefundable. </p>
-        </div>
-        <div className="event-heading">
          <h5 class="event-heading-color">About this event</h5>
          <p className="medium-text">
           <p className="medium-text">
@@ -60,23 +51,6 @@ function EventDetails() {
          and from our record of successful partnerships with our clients. We also want to offer immediate help to your urgent problems and build a community for SMB 
          leaders to support and learn from each other.
          </p>
-        </div>
-        <div className="event-heading">
-         <h5 class="event-heading-color">Who is this for?</h5>
-         <p className="medium-text">
-         Small and medium business leaders such as owners, founders, and managers   
-         </p>
-        </div>
-        <div className="event-heading">
-         <h5 class="event-heading-color">About the organizer</h5>
-         <p className="medium-text">
-         Komodo Technologies is an innovative, end-to-end data R&D firm that leverages data science, software engineering, rapid prototyping, and future-focused people strategy to help companies discover and unleash the power of their data.    
-         </p>
-        </div>
-        <div className="tags event-heading event-heading-color">
-          <strong>Tags:</strong><br/>
-          <span className="mt-2">Technical event</span>
-          <span>Data Science</span>
         </div>
       </div>
 
