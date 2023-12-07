@@ -2,7 +2,6 @@ import logo from "./logo.svg";
 import "./App.css";
 import LoginHome from "./Login";
 import Dashboard from "./Dashboard";
-import SignUpUser from "./Login/SignUpUser/SignUpUser";
 import Profile from "./Profile/Profile";
 import {
   Route,

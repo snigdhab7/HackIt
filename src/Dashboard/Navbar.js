@@ -17,7 +17,7 @@ const Navbar = () => {
         {/* Profile icon placeholder (replace with your preferred icon) */}
         <Link className="navbar-right-button" to={`/Dashboard/signIn`}>Sign In</Link>
         <Link className="navbar-right-button" to={`/Dashboard/signUp`}>Sign Up</Link>
-        <span className="profile-icon"><FiUser /></span>
+        <Link to={`/profile`}><span className="profile-icon"><FiUser /></span></Link>
       </div>
     </div>
   );
