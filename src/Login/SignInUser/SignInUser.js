@@ -1,12 +1,13 @@
 // SignUp.js
 
-import React, { useState } from "react";
+import React, { useState , useEffect }  from "react";
 import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
+import { useLocation, useHistory } from 'react-router-dom';
 import { Link,useNavigate } from "react-router-dom";
-const SignUpUser = () => {
+const SignInUser = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const handleSignUp = () => {
     // Handle the sign-up logic here (e.g., send data to server)
     console.log("Username:", username);
@@ -15,6 +16,7 @@ const SignUpUser = () => {
 
   return (
       <div className="signup-container">
+        {/* <h1 className="signup-heading">{isOrganizer ? 'Sign Up as Organizer' : 'Sign Up'}</h1> */}
         <h1 class="signup-heading">Sign Up</h1>
         <div className="input-container">
           <label htmlFor="username">Username:</label>
@@ -42,4 +44,4 @@ const SignUpUser = () => {
   );
 };
 
-export default SignUpUser;
+export default SignInUser;
