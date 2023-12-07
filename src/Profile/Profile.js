@@ -33,7 +33,7 @@ const Profile = () => {
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="fas fa-search"></i></span>
                                     </div>
-                                    <input className="form-control" placeholder="Search People" type="text"/>
+                                    <input className="form-control mt-0" placeholder="Search People" type="text"/>
                                 </div>
                             </div>
                         </form>
@@ -147,7 +147,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 <div className="card-body">
-                                    <form>
+                                    <form className="userInfo">
                                         <h6 className="heading-small mb-4">User information</h6>
                                         <div className="pl-lg-4">
                                             <div className="row">
