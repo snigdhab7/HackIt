@@ -19,6 +19,10 @@
   /* padding: 2%; */
 }
 
+Link{
+  text-decoration: none;
+}
+
 .navbar-horizontal {
   background-color: #000;
   color: #eddfdf; /* Darker red text */
@@ -84,6 +88,7 @@
   padding: 12px;
   margin-top: 20px;
   border: 1px solid #ece6e6; /* Darker red border */
+
   border-radius: 5px;
   font-size: 0.8em;
   margin-bottom: 15px;
@@ -146,6 +151,11 @@
   color: #ddd;
   line-height: 1.4;
   margin-bottom: 10px;
+  text-decoration: none;
+}
+
+.event-card Link {
+  text-decoration: none;
 }
 
 .event-details {
