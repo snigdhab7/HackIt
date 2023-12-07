@@ -1,10 +1,10 @@
 // Home.js
-import Slider from 'react-slick';
-import './LoginHome.css'; // Make sure to adjust the path according to your project structure
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { Link} from "react-router-dom";
-import React, { useState } from 'react';
+import Slider from "react-slick";
+import "./LoginHome.css"; // Make sure to adjust the path according to your project structure
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 const LoginHome = () => {
   const carouselSettings = {
@@ -20,9 +20,7 @@ const LoginHome = () => {
 
   const toggleMode = () => {
     setIsRegisterMode((prevMode) => !prevMode);
-    
   };
-
 
   return (
     <div className="homepage-container">
@@ -55,40 +53,49 @@ const LoginHome = () => {
         </Slider>
       </div>
       <div className="user-selection-container">
-      <div className="toggle-container">
-     
-  <label className="switch">
-    <input type="checkbox" onChange={toggleMode} checked={isRegisterMode} />
-    {isRegisterMode && <span className="slider">Sign In</span>}
-    {!isRegisterMode && <span className="slider">Register</span>}
-  </label>
-  
-
-  
-</div>
-      {isRegisterMode ? (
-          <>
-        <h1>Welcome to HackIt!</h1>
-        <p>Which role suits you best?</p>
-        <div className="role-buttons">
-        <Link to={`/signup`}>
-          <button style={{ marginRight: '20px' }} className="button-49" role="button">
-            Organizer
-          </button>
-          </Link>
-          <Link to={`/signup`}>
-          <button className="button-49 button-49-flipped" role="button" >
-          Attendee
-          </button>
-          </Link>
+        <div className="toggle-container">
+          <label className="switch">
+            <input
+              type="checkbox"
+              onChange={toggleMode}
+              checked={isRegisterMode}
+            />
+            {isRegisterMode && <span className="slider">Sign In</span>}
+            {!isRegisterMode && <span className="slider">Register</span>}
+          </label>
         </div>
-        <br/>
-          <p style={{fontSize:'1em'}}><a href="#">Continue without Logging in</a></p>
-        </>
+        {isRegisterMode ? (
+          <>
+            <h1>Welcome to HackIt!</h1>
+            <p>Which role suits you best?</p>
+            <div className="role-buttons">
+              <Link to={`/signup`}>
+                <button
+                  style={{ marginRight: "20px" }}
+                  className="button-49"
+                  role="button"
+                >
+                  Organizer
+                </button>
+              </Link>
+              <Link to={`/signup`}>
+                <button className="button-49 button-49-flipped" role="button">
+                  Attendee
+                </button>
+              </Link>
+            </div>
+            <br />
+
+            <Link to={`/dashboard`}>
+              <p style={{ fontSize: "1em" }}>
+                Continue without Logging in
+              </p>
+            </Link>
+          </>
         ) : (
           <>
             <div className="signin-container">
-            <h1 class="signup-heading">Sign Up</h1>
+              <h1 class="signup-heading">Sign Up</h1>
               <div className="input-container">
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" />
@@ -102,7 +109,6 @@ const LoginHome = () => {
           </>
         )}
       </div>
-      
     </div>
   );
 };
