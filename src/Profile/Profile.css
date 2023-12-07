@@ -133,7 +133,7 @@ strong {
   font-weight: bolder;
 }
 
-a {
+/* a {
   text-decoration: none;
   color: #5e72e4;
   background-color: transparent;
@@ -158,7 +158,7 @@ a:not([href]):not([tabindex]):focus {
 
 a:not([href]):not([tabindex]):focus {
   outline: 0;
-}
+} */
 
 code {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
@@ -307,7 +307,7 @@ h1,
 
 h3,
 .h3 {
-  font-size: 1.0625rem;
+  font-size: 1.5rem;
 }
 
 h4,
@@ -505,9 +505,9 @@ a>code {
   padding: .625rem .75rem;
   transition: all .2s cubic-bezier(.68, -.55, .265, 1.55);
   color: #000000;
-  border: 1px solid #cad1d7;
+  border: 1px solid #868282;
   border-radius: .375rem;
-  background-color: #fff;
+  background-color: #222;
   background-clip: padding-box;
   box-shadow: none;
 }
@@ -523,13 +523,13 @@ a>code {
   background-color: transparent;
 }
 
-.form-control:focus {
+/* .form-control:focus {
   color: #8898aa;
   border-color: rgba(50, 151, 211, .25);
   outline: 0;
   background-color: #fff;
   box-shadow: none, none;
-}
+} */
 
 .form-control:-ms-input-placeholder {
   opacity: 1;
@@ -1675,7 +1675,7 @@ a.text-white:focus {
 }
 
 .form-control {
-  font-size: .875rem;
+  font-size: .875rem !important;
 }
 
 .form-control:focus:-ms-input-placeholder {
@@ -2025,7 +2025,7 @@ p {
 }
 
 .heading-small {
-  font-size: .75rem;
+  font-size: 1rem;
   padding-top: .25rem;
   padding-bottom: .25rem;
   letter-spacing: .04em;
