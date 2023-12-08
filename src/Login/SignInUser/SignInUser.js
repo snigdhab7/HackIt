@@ -1,30 +1,43 @@
 // SignUp.js
 
 import React, { useState , useEffect }  from "react";
+import * as client from "../client"
 import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
 import { useLocation, useHistory } from 'react-router-dom';
 import { Link,useNavigate } from "react-router-dom";
-const SignInUser = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+function SignInUser() {
   
-  const handleSignUp = () => {
-    // Handle the sign-up logic here (e.g., send data to server)
-    console.log("Username:", username);
-    console.log("Password:", password);
+  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
+  const signin = async () => {
+    await client.signin(credentials);
+    //navigate("/");
   };
+
+  const signup = async () => {
+    try {
+      console.log("Calling findAllUsers API");
+      const users = await client.findAllUsers();
+      // Do something with the fetched users, e.g., update state or display in the UI
+      console.log("Fetched users:", users);
+      //navigate("/Kanbas/account");
+    } catch (err) {
+      console.error("Error during API call:", err);
+      // setError(err.response.data.message);
+    }
+  };
+  
 
   return (
       <div className="signup-container">
         {/* <h1 className="signup-heading">{isOrganizer ? 'Sign Up as Organizer' : 'Sign Up'}</h1> */}
-        <h1 class="signup-heading">Sign Up</h1>
+        <h1 class="signup-heading">Sign In</h1>
         <div className="input-container">
           <label htmlFor="username">Username:</label>
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={credentials.username} onChange={(e) => setCredentials({...credentials, username: e.target.value})}
           />
         </div>
         <div className="input-container">
@@ -32,16 +45,15 @@ const SignInUser = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={credentials.password} onChange={(e) => setCredentials({...credentials, password: e.target.value})}
           />
         </div>
-        <Link to={`/`}>
-        <button className="signup-button" onClick={handleSignUp}>
+      
+        <button className="signup-button" onClick={signup}>
           Sign Up
-        </button></Link>
+        </button>
       </div>
   );
-};
+}
 
 export default SignInUser;
