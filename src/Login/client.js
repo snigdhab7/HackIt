@@ -15,6 +15,15 @@ export const createUser = async (user) => {
   
   export const findAllUsers = async () => {
     const response = await axios.get(`${USERS_API}`);
-    console.log("RESPP",response.data)
+    console.log("RESPP",response)
+    return response.data;
+  };
+  export const signup = async (credentials) => {
+    console.log("Signup",credentials)
+    const newUser = { ...credentials,
+        _id: new Date().getTime().toString() };
+    const response = await axios.post(
+      `${USERS_API}/signup`, newUser);
+      
     return response.data;
   };
