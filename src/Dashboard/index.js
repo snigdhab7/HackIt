@@ -1,5 +1,3 @@
-// index.js
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Dashboard.css";
@@ -11,30 +9,29 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import * as client from "./client";
-import { response } from "express";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // Fetch events from the server when the component mounts
     const fetchEvents = async () => {
       try {
-        const users = await client.findAllEvents();
-        // setEvents(response.data);
-        console.log("Fetched events:", users);
+        const eventsData = await client.findAllEvents();
+        setEvents(eventsData);  // Fix: Set eventsData instead of response.data
+        console.log("Fetched events:", eventsData);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     };
 
     fetchEvents();
-  }, []); // The empty dependency array ensures the effect runs once when the component mounts
+  }, []); 
 
-  const filteredEvents = events.filter((event) =>
+  // Remove the following line to display all events without filtering
+  const filteredEvents = events ? events.filter((event) =>
     event.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ) : [];
 
   const carouselSettings = {
     dots: true,
