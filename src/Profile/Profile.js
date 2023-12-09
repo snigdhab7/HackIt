@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../Profile/Profile.css';
 import profileImage from '../images/profile.jpeg';
 import coverImage from '../images/background.jpeg';
+import '../Profile/Profile.css';
 
 const Profile = () => {
     const bgImage = {
@@ -11,21 +11,22 @@ const Profile = () => {
     const firstName = "Jaehyun";
     const lastName = "Jung";
     const email = "Jaehyun@gmail.com";
+    
     // const aboutMe;
     // const phoneNumber;
     
 
     return (
 
-        <div className='body_style'>
-            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"></link>
-            <div className="main-content">
+        <div className='profile'>
+            {/* <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"></link> */}
+            <div className="profile-content">
                 {/* <!-- Top navbar --> */}
                 <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
                     <div className="container-fluid">
                         {/* <!-- Brand --> */}
-                        <Link to = {"/"} className="h4 mb-0 mr-2 text-white text-uppercase d-none d-lg-inline-block" target="_blank">Home</Link>
-                        <Link to = {"/profile"} className="h4 ml-2 mb-0 text-white text-uppercase d-none d-lg-inline-block" target="_blank">User profile</Link>
+                        <Link to = {"/"} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">Home</Link>
+                        <Link to = {"/profile"} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">User profile</Link>
                         {/* <!-- Form --> */}
                         <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                             <div className="form-group mb-0">
@@ -38,9 +39,10 @@ const Profile = () => {
                             </div>
                         </form>
                         {/* <!-- User --> */}
-                        <ul className="navbar-nav align-items-center d-none d-md-flex">
+                        <ul className="navbar-nav align-items-center d-none d-md-flex" style={{color: 'white'}}>
                             <li className="nav-item dropdown">
-                                <a className="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            
+                                <a className="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div className="media align-items-center">
                                         <span className="avatar avatar-sm rounded-circle">
                                             <img alt="Image placeholder" src={profileImage}/>
@@ -50,7 +52,8 @@ const Profile = () => {
                                         </div>
                                     </div>
                                 </a>
-                                <div className="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                           
+                                <div id="myDropdown" className="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                                     <div className=" dropdown-header noti-title">
                                         <h6 className="text-overflow m-0">Welcome!</h6>
                                     </div>
@@ -88,9 +91,9 @@ const Profile = () => {
                     <div className="container-fluid d-flex align-items-center">
                         <div className="row">
                             <div className="col-lg-7 col-md-10">
-                                <h1 className="display-2 text-white">Hello {firstName}</h1>
-                                <p className="text-white mt-0 mb-5">This is your profile page. You can see the events you've registered for and manage your schedule.</p>
-                                <a href="#!" className="btn btn-info">Edit profile</a>
+                                <h1 className="p-display-2 p-text-white">Hello {firstName}</h1>
+                                <p className="p-text-white mt-0 mb-5">This is your profile page. You can see the events you've registered for and manage your schedule.</p>
+                                <a href="#!" className="p-btn p-btn-info">Edit profile</a>
                             </div>
                         </div>
                     </div>
@@ -99,7 +102,7 @@ const Profile = () => {
                 <div className="container-fluid mt--7">
                     <div className="row">
                         <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">
-                            <div className="card card-profile shadow">
+                            <div className="p-card card-profile shadow">
                                 {/* <div className="row justify-content-center">
                                     <div className="col-lg-3 order-lg-2">
                                         <div className="card-profile-image">
@@ -109,13 +112,13 @@ const Profile = () => {
                                         </div>
                                     </div>
                                 </div> */}
-                                <div className="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                                     <div className="d-flex justify">
-                                        <a href="#" className="btn btn-sm btn-info mr-4">Upcoming Events</a>
-                                        <a href="#" className="btn btn-sm btn-default">All Events</a>
+                                        <a href="#" className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</a>
+                                        <a href="#" className="p-btn p-btn-sm p-btn-default">All Events</a>
                                     </div>
                                 </div>
-                                <div className="card-body pt-0 pt-md-4">
+                                <div className="p-card-body pt-0 pt-md-4">
                                     <div className="row">
                                         <div className="col">
                                             Event 1
@@ -135,18 +138,18 @@ const Profile = () => {
                             </div>
                         </div>
                         <div className="col-xl-8 order-xl-1">
-                            <div className="card shadow">
-                                <div className="card-header border-0">
+                            <div className="p-card shadow">
+                                <div className="p-card-header border-0">
                                     <div className="row align-items-center">
                                         <div className="col-8">
                                             <h3 className="mb-0">My account</h3>
                                         </div>
                                         <div className="col-4 text-right">
-                                            <a href="#!" className="btn btn-sm btn-info">Settings</a>
+                                            <a href="#!" className="p-btn p-btn-sm p-btn-info">Settings</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card-body">
+                                <div className="p-card-body">
                                     <form className="userInfo">
                                         <h6 className="heading-small mb-4">User information</h6>
                                         <div className="pl-lg-4">
@@ -154,13 +157,13 @@ const Profile = () => {
                                                 <div className="col-lg-6">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-username">Username</label>
-                                                        <input type="text" id="input-username" className="form-control form-control-alternative" placeholder="Username" value={firstName} />
+                                                        <input type="text" id="input-username" className="p-form-control form-control-alternative" placeholder="Username" value={firstName} />
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-6">
                                                     <div className="form-group">
                                                         <label className="form-control-label" for="input-email">Email address</label>
-                                                        <input type="email" id="input-email" className="form-control form-control-alternative" placeholder="email" value={email} />
+                                                        <input type="email" id="input-email" className="p-form-control form-control-alternative" placeholder="email" value={email} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -168,13 +171,13 @@ const Profile = () => {
                                                 <div className="col-lg-6">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-first-name">First name</label>
-                                                        <input type="text" id="input-first-name" className="form-control form-control-alternative" placeholder="First name" value={firstName} />
+                                                        <input type="text" id="input-first-name" className="p-form-control form-control-alternative" placeholder="First name" value={firstName} />
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-6">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-last-name">Last name</label>
-                                                        <input type="text" id="input-last-name" className="form-control form-control-alternative" placeholder="Last name" value={lastName} />
+                                                        <input type="text" id="input-last-name" className="p-form-control form-control-alternative" placeholder="Last name" value={lastName} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,7 +185,7 @@ const Profile = () => {
                                                 <div className="col-lg-6">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-dob">Date of Birth</label>
-                                                        <input type="date" id="input-dob" className="form-control form-control-alternative" placeholder="Date of Birth"  />
+                                                        <input type="date" id="input-dob" className="p-form-control form-control-alternative" placeholder="Date of Birth"  />
                                                     </div>
                                                 </div>                
                                             </div>
@@ -195,7 +198,7 @@ const Profile = () => {
                                                 <div className="col-md-12">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-address">Address</label>
-                                                        <input id="input-address" className="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text" />
+                                                        <input id="input-address" className="p-form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -203,19 +206,19 @@ const Profile = () => {
                                                 <div className="col-lg-4">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-city">City</label>
-                                                        <input type="text" id="input-city" className="form-control form-control-alternative" placeholder="City" value="New York" />
+                                                        <input type="text" id="input-city" className="p-form-control form-control-alternative" placeholder="City" value="New York" />
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-4">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-country">Country</label>
-                                                        <input type="text" id="input-country" className="form-control form-control-alternative" placeholder="Country" value="United States" />
+                                                        <input type="text" id="input-country" className="p-form-control form-control-alternative" placeholder="Country" value="United States" />
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-4">
                                                     <div className="form-group">
                                                         <label className="form-control-label" for="input-postal-code">Postal code</label>
-                                                        <input type="number" id="input-postal-code" className="form-control form-control-alternative" placeholder="Postal code" />
+                                                        <input type="number" id="input-postal-code" className="p-form-control form-control-alternative" placeholder="Postal code" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,7 +226,7 @@ const Profile = () => {
                                                 <div className="col-lg-6">
                                                     <div className="form-group focused">
                                                         <label className="form-control-label" for="input-phoneNumber">Phone Number</label>
-                                                        <input type="date" id="input-phoneNumber" className="form-control form-control-alternative" placeholder="Phone Number"  />
+                                                        <input type="number" id="input-phoneNumber" className="p-form-control form-control-alternative" placeholder="Phone Number"  />
                                                     </div>
                                                 </div>                
                                             </div>
@@ -234,7 +237,7 @@ const Profile = () => {
                                         <div className="pl-lg-4">
                                             <div className="form-group focused">
                                                 {/* <label>About Me</label> */}
-                                                <textarea rows="4" className="form-control form-control-alternative" placeholder="A few words about you ...">
+                                                <textarea rows="4" className="p-form-control form-control-alternative" placeholder="A few words about you ...">
                                                 {/* {aboutMe} */}
                                                 </textarea>
                                             </div>
