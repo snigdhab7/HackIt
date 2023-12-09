@@ -13,3 +13,8 @@ export const createEvent = async (event) => {
   const response = await axios.post(`${EVENTS_API}`, newEvent);
   return response.data;
 };
+
+export const findEventById = async (eventId) => {
+  const response = await axios.get(`${EVENTS_API}/${eventId}`);
+  return response.data;
+};

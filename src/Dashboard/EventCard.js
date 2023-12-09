@@ -5,18 +5,16 @@ import { Link } from "react-router-dom";
 
 const EventCard = ({ event }) => {
   return (
-
-    <Link to={`/eventdetails`} style={{ textDecoration: 'none'}}>
-    <div key={event.id} className="event-card" style={{margin: '10px'}}>
-
-      <img src={event.imageUrl} alt={event.title} />
-      <div>
-        <h2>{event.title}</h2>
-        <p>{event.description}</p>
-        <p>{event.time}</p>
-        <p>{event.venue}</p>
+    <Link to={`/events/${event._id}`} style={{ textDecoration: "none" }}>
+      <div key={event.id} className="event-card" style={{ margin: "10px" }}>
+        {/* <img src={event.photo} alt={event.eventName} /> */}
+        <div>
+          <h2>{event.eventName}</h2>
+          <p>{event.summary}</p>
+          <p>Duration: {event.duration}</p>
+          <p>{event.venue}</p>
+        </div>
       </div>
-    </div>
     </Link>
   );
 };
