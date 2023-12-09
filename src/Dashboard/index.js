@@ -21,9 +21,9 @@ const Dashboard = () => {
     // Fetch events from the server when the component mounts
     const fetchEvents = async () => {
       try {
-        const users = await client.findAllUsers();
-        setEvents(response.data);
-        console.log("Fetched events:", response.data);
+        const users = await client.findAllEvents();
+        // setEvents(response.data);
+        console.log("Fetched events:", users);
       } catch (error) {
         console.error("Error fetching events:", error);
       }

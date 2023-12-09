@@ -1,5 +1,5 @@
 import axios from "axios";
-export const BASE_API = process.env.REACT_APP_BASE_API_URL;
+export const BASE_API = `http://localhost:4000`;
 export const EVENTS_API = `${BASE_API}/api/events`;
 
 export const findAllEvents = async () => {
