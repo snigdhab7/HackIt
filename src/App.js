@@ -8,6 +8,7 @@ import LoginHome from "./Login";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile/Profile";
 import SignInUser from "./Login/SignInUser/SignInUser";
+import Events from './ExternalApi/Events';
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
           <Route path="/signin" element={<SignInUser />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/eventdetails" element={<EventDetails/>}/>
+          //added below routes to just check external API events
+          <Route path="/getEvents" element={<Events/>}/>
         </Routes>
       </HashRouter>
     </div>
