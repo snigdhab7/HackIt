@@ -16,16 +16,6 @@ function SignInUser() {
 
   const signup = async () => {
     try {
-      await client.signup(credentials);
-      //navigate("/Kanbas/account");
-    } catch (err) {
-        console.log("error",err)
-     // setError(err.response.data.message);
-    }
-  };
-
-  const signin1 = async () => {
-    try {
       console.log("Calling findAllUsers API");
       const users = await client.findAllUsers();
       // Do something with the fetched users, e.g., update state or display in the UI

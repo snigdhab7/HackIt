@@ -18,7 +18,7 @@ export const createUser = async (user) => {
   
   export const findAllUsers = async () => {
     const response = await axios.get(`${USERS_API}`);
-    console.log("RESPP",response)
+    console.log("RESPP",response.data)
     return response.data;
   };
   export const signup = async (credentials) => {

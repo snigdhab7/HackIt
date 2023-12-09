@@ -38,11 +38,13 @@ img {
 }
 
 header {
-  background-color: black;
+  background: url('https://crafthub.events/wp-content/uploads/287518876_5033265326781884_5497190112367581962_n.jpg') center/cover;
   color: #fff;
   padding: 20px;
   text-align: center;
   width: 100%;
+  height:300px;
+  background-size: cover;
 }
 
 .event-details {
@@ -97,11 +99,7 @@ footer {
   width: 100%;
 }
 
-.heart-icon{
-  margin-left: 80px;
-}
-
-.ticket-box {
+/* .ticket-box {
   position: fixed;
   bottom: 20px;
   right: 10px;
@@ -109,14 +107,9 @@ footer {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 200px;
-}
+  width: 300px;
+} */
 
-.ticket-price {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color:whitesmoke;
-}
 
 .register-button {
   background-color: #FF013C;
@@ -125,11 +118,35 @@ footer {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  
+}
+.register-button:hover{
+  opacity:0.5;
 }
 
 .event-details * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registration-form {
+  background-color: rgba(0, 0, 0, 0.9);
+  width: 30%;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Media query for smaller screens */

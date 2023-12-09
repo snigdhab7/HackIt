@@ -1,8 +1,8 @@
 .entire-page {
  /*  margin: 0;
   font-family: "Arial", sans-serif; */
-  /* background: #000 !important; */
-  background: url("https://undsgn.com/wp-content/uploads/2018/04/ltotbngnzzu-uai-1600x900.jpg") center/cover !important;
+  background: #000 !important;
+  /* background: url("https://undsgn.com/wp-content/uploads/2018/04/ltotbngnzzu-uai-1600x900.jpg") center/cover !important; */
   /* color: #fff;
   height: 100vh; */
 
@@ -99,8 +99,10 @@ Link{
 .event-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  margin-left: 5%;
+  justify-content: left;
+  margin: auto;
+  /* gap: 20px;
+  margin-left: 5%; */
 }
 
 .event-card {
@@ -110,6 +112,7 @@ Link{
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
   width: 350px; /* Adjusted width */
+  height: 450px;
 }
 
 .event-card div {
@@ -189,6 +192,7 @@ body::-webkit-scrollbar-track {
   color: #ee9595; /* Even darker red on hover */
 }
 .add-card {
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -259,4 +263,75 @@ body::-webkit-scrollbar-track {
   justify-content: center;
   align-items: center;
   padding: 20px;
+}
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  background-color: #000; /* Light gray background */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width */
+  margin: auto;
+}
+
+.popup label {
+  display: block;
+  margin-bottom: 8px;
+  color: #ddd;
+}
+
+.popup input,
+.popup textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  color: #ddd;
+
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #45a049;
+}
+
+.form-field-white {
+  background-color: #fff !important;
+  color: #000 !important; /* You may need to adjust the text color if needed */
+}
+.form-field-rounded {
+  border-radius: 8px !important;
+}
+
+.btn-rounded {
+  border-radius: 12px;
+}
+
+.btn-rounded:hover {
+  transform: scale(1.05);
 }
