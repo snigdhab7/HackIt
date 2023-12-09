@@ -1,6 +1,9 @@
 import axios from "axios";
 export const BASE_API = process.env.REACT_APP_BASE_API_URL;
 export const USERS_API = `${BASE_API}/api/users`;
+const request =  axios.create({
+  withCredentials: true,
+});
 export const signin = async (credentials) => {
     console.log("client",credentials)
   const response = await axios.put( `${USERS_API}/signin`, credentials );
@@ -20,10 +23,10 @@ export const createUser = async (user) => {
   };
   export const signup = async (credentials) => {
     console.log("Signup",credentials)
-    const newUser = { ...credentials,
-        _id: new Date().getTime().toString() };
-    const response = await axios.post(
-      `${USERS_API}/signup`, newUser);
+    //const newUser = { ...credentials,
+        // _id: new Date().getTime().toString() };
+    const response = await request.post(
+      `${USERS_API}/signup`, credentials);
       
     return response.data;
   };

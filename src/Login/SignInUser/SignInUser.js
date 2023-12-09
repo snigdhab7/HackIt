@@ -59,7 +59,7 @@ function SignInUser() {
           />
         </div>
       
-        <button className="signup-button" onClick={signin1}>
+        <button className="signup-button" onClick={signup}>
           Sign Up
         </button>
       </div>
