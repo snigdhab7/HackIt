@@ -3,10 +3,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventCard = ({ event }) => {
+const EventCard = ( props) => {
+  const { event, userid } = props;
+  console.log("eventcard",props)
   return (
 
-    <Link to={`/events/${event._id}`} style={{ textDecoration: "none" }}>
+    // <Link to={`/events/${userid}/${event._id}`} style={{ textDecoration: "none" }}>
       <div key={event.id} className="event-card" style={{ margin: "10px" }}>
         {/* <img src={event.photo} alt={event.eventName} /> */}
         <div>
@@ -17,7 +19,7 @@ const EventCard = ({ event }) => {
         </div>
 
       </div>
-    </Link>
+    //</Link>
   );
 };
 
