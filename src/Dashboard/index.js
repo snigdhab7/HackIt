@@ -29,6 +29,12 @@ const Dashboard = () => {
     fetchEvents();
   }, []);
 
+  const handleCreateEvent = async () => {
+    // Refetch events after creating a new one
+    const updatedEvents = await client.findAllEvents();
+    setEvents(updatedEvents);
+  };
+
   // Remove the following line to display all events without filtering
   const filteredEvents = events;
 
@@ -78,7 +84,7 @@ const Dashboard = () => {
             ))}
 
             {/* Organizer Card for Adding Events */}
-            <OrganizerCard isAddCard={true} />
+            <OrganizerCard isAddCard={true} onCreateEvent={handleCreateEvent}/>
           </div>
         </div>
       </div>
