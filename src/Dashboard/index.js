@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import * as client from "./client";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,8 +19,7 @@ const Dashboard = () => {
     const fetchEvents = async () => {
       try {
         const eventsData = await client.findAllEvents();
-        console.log(eventsData);
-        setEvents(eventsData);  // Fix: Set eventsData instead of response.data
+        setEvents(eventsData); // Fix: Set eventsData instead of response.data
         console.log("Fetched events:", eventsData);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -27,12 +27,12 @@ const Dashboard = () => {
     };
 
     fetchEvents();
-  }, []); 
+  }, []);
 
   // Remove the following line to display all events without filtering
-  const filteredEvents = events ? events.filter((event) =>
-    event.title.toLowerCase().includes(searchTerm.toLowerCase())
-  ) : [];
+
+  const filteredEvents = events;
+
 
   const carouselSettings = {
     dots: true,
@@ -66,8 +66,17 @@ const Dashboard = () => {
 
           {/* List of Events as Cards */}
           <div className="event-list">
-            {filteredEvents.map((event) => (
+            {/* {filteredEvents.map((event) => (
               <EventCard key={event._id} event={event} />
+            ))} */}
+            {filteredEvents.map((event) => (
+              <Link
+                key={event._id}
+                to={`/events/${event._id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <EventCard event={event} />
+              </Link>
             ))}
 
             {/* Organizer Card for Adding Events */}
