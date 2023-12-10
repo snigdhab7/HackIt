@@ -301,3 +301,27 @@ body::-webkit-scrollbar-track {
   background-color: white;
 }
 
+.popup button:hover {
+  background-color: #45a049;
+}
+
+.form-field-white {
+  background-color: #fff !important;
+  color: #000 !important; /* You may need to adjust the text color if needed */
+}
+.form-field-rounded {
+  border-radius: 8px !important;
+}
+
+.btn-rounded {
+  border-radius: 12px;
+}
+
+.btn-rounded:hover {
+  transform: scale(1.05);
+}
+
+.link-style {
+  color: inherit; /* Use the color of the parent element */
+  cursor: pointer; /* Change cursor to pointer */
+}

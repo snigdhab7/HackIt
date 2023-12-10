@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import profileImage from '../images/profile.jpeg';
 import coverImage from '../images/background.jpeg';
 import '../Profile/Profile.css';
-
+import { useParams } from "react-router-dom";
 const Profile = () => {
     const bgImage = {
         backgroundImage: `url(${coverImage})`,
@@ -11,6 +11,8 @@ const Profile = () => {
     const firstName = "Jaehyun";
     const lastName = "Jung";
     const email = "Jaehyun@gmail.com";
+    const userid = useParams().id;
+    console.log("id",userid)
     
     // const aboutMe;
     // const phoneNumber;
