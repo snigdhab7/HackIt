@@ -4,21 +4,27 @@ import React from "react";
 import "./EventDetails.css";
 import { Link , useParams} from "react-router-dom";
 import StarRating from "./StarRating";
-import * as client from "../Dashboard/client";
+import * as client from "./client.js";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 function EventDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const { userid, eventId } = useParams();
-  console.log("id1event",userid)
-  console.log("id2event",eventId)  
+  const { userid, eventId } = useParams(); 
   const [events, setEvents] = useState([]);
- 
-  const openModal = () => {
-    setModalOpen(true);
+  const [users, setUsers] = useState([]);
+  const [registrationConfirmed, setRegistrationConfirmed] = useState(false);
+
+  const openModal = async () => {
+    // Fetch user data only when the modal is opened
+    try {
+      const userData = await client.findUserById(userid);
+      setUsers(userData);
+      setModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
   };
 
   const closeModal = () => {
@@ -28,11 +34,12 @@ function EventDetails() {
 
   const handleRegisterClick = () => {
       closeModal();
-      return <Link to="/Dashboard" replace="true" />;
+      setRegistrationConfirmed(true);
   };
 
   const handleDeregisterClick = () => {
     setShowConfirmation(true);
+    setRegistrationConfirmed(false);
   };
 
   const formatDate = (dateString) => {
@@ -62,6 +69,8 @@ function EventDetails() {
     fetchEventDetails();
   }, [eventId]);
 
+  console.log("USERSSSSS",users);
+
   return (
     <div>
       <header className="header-background">
@@ -71,7 +80,7 @@ function EventDetails() {
        <div>
       <div className="float-end">
           <button className="register-button me-2" onClick={handleDeregisterClick}>Deregister</button>
-        <button className="register-button" onClick={openModal}>Register</button>
+        <button className="register-button" onClick={openModal} disabled={registrationConfirmed} >Register</button>
         </div>
         <div className="event-heading">
           <StarRating/>
@@ -119,6 +128,7 @@ function EventDetails() {
               type="text"
               placeholder="First Name*"
               name="firstName"
+              value={users.firstName}
             />
         
             <input
@@ -126,6 +136,7 @@ function EventDetails() {
               type="text"
               placeholder="Last Name*"
               name="lastName"
+              value={users.lastName}
             />
         
             <input
@@ -133,13 +144,7 @@ function EventDetails() {
               type="email"
               placeholder="Email*"
               name="email"
-            />
-        
-            <input
-              className="form-control mb-2"
-              type="email"
-              placeholder="Confirm Email*"
-              name="confirmEmail"
+              value={users.email}
             />
         
             <input
@@ -147,6 +152,7 @@ function EventDetails() {
               type="text"
               placeholder="Mobile number*"
               name="mobileNumber"
+              value={users.phoneNumber}
             />
             <button className="btn btn-danger mt-2" onClick={handleRegisterClick}>
               Confirm

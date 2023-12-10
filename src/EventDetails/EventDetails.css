@@ -149,6 +149,14 @@ footer {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Disable hover effect when the button is disabled */
+.register-button:disabled {
+  cursor: not-allowed;
+  background-color: #FF013C;
+  color: #fff;
+  opacity: 1;
+}
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .ticket-box {
