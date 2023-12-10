@@ -4,12 +4,13 @@ import "./LoginHome.css"; // Make sure to adjust the path according to your proj
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link,useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import React, { useState } from "react";
-
+import { useParams } from 'react-router-dom';
 const LoginHome = (props) => {
-  const navigate = useNavigate();
-  const { isSignIn } = props;
-  console.log(isSignIn,isSignIn)
+ const { pathname } = useLocation();
+ const linkTo = pathname.includes('signIn') ? '/signin' : '/signup';
+
   const carouselSettings = {
     dots: true,
     infinite: true,
@@ -56,25 +57,25 @@ const LoginHome = (props) => {
             <h1>Welcome to HackIt!</h1>
             <p>Which role suits you best?</p>
             <div className="role-buttons">
-            <Link  to={{
-    pathname: isSignIn ? "/signin" : "/signup",
-  }}>
-                <button
-                  style={{ marginRight: "20px" }}
-                  className="button-49"
-                  role="button"
-                >
-                  Organizer
-                </button>
-              </Link>
+            <Link to={linkTo}>
+      <button
+        style={{ marginRight: '20px' }}
+        className="button-49"
+        role="button"
+      >
+        Organizer
+      </button>
+      </Link>
 
-              <Link  to={{
-    pathname: isSignIn ? "/signin" : "/signup",
-  }}>
-                <button className="button-49 button-49-flipped" role="button">
-                  Attendee
-                </button>
-              </Link>
+      <Link to={linkTo}>
+      <button
+        style={{ marginRight: '20px' }}
+        className="button-49"
+        role="button"
+      >
+        Attendee
+      </button>
+      </Link>
             </div>
             <br />
 
