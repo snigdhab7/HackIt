@@ -9,12 +9,20 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import * as client from "./client";
-import { Link } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
-
+  const location = useLocation();
+  const userid = useParams().id;
+  console.log("id",userid)
+  const id1 = useParams().id;
+  console.log("id1",id1)
+  /* console.log("id1",userid)
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  console.log("id2",id) */
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -72,10 +80,11 @@ const Dashboard = () => {
             {filteredEvents.map((event) => (
               <Link
                 key={event._id}
-                to={`/events/${event._id}`}
+                to={`/events/${userid}/${event._id}`}
                 style={{ textDecoration: "none" }}
               >
-                <EventCard event={event} />
+          <EventCard event={event} userId={userid} />
+
               </Link>
             ))}
 

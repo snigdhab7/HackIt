@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import * as client from "../client";
 import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
 import { useNavigate } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
 function SignInUser() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState({ id: "", username: "" });
-
+  
   const signin = async () => {
     // Basic validation
     if (!credentials.username || !credentials.password) {
@@ -24,9 +24,10 @@ function SignInUser() {
       console.log("API Response", response.username);
       setUser({ id: userId, username: response.username });
       console.log("USERID_SIGNIN",userId)
-      navigate(`/`);
-    } catch (error) {
-      // Handle sign-in failure (display error message, etc.)
+     navigate(`/${userId}`);
+      
+   } catch (error) {
+     // Handle sign-in failure (display error message, etc.)
       setError("Invalid username or password. Please try again.");
     }
   };
@@ -58,7 +59,7 @@ function SignInUser() {
       </div>
 
       {error && <p className="error-message">{error}</p>}
-
+     
       <button className="signup-button" onClick={signin}>
         Sign In
       </button>

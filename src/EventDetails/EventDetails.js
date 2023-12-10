@@ -2,7 +2,7 @@ import { FaCalendar, FaLocationArrow, FaClock} from "react-icons/fa";
 import { useState } from "react";
 import React from "react";
 import "./EventDetails.css";
-import { Link } from "react-router-dom";
+import { Link , useParams} from "react-router-dom";
 import StarRating from "./StarRating";
 import * as client from "../Dashboard/client";
 import { useEffect } from "react";
@@ -12,9 +12,11 @@ import { format } from "date-fns";
 function EventDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const { userid, eventId } = useParams();
+  console.log("id1event",userid)
+  console.log("id2event",eventId)  
   const [events, setEvents] = useState([]);
-  const { eventId } = useParams();
-  
+ 
   const openModal = () => {
     setModalOpen(true);
   };
