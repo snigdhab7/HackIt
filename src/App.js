@@ -27,7 +27,7 @@ function App() {
 />
 
           <Route path="/profile" element={<Profile />} />
-          <Route path="/eventdetails" element={<EventDetails/>}/>
+          <Route path="/events/:eventId" element={<EventDetails/>}/>
           //added below routes to just check external API events
           <Route path="/getEvents" element={<Events/>}/>
         </Routes>
