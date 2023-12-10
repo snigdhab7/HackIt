@@ -19,10 +19,7 @@ const Dashboard = () => {
   console.log("id",userid)
   const id1 = useParams().id;
   console.log("id1",id1)
-  /* console.log("id1",userid)
-  const params = new URLSearchParams(location.search);
-  const id = params.get('id');
-  console.log("id2",id) */
+  
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -60,7 +57,7 @@ const Dashboard = () => {
         <div className="main-content">
           {/* Horizontal Navbar */}
           <div className="navbar-horizontal">
-            <Navbar />
+            <Navbar userid={userid}/>
           </div>
 
           {/* Slider Carousel */}
@@ -78,12 +75,12 @@ const Dashboard = () => {
               <EventCard key={event._id} event={event} />
             ))} */}
             {filteredEvents.map((event) => (
-              <Link
-                key={event._id}
-                to={`/events/${userid}/${event._id}`}
-                style={{ textDecoration: "none" }}
-              >
-          <EventCard event={event} userId={userid} />
+           <Link
+           key={event._id}
+           to={userid ? `/events/${userid}/${event._id}` : `/events/${event._id}`}
+           style={{ textDecoration: "none" }}
+         >
+          <EventCard event={event} />
 
               </Link>
             ))}
