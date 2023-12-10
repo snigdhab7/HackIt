@@ -335,3 +335,8 @@ body::-webkit-scrollbar-track {
 .btn-rounded:hover {
   transform: scale(1.05);
 }
+
+.link-style {
+  color: inherit; /* Use the color of the parent element */
+  cursor: pointer; /* Change cursor to pointer */
+}

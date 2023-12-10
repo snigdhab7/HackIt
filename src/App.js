@@ -27,7 +27,7 @@ function App() {
   element={<SignInUser />}
 />
 
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<Profile />} />
           <Route path="/events/:userid/:eventId" element={<EventDetails/>}/>    {/* when user logged in */}
           <Route path="/events/:eventId" element={<EventDetails/>}/>          {/* when user not logged in */}
           //added below routes to just check external API events
