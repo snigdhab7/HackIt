@@ -30,7 +30,7 @@ const Dashboard = () => {
 
   // Remove the following line to display all events without filtering
   const filteredEvents = events ? events.filter((event) =>
-    event.title.toLowerCase().includes(searchTerm.toLowerCase())
+    event.eventName.toLowerCase().includes(searchTerm.toLowerCase())
   ) : [];
 
   const carouselSettings = {

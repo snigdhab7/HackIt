@@ -7,13 +7,13 @@ const EventCard = ({ event }) => {
   return (
 
     <Link to={`/eventdetails`} style={{ textDecoration: 'none'}}>
-    <div key={event.id} className="event-card" style={{margin: '10px'}}>
+    <div key={event._id} className="event-card" style={{margin: '10px'}}>
 
-      <img src={event.imageUrl} alt={event.title} />
+      <img src={event.photo} alt={event.eventName} />
       <div>
-        <h2>{event.title}</h2>
+        <h2>{event.eventName}</h2>
         <p>{event.description}</p>
-        <p>{event.time}</p>
+        <p>{event.timeStart}</p>
         <p>{event.venue}</p>
       </div>
     </div>

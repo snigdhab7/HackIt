@@ -1,58 +1,68 @@
-// SignUp.js
-
-import React, { useState , useEffect }  from "react";
-import * as client from "../client"
+import React, { useState } from "react";
+import * as client from "../client";
 import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
-import { useLocation, useHistory } from 'react-router-dom';
-import { Link,useNavigate } from "react-router-dom";
-function SignInUser() {
-  
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
-  const navigate = useNavigate();
-  const signin = async () => {
-    await client.signin(credentials);
-    //navigate("/");
-  };
+import { useNavigate } from "react-router-dom";
 
-  const signup = async () => {
+function SignInUser() {
+  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const [user, setUser] = useState({ id: "", username: "" });
+
+  const signin = async () => {
+    // Basic validation
+    if (!credentials.username || !credentials.password) {
+      setError("Username and password are required.");
+      return;
+    }
+
     try {
-      console.log("Calling findAllUsers API");
-      const users = await client.findAllUsers();
-      // Do something with the fetched users, e.g., update state or display in the UI
-      console.log("Fetched users:", users);
-      //navigate("/Kanbas/account");
-    } catch (err) {
-      console.error("Error during API call:", err);
-      // setError(err.response.data.message);
+      const response = await client.signin(credentials);
+      const userId = String(response._id);
+      console.log("API Response", response);
+      console.log("API Response", userId);
+      console.log("API Response", response.username);
+      setUser({ id: userId, username: response.username });
+      console.log("USERID_SIGNIN",userId)
+      navigate(`/`);
+    } catch (error) {
+      // Handle sign-in failure (display error message, etc.)
+      setError("Invalid username or password. Please try again.");
     }
   };
-  
 
   return (
-      <div className="signup-container">
-        {/* <h1 className="signup-heading">{isOrganizer ? 'Sign Up as Organizer' : 'Sign Up'}</h1> */}
-        <h1 class="signup-heading">Sign In</h1>
-        <div className="input-container">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={credentials.username} onChange={(e) => setCredentials({...credentials, username: e.target.value})}
-          />
-        </div>
-        <div className="input-container">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={credentials.password} onChange={(e) => setCredentials({...credentials, password: e.target.value})}
-          />
-        </div>
-      
-        <button className="signup-button" onClick={signup}>
-          Sign Up
-        </button>
+    <div className="signup-container">
+      <h1 class="signup-heading">Sign In</h1>
+      <div className="input-container">
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          value={credentials.username}
+          onChange={(e) =>
+            setCredentials({ ...credentials, username: e.target.value })
+          }
+        />
       </div>
+      <div className="input-container">
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          value={credentials.password}
+          onChange={(e) =>
+            setCredentials({ ...credentials, password: e.target.value })
+          }
+        />
+      </div>
+
+      {error && <p className="error-message">{error}</p>}
+
+      <button className="signup-button" onClick={signin}>
+        Sign In
+      </button>
+    </div>
   );
 }
 
