@@ -18,3 +18,12 @@ export const createUser = async (user) => {
     console.log("RESPP",response.data)
     return response.data;
   };
+
+  export const signup = async (credentials) => {
+    // const newUser = { ...credentials,
+    //     _id: new Date().getTime().toString() };
+    const response = await axios.post(
+      `${USERS_API}/signup`, credentials);
+    return response.data;
+   
+  };

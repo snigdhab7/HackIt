@@ -16,14 +16,12 @@ function SignInUser() {
 
   const signup = async () => {
     try {
-      console.log("Calling findAllUsers API");
-      const users = await client.findAllUsers();
-      // Do something with the fetched users, e.g., update state or display in the UI
-      console.log("Fetched users:", users);
+      console.log("creds:",credentials);
+      await client.signup(credentials);
       //navigate("/Kanbas/account");
     } catch (err) {
-      console.error("Error during API call:", err);
-      // setError(err.response.data.message);
+        console.log("error",err)
+     // setError(err.response.data.message);
     }
   };
   

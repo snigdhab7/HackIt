@@ -18,6 +18,7 @@ const Dashboard = () => {
     const fetchEvents = async () => {
       try {
         const eventsData = await client.findAllEvents();
+        console.log(eventsData);
         setEvents(eventsData);  // Fix: Set eventsData instead of response.data
         console.log("Fetched events:", eventsData);
       } catch (error) {

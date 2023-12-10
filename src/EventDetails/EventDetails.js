@@ -4,9 +4,12 @@ import React from "react";
 import "./EventDetails.css";
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
+import * as client from "./client";
+import { useEffect } from "react";
 function EventDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [events, setEvents] = useState([]);
 
   
   const openModal = () => {
@@ -29,19 +32,29 @@ function EventDetails() {
     setShowConfirmation(true);
   };
 
+  const fetchEvents = async () => {
+    const events = await client.findAllEvents();
+    setEvents(events);
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
   return (
     <div>
       <header className="header-background">
       </header>
       <div className="event-details">
+     {events.map((event)=> (
+       <div>
       <div className="float-end">
           <button className="register-button me-2" onClick={handleDeregisterClick}>Deregister</button>
         <button className="register-button" onClick={openModal}>Register</button>
         </div>
         <div className="event-heading">
           <StarRating/>
-          <h2 class="event-heading-color">Data and Tech Workshop for Small and Medium Business Leaders
-      
+          <h2 class="event-heading-color">{event.eventName}
           </h2>
           <p className="medium-text">Join us for an in-person Data and Tech Workshop where small and medium business leaders can enhance their skills and stay ahead of the game</p>
         </div>
@@ -49,14 +62,14 @@ function EventDetails() {
          <h5 class="event-heading-color">Date and time</h5>
         <p className="medium-text">
         <FaCalendar className="me-3 color-palette"/>
-          Thursday, December 28 2023
+          {event.date}
           </p>
         </div>
         <div className="event-heading">
          <h5 class="event-heading-color">Location</h5>
          <p className="medium-text">
           <FaLocationArrow className="me-3 color-palette"/>
-          Boston, MA 
+          {event.venue}
           </p>
         </div>
         <div className="event-heading">
@@ -64,14 +77,13 @@ function EventDetails() {
          <p className="medium-text">
           <p className="medium-text">
           <FaClock className="color-palette me-2"/>
-          5 hours 30 minutes
+         {event.timeStart}
           </p>
-         As a revenue funded, self-sustaining, and employee-owned small business, we deeply understand what tech and data challenges SMB might be facing, and 
-         the great potential in business growth with the power of data and tech. We want to share what we have learned in the trenches of running our own business 
-         and from our record of successful partnerships with our clients. We also want to offer immediate help to your urgent problems and build a community for SMB 
-         leaders to support and learn from each other.
+         {event.description}
          </p>
         </div>
+        </div>
+))}
       </div>
 
       <footer>
