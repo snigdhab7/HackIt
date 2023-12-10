@@ -3,14 +3,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const EventCard = ( props) => {
-  const { event, userid } = props;
-  console.log("eventcard",props)
+const EventCard = ({ event }) => {
   return (
 
-    // <Link to={`/events/${userid}/${event._id}`} style={{ textDecoration: "none" }}>
+    //<Link to={`/events/${event._id}`} style={{ textDecoration: "none" }}>
       <div key={event.id} className="event-card" style={{ margin: "10px" }}>
-        {/* <img src={event.photo} alt={event.eventName} /> */}
+        <img src={event.photo} alt={event.eventName} />
         <div>
           <h2>{event.eventName}</h2>
           <p>{event.summary}</p>

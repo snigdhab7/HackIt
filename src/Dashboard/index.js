@@ -10,19 +10,16 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import * as client from "./client";
 import { Link, useParams } from "react-router-dom";
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
   const location = useLocation();
   const userid = useParams().id;
-  console.log("id",userid)
+  console.log("id", userid);
   const id1 = useParams().id;
-  console.log("id1",id1)
-  /* console.log("id1",userid)
-  const params = new URLSearchParams(location.search);
-  const id = params.get('id');
-  console.log("id2",id) */
+  console.log("id1", id1);
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -40,7 +37,6 @@ const Dashboard = () => {
   // Remove the following line to display all events without filtering
 
   const filteredEvents = events;
-
 
   const carouselSettings = {
     dots: true,
@@ -60,7 +56,7 @@ const Dashboard = () => {
         <div className="main-content">
           {/* Horizontal Navbar */}
           <div className="navbar-horizontal">
-            <Navbar />
+            <Navbar userid={userid} />
           </div>
 
           {/* Slider Carousel */}
@@ -80,16 +76,19 @@ const Dashboard = () => {
             {filteredEvents.map((event) => (
               <Link
                 key={event._id}
-                to={`/events/${userid}/${event._id}`}
+                to={
+                  userid
+                    ? `/events/${userid}/${event._id}`
+                    : `/events/${event._id}`
+                }
                 style={{ textDecoration: "none" }}
               >
-          <EventCard event={event} userId={userid} />
-
+                <EventCard event={event} />
               </Link>
             ))}
 
             {/* Organizer Card for Adding Events */}
-            <OrganizerCard isAddCard={true} />
+            <OrganizerCard isAddCard={false} />
           </div>
         </div>
       </div>

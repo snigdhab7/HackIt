@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
-import { Link, useNavigate } from "react-router-dom";
 import * as client from "../client";
-
-const SignUpUser = () => {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
+import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
+import { useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+function SignUpUser() {
+  const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const [user, setUser] = useState({ id: "", username: "" });
   const signup = async () => {
     // Basic validation
     if (!credentials.username || !credentials.password) {
@@ -22,7 +19,11 @@ const SignUpUser = () => {
       const response=await client.signup(credentials);
       console.log("respp",response)
      // if(response.username){
-      navigate("/");
+      const userId = String(response._id);
+      console.log("API Response", userId);
+      setUser({ id: userId, username: response.username });
+      console.log("USERID_SIGNUP",userId)
+     navigate(`/${userId}`);
      // }
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -34,6 +35,7 @@ const SignUpUser = () => {
       }
     }
   };
+
 
   return (
     <div className="signup-container">
@@ -62,14 +64,12 @@ const SignUpUser = () => {
       </div>
 
       {error && <p className="error-message">{error}</p>}
-
-   
-        <button className="signup-button" onClick={signup}>
-          Sign Up
-        </button>
-      
+     
+      <button className="signup-button" onClick={signup}>
+        Sign Up
+      </button>
     </div>
   );
-};
+}
 
 export default SignUpUser;

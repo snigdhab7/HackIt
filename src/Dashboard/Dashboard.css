@@ -264,56 +264,41 @@ body::-webkit-scrollbar-track {
   align-items: center;
   padding: 20px;
 }
-.popup-container {
+
+
+.popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  background: white(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.popup {
-  background-color: #000; /* Light gray background */
+.create-event-form-popup {
+  background: black;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  width: 80%; /* Adjust the width as needed */
-  max-width: 400px; /* Maximum width */
-  margin: auto;
+  border-radius: 8px;
+  width: 400px; /* Adjust the width as needed */
 }
 
-.popup label {
-  display: block;
-  margin-bottom: 8px;
-  color: #ddd;
-}
-
-.popup input,
-.popup textarea {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 12px;
-  box-sizing: border-box;
-  color: #ddd;
-
-}
-
-.button-container {
+.create-event-form-popup .button-container {
   display: flex;
   justify-content: space-between;
 }
 
-.popup button {
-  padding: 8px 16px;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
+.create-event-form-popup input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  cursor: pointer;
+  box-sizing: border-box;
+  color: white; /* Set text color to white */
+  background-color: white;
 }
 
 .popup button:hover {
@@ -334,4 +319,9 @@ body::-webkit-scrollbar-track {
 
 .btn-rounded:hover {
   transform: scale(1.05);
+}
+
+.link-style {
+  color: inherit; /* Use the color of the parent element */
+  cursor: pointer; /* Change cursor to pointer */
 }
