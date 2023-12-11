@@ -4,15 +4,27 @@ import React from "react";
 import "./EventDetails.css";
 import { Link , useParams} from "react-router-dom";
 import StarRating from "./StarRating";
+import * as client from "./client.js";
+import { useEffect } from "react";
+import { format } from "date-fns";
+
 function EventDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const { userid, eventId } = useParams();
-  console.log("id1event",userid)
-  console.log("id2event",eventId)
- 
-  const openModal = () => {
-    setModalOpen(true);
+  const { userid, eventId } = useParams(); 
+  const [events, setEvents] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [registrationConfirmed, setRegistrationConfirmed] = useState(false);
+
+  const openModal = async () => {
+    // Fetch user data only when the modal is opened
+    try {
+      const userData = await client.findUserById(userid);
+      setUsers(userData);
+      setModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
   };
 
   const closeModal = () => {
@@ -20,45 +32,74 @@ function EventDetails() {
     setShowConfirmation(false);
   };
 
-
-
   const handleRegisterClick = () => {
       closeModal();
-      return <Link to="/Dashboard" replace="true" />;
+      setRegistrationConfirmed(true);
   };
 
   const handleDeregisterClick = () => {
     setShowConfirmation(true);
+    setRegistrationConfirmed(false);
   };
+
+  const formatDate = (dateString) => {
+    try {
+      const date = new Date(dateString);
+      // Check if the date is valid
+      if (isNaN(date.getTime())) {
+        console.log("Invalid date");
+      }
+      return format(date, "do MMMM yyyy");
+    } catch (error) {
+      console.error('Error parsing date:', error);
+      return 'Invalid date';
+    }
+  };
+
+  useEffect(() => {
+    const fetchEventDetails = async () => {
+      try {
+        const eventData = await client.findEventById(eventId);
+        setEvents(eventData); // 
+      } catch (error) {
+        console.error("Error fetching event details:", error);
+      }
+    };
+ 
+    fetchEventDetails();
+  }, [eventId]);
+
+  console.log("USERSSSSS",users);
 
   return (
     <div>
       <header className="header-background">
       </header>
       <div className="event-details">
+      {events && (
+       <div>
       <div className="float-end">
           <button className="register-button me-2" onClick={handleDeregisterClick}>Deregister</button>
-        <button className="register-button" onClick={openModal}>Register</button>
+        <button className="register-button" onClick={openModal} disabled={registrationConfirmed} >Register</button>
         </div>
         <div className="event-heading">
           <StarRating/>
-          <h2 class="event-heading-color">Data and Tech Workshop for Small and Medium Business Leaders
-      
+          <h2 class="event-heading-color">{events.eventName}
           </h2>
-          <p className="medium-text">Join us for an in-person Data and Tech Workshop where small and medium business leaders can enhance their skills and stay ahead of the game</p>
+          <p className="medium-text">{events.summary}</p>
         </div>
         <div className="event-heading">
          <h5 class="event-heading-color">Date and time</h5>
         <p className="medium-text">
         <FaCalendar className="me-3 color-palette"/>
-          Thursday, December 28 2023
+        {formatDate(events.date)}
           </p>
         </div>
         <div className="event-heading">
          <h5 class="event-heading-color">Location</h5>
          <p className="medium-text">
           <FaLocationArrow className="me-3 color-palette"/>
-          Boston, MA 
+          {events.venue}
           </p>
         </div>
         <div className="event-heading">
@@ -66,14 +107,13 @@ function EventDetails() {
          <p className="medium-text">
           <p className="medium-text">
           <FaClock className="color-palette me-2"/>
-          5 hours 30 minutes
+         {events.timeStart}
           </p>
-         As a revenue funded, self-sustaining, and employee-owned small business, we deeply understand what tech and data challenges SMB might be facing, and 
-         the great potential in business growth with the power of data and tech. We want to share what we have learned in the trenches of running our own business 
-         and from our record of successful partnerships with our clients. We also want to offer immediate help to your urgent problems and build a community for SMB 
-         leaders to support and learn from each other.
+         {events.description}
          </p>
         </div>
+        </div>
+      )}
       </div>
 
       <footer>
@@ -88,6 +128,7 @@ function EventDetails() {
               type="text"
               placeholder="First Name*"
               name="firstName"
+              value={users.firstName}
             />
         
             <input
@@ -95,6 +136,7 @@ function EventDetails() {
               type="text"
               placeholder="Last Name*"
               name="lastName"
+              value={users.lastName}
             />
         
             <input
@@ -102,13 +144,7 @@ function EventDetails() {
               type="email"
               placeholder="Email*"
               name="email"
-            />
-        
-            <input
-              className="form-control mb-2"
-              type="email"
-              placeholder="Confirm Email*"
-              name="confirmEmail"
+              value={users.email}
             />
         
             <input
@@ -116,6 +152,7 @@ function EventDetails() {
               type="text"
               placeholder="Mobile number*"
               name="mobileNumber"
+              value={users.phoneNumber}
             />
             <button className="btn btn-danger mt-2" onClick={handleRegisterClick}>
               Confirm
