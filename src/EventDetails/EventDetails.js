@@ -15,7 +15,7 @@ function EventDetails() {
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
   const [registrationConfirmed, setRegistrationConfirmed] = useState(false);
-
+  const [deregisterConfirmed, setDeregisterConfirmed] = useState(true);
   const openModal = async () => {
     // Fetch user data only when the modal is opened
     try {
@@ -39,9 +39,18 @@ function EventDetails() {
 
   const handleDeregisterClick = () => {
     setShowConfirmation(true);
-    setRegistrationConfirmed(false);
   };
 
+  const handleConfirmationNo = () => {
+    setShowConfirmation(false);
+    setDeregisterConfirmed(false); 
+  };
+
+  const handleConfirmationYes = () => {
+    setShowConfirmation(false);
+    setDeregisterConfirmed(true); 
+    setRegistrationConfirmed(false);
+  };
   const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
@@ -67,7 +76,9 @@ function EventDetails() {
     };
  
     fetchEventDetails();
-  }, [eventId]);
+    console.log("DeregisterConfirmed state:", deregisterConfirmed);
+    console.log("Regist",registrationConfirmed);
+  }, [eventId,deregisterConfirmed,registrationConfirmed]);
 
   console.log("USERSSSSS",users);
 
@@ -80,7 +91,7 @@ function EventDetails() {
        <div>
       <div className="float-end">
           <button className="register-button me-2" onClick={handleDeregisterClick}>Deregister</button>
-        <button className="register-button" onClick={openModal} disabled={registrationConfirmed} >Register</button>
+        <button className="register-button" onClick={openModal} disabled={registrationConfirmed || !deregisterConfirmed} >Register</button>
         </div>
         <div className="event-heading">
           <StarRating/>
@@ -169,10 +180,10 @@ function EventDetails() {
           <div className="confirmation-message" onClick={(e) => e.stopPropagation()}>
             <h3 className="event-heading-color">We are sorry to see you go  :( </h3>
             <p>Are you sure you want to deregister?</p>
-            <button className="btn btn-danger mt-2" onClick={() => setShowConfirmation(false)}>
+            <button className="btn btn-danger mt-2" onClick={handleConfirmationNo}>
               No, Cancel
             </button>
-            <button className="btn btn-danger mt-2" onClick={() => setShowConfirmation(false)}>
+            <button className="btn btn-danger mt-2" onClick={handleConfirmationYes}>
               Yes, Deregister
             </button>
           </div>
