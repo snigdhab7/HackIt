@@ -15,6 +15,7 @@ export const findEventById = async (eventId) => {
 };
   
 export const findUserById = async (userId) => {
+  console.log("XXX",userId)
     const response = await axios.get(`${USERS_API}/${userId}`);
     console.log("RESSSSS",response.data);
     return response.data;
