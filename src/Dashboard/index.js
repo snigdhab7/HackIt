@@ -21,18 +21,20 @@ const Dashboard = () => {
   console.log("id1", id1);
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const eventsData = await client.findAllEvents();
-        setEvents(eventsData); // Fix: Set eventsData instead of response.data
-        console.log("Fetched events:", eventsData);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-      }
-    };
+    
 
     fetchEvents();
   }, []);
+
+  const fetchEvents = async () => {
+    try {
+      const eventsData = await client.findAllEvents();
+      setEvents(eventsData); // Fix: Set eventsData instead of response.data
+      console.log("Fetched events:", eventsData);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
 
   // Remove the following line to display all events without filtering
 
