@@ -8,18 +8,27 @@ function StarRating() {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [averageRating, setAverageRating] = useState(0);
-
-    
-
     const fetchEvents = async () => {
-      const events = await client.findAllEvents();
-      const overallRatings = events.map((event) => event.ratings?.overallRating || 0);
-
-      // Calculate the average rating
-      const averageRating =
-        overallRatings.reduce((total, rating) => total + rating, 0) / overallRatings.length;
-
-      setAverageRating(averageRating);
+      try {
+        const events = await client.findAllEvents();
+  
+        const ratingsData = events.map((event) => ({
+          overallRating: event.ratings?.overallRating || 0,
+          numberOfRates: event.ratings?.numberOfRates || 1,
+        }));
+    
+        const totalWeightedRating = ratingsData.reduce((total, { overallRating, numberOfRates }) => {
+          return total + overallRating * numberOfRates;
+        }, 0);
+    
+        const totalNumberOfRates = ratingsData.reduce((total, { numberOfRates }) => total + numberOfRates, 0);
+    
+        const averageRating = totalNumberOfRates !== 0 ? totalWeightedRating / totalNumberOfRates : 0;
+        const roundedAverageRating = averageRating.toFixed(2);
+        setAverageRating(roundedAverageRating);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
     };
   
     useEffect(() => {
