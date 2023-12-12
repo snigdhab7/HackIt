@@ -12,7 +12,7 @@ const Profile = () => {
     const lastName = "Jung";
     const email = "Jaehyun@gmail.com";
     const userid = useParams().id;
-    console.log("id",userid)
+    console.log("profileid",userid)
     
     // const aboutMe;
     // const phoneNumber;

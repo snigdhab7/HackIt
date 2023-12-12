@@ -9,30 +9,22 @@ import * as client from "../client";
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState({ username: "", password: "", role: "USER", _id:"" });
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const bgImage = {
         backgroundImage: `url(${coverImage})`,
     };
-    const firstName = "Jaehyun";
-    const lastName = "Jung";
-    const email = "Jaehyun@gmail.com";
+    
     const userid = useParams().id;
     console.log("id",userid)
 
     const fetchUsers = async () => {
         const users = await client.findAllUsers();
         setUsers(users);
+        setFilteredUsers(users);
       };
 
-    // Dummy data for multiple users
-    const usersData = [
-        { id: 1, name: "John Doe", profileLink: "/profile/1" },
-        { id: 2, name: "Jane Doe", profileLink: "/profile/2" },
-        { id: 1, name: "Aohn Doe", profileLink: "/profile/1" },
-        { id: 2, name: "Bane Doe", profileLink: "/profile/2" },
-        { id: 1, name: "Sohn Doe", profileLink: "/profile/1" },
-        { id: 2, name: "Mane Doe", profileLink: "/profile/2" },
-        // Add more user data as needed
-    ];
+  
     const getRandomTransparentGradientColor = () => {
         // Generate a random transparent gradient color
         const letters = '0123456789ABCDEF';
@@ -40,6 +32,14 @@ const Users = () => {
         const color2 = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.8)`;
         return `linear-gradient(45deg, ${color1}, ${color2})`;
     };
+
+    const handleSearch = (searchTerm) => {
+        setSearchTerm(searchTerm);
+        const filtered = users.filter((user) =>
+          user.username.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredUsers(filtered);
+      };
     // const aboutMe;
     // const phoneNumber;
     useEffect(() => { fetchUsers(); }, []);
@@ -79,7 +79,7 @@ const Users = () => {
                                         <img alt="Image placeholder" src={profileImage}/>
                                     </span>
                                     <div className="media-body ml-2 d-none d-lg-block">
-                                        <span className="mb-0 text-sm  font-weight-bold">{firstName}{" "}{lastName}</span>
+                                        <span className="mb-0 text-sm  font-weight-bold">{user.firstName}{" "}{user.lastName}</span>
                                     </div>
                                 </div>
                             </a>
@@ -122,7 +122,7 @@ const Users = () => {
                 <div className="container-fluid d-flex align-items-center">
                     <div className="row">
                         <div className="col-lg-7 col-md-10">
-                            <h1 className="p-display-2 p-text-white">Hello {firstName}</h1>
+                            <h1 className="p-display-2 p-text-white">Hello {user.username}</h1>
                             <p className="p-text-white mt-0 mb-5">This is the users screen you can search and view other user profiles.</p>
                         </div>
                     </div>
@@ -134,22 +134,29 @@ const Users = () => {
                    
                     <div className="col-xl-12 order-xl-1">
                         <div className="p-card shadow">
-                            <div className="p-card-header border-0">
-                                <div className="row align-items-center">
-                                    <div className="col-8">
-                                        <h3 className="mb-0">Users</h3>
-                                    </div>
-                                    <div className="col-4 text-right">
-                                        <a href="#!" className="p-btn p-btn-sm p-btn-info">Settings</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="p-card-header border-0">
+  <div className="row align-items-center">
+    <div className="col-md-8">
+      <h3>Users</h3>
+    </div>
+    <div className="col-md-4">
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Search Users"
+        value={searchTerm}
+        onChange={(e) => handleSearch(e.target.value)}
+      />
+    </div>
+  </div>
+</div>
+
                             <div className="p-card-body">
 {/* insert user icons here */}
 <div className="p-card-body">
                                 {/* Insert user icons here */}
                                 <div className="row">
-                                    {users.map((user) => (
+                                    {filteredUsers.map((user) => (
                                         <div key={user.id} className="col-lg-3 col-md-6 mb-4">
                                            <Link to={`/profile/${user._id}`} className="text-center">
 
