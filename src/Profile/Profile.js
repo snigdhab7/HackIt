@@ -29,6 +29,7 @@ const Profile = () => {
                         {/* <!-- Brand --> */}
                         <Link to = {"/"} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">Home</Link>
                         <Link to = {"/profile"} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">User profile</Link>
+                        <Link to = {"/users"} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">Users</Link>
                         {/* <!-- Form --> */}
                         <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                             <div className="form-group mb-0">
