@@ -27,9 +27,9 @@ const Profile = () => {
                 <nav className="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
                     <div className="container-fluid">
                         {/* <!-- Brand --> */}
-                        <Link to = {`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">Home</Link>
-                        <Link to = {`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">User profile</Link>
-                        <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" target="_blank">
+                        <Link to = {`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
+                        <Link to = {`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >User profile</Link>
+                        <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >
   Users
 </Link>
 
