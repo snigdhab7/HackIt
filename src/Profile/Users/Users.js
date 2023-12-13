@@ -11,15 +11,28 @@ const Users = () => {
     const [user, setUser] = useState({ username: "", password: "", role: "USER", _id:"" });
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const userid = useParams().id;
+    console.log("id",userid)
+
     const bgImage = {
         backgroundImage: `url(${coverImage})`,
     };
     
-    const userid = useParams().id;
-    console.log("id",userid)
+    const fetchCurrentUserDetails = async (userid) => {
+        // console.log("proile id", userid)
+        try {
+            const account = await client.fetchCurrentUserDetails(userid);
+            setUser(account);
+            // console.log("client response", account);
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+        }
+
+    };
 
     const fetchUsers = async () => {
         const users = await client.findAllUsers();
+        console.log("userrrrrrrrrrrr",users)
         setUsers(users);
         setFilteredUsers(users);
       };
@@ -42,7 +55,9 @@ const Users = () => {
       };
     // const aboutMe;
     // const phoneNumber;
-    useEffect(() => { fetchUsers(); }, []);
+  
+
+    useEffect(() => { fetchUsers(); fetchCurrentUserDetails(userid);}, [userid]);
     
     return (
 

@@ -7,7 +7,12 @@ const request =  axios.create({
 
 export const signin = async (credentials) => {
   console.log("sign in creds,",credentials)
-  const response = await request.post( `${USERS_API}/signin`, credentials );
+  const response = await request.post( `${USERS_API}/signin/user`, credentials );
+  return response.data;
+};
+export const signinOrganizer = async (credentials) => {
+  console.log("sign in creds,",credentials)
+  const response = await request.post( `${USERS_API}/signin/organizer`, credentials );
   return response.data;
 };
 export const createUser = async (user) => {
@@ -30,4 +35,9 @@ export const createUser = async (user) => {
     return response.data;
   };
 
- 
+  export const updateUser = async (user) => {
+    console.log("update user", user);
+    const response = await request.put(`${USERS_API}/${user.id}`, user);
+    return response.data;
+  };
+  

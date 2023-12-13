@@ -325,3 +325,24 @@ body::-webkit-scrollbar-track {
   color: inherit; /* Use the color of the parent element */
   cursor: pointer; /* Change cursor to pointer */
 }
+
+.event-cards{
+  flex: .75;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: left;
+  align-items: center;
+}
+
+.external-events{
+  flex: .25;
+  margin: 10px auto;
+  justify-content: left;
+  color: white;
+  text-align: left;
+}
+.external-events-title {
+  font-size: medium;
+}
+

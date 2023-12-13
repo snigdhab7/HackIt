@@ -11,7 +11,9 @@ import SignInUser from "./Login/SignInUser/SignInUser";
 import Events from './ExternalApi/Events';
 import React, { useState } from "react";
 import Users from './Profile/Users/Users';
-
+import SignInOrganizer from './Login/SignInOrganizer/SignInOrganizer';
+import SignUpOrganizer from './Login/SignUpOrganizer/SignUpOrganizer';
+import SignUpUserDetails from './Login/SignUpUserDetails/SignUpUserDetails';
 function App() {
   
   return (
@@ -22,8 +24,21 @@ function App() {
         <Route path="/:id" element={<Dashboard />} />          {/* when user not logged in */}
           <Route path="/Dashboard/signIn" element={<LoginHome />}/>
           <Route path="/Dashboard/signUp" element={<LoginHome />} />
-          <Route path="/signup" element={<SignUpUser />} />
-          <Route path="/signin" element={<SignInUser />} />
+          <Route path="/signup/user" element={<SignUpUser />} />
+          <Route path="/signup/organizer" element={<SignUpOrganizer />} />
+          <Route
+  path="/signin/organizer"
+  element={<SignInOrganizer />}
+/>
+<Route
+  path="/signup/details/:id"
+  element={<SignUpUserDetails />}
+/>
+<Route
+  path="/signin/user"
+  element={<SignInUser />}
+/>
+
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/users/:id" element={<Users />} />
           <Route path="/events/:userid/:eventId" element={<EventDetails/>}/>    {/* when user logged in */}

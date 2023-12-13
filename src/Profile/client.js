@@ -5,8 +5,8 @@ const request = axios.create({
   withCredentials: true,
 });
 
-export const findAllUsers = () => {
-  const response = request.get(`${USERS_API}`);
+export const findAllUsers = async () => {
+  const response = await request.get(`${USERS_API}`);
   console.log("RESPP", response.data)
   return response.data;
 };

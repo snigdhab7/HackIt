@@ -54,10 +54,10 @@ const LoginHome = (props) => {
       </div>
       <div className="user-selection-container">
         
-            <h1>Welcome to HackIt!</h1>
+            <h1 style={{color:'white'}}>Welcome to HackIt!</h1>
             <p>Which role suits you best?</p>
             <div className="role-buttons">
-            <Link to={linkTo}>
+            <Link to={`${linkTo}/organizer`}>
       <button
         style={{ marginRight: '20px' }}
         className="button-49"
@@ -67,15 +67,15 @@ const LoginHome = (props) => {
       </button>
       </Link>
 
-      <Link to={linkTo}>
-      <button
-        style={{ marginRight: '20px' }}
-        className="button-49"
-        role="button"
-      >
-        Attendee
-      </button>
-      </Link>
+      <Link to={`${linkTo}/user`}>
+  <button
+    style={{ marginRight: '20px' }}
+    className="button-49"
+    role="button"
+  >
+    Attendee
+  </button>
+</Link>
             </div>
             <br />
 
