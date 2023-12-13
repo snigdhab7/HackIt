@@ -1,35 +1,31 @@
 import React, { useState, useEffect } from "react";
-import * as client from './Client';
+import * as client from "./Client";
 
 function Events() {
-    
-    const [events, setEvents] = useState([]);
-    useEffect(() => {
-        fetchEvents();
-    }, []);
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    fetchExternalEvents();
+  }, []);
 
-    const fetchEvents = async () => {
-        const events = await client.findAllEvents();
-        setEvents(events);
-    };
+  const fetchExternalEvents = async () => {
+    const events = await client.fetchExternalEvents();
+    setEvents(events);
+  };
 
-    return (
-
-        <div>
-            <h1>Events:</h1>
-            <div>
-                {events.map((event, index) => (
-
-                    <div key={index}>
-                        <h2>{event.title}</h2>
-                        <p>Link: <a href={event.link}>{event.link}</a></p>
-                    </div>
-
-                ))}
-            </div>            
-           
-        </div>
-    );
-
+  return (
+    <div>
+      <h1 style={{ textAlign: "center" }}>Events</h1>
+      <div>
+        {events.map((event, index) => (
+          <div key={index}>
+            <a href={event.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color:"white"}}>
+              <h2 className="external-events-title">{event.title}</h2>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
+
 export default Events;

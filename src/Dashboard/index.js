@@ -11,34 +11,27 @@ import Slider from "react-slick";
 import * as client from "./client";
 import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Events from "../ExternalApi/Events";
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
   const location = useLocation();
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  // const [event, setEvent] = useState([]);
   const userid = useParams().id;
-  console.log("id", userid);
+  // console.log("id", userid);
   const id1 = useParams().id;
-  console.log("id1", id1);
+  // console.log("id1", id1);
 
-  useEffect(() => {
-    
-
-    fetchEvents();
-  }, []);
-
-  const fetchEvents = async () => {
-    try {
-      const eventsData = await client.findAllEvents();
-      setEvents(eventsData); // Fix: Set eventsData instead of response.data
-      console.log("Fetched events:", eventsData);
-    } catch (error) {
-      console.error("Error fetching events:", error);
-    }
+  const fetchEvents = async (searchTerm) => {
+    const events = await client.findAllEvents();
+    setEvents(events);
+    setFilteredEvents(events);
   };
 
-  // Remove the following line to display all events without filtering
-
-  const filteredEvents = events;
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const carouselSettings = {
     dots: true,
@@ -49,6 +42,14 @@ const Dashboard = () => {
     autoplay: true,
     arrows: false,
     autoplaySpeed: 3000,
+  };
+
+  const setSearchTerms = (e) => {
+    setSearchTerm(e);
+    const filtered = events.filter((event) => {
+      return event.eventName?.toLowerCase().includes(e.toLowerCase());
+    });
+    setFilteredEvents(filtered);
   };
 
   return (
@@ -68,29 +69,31 @@ const Dashboard = () => {
           <br />
 
           {/* Search Bar */}
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerms} />
 
           {/* List of Events as Cards */}
           <div className="event-list">
-            {/* {filteredEvents.map((event) => (
-              <EventCard key={event._id} event={event} />
-            ))} */}
-            {filteredEvents.map((event) => (
-              <Link
-                key={event._id}
-                to={
-                  userid
-                    ? `/events/${userid}/${event._id}`
-                    : `/events/${event._id}`
-                }
-                style={{ textDecoration: "none" }}
-              >
-                <EventCard event={event} />
-              </Link>
-            ))}
+            <div className="event-cards">
+              {filteredEvents.map((event) => (
+                <Link
+                  key={event._id}
+                  to={
+                    userid
+                      ? `/events/${userid}/${event._id}`
+                      : `/events/${event._id}`
+                  }
+                  style={{ textDecoration: "none" }}
+                >
+                  <EventCard event={event} />
+                </Link>
+              ))}
 
-            {/* Organizer Card for Adding Events */}
-            <OrganizerCard isAddCard={false} />
+              {/* Organizer Card for Adding Events */}
+              <OrganizerCard isAddCard={false} />
+            </div>
+            <div className="external-events">
+              <Events />
+            </div>
           </div>
         </div>
       </div>
