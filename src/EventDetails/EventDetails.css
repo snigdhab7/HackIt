@@ -99,18 +99,6 @@ footer {
   width: 100%;
 }
 
-/* .ticket-box {
-  position: fixed;
-  bottom: 20px;
-  right: 10px;
- background-color: rgba(255, 0, 60, 0.5); 
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-} */
-
-
 .register-button {
   background-color: #FF013C;
   color: #fff;
@@ -157,16 +145,31 @@ footer {
   opacity: 1;
 }
 
+.bookmarked {
+  color: #FF013C;
+}
+
+.fa-bookmark {
+  font-size: 34px; 
+}
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
-  .ticket-box {
+ 
+  .buttons {
     width: 100%;
     bottom: 0;
     right: 0;
     padding: 10px;
     height: 15%;
   }
-  .register-button{
-    padding: 16px 24px;
+
+  .fa-bookmark {
+    margin-top: 10px;
   }
+
+  .header {
+    height: 700px;
+  }
+ 
 }
