@@ -1,0 +1,42 @@
+/* Add this style to your existing CSS or create a new CSS file */
+.avatar {
+    /* Add other styles as needed */
+    display: inline-block;
+}
+
+.avatar-lg {
+    width: 150px; /* Set the width to 150px */
+    height: 150px; /* Set the height to 150px */
+    line-height: 150px; /* Center the text vertically within the circle */
+    text-align: center;
+    border-radius: 50%; /* Set the radius to 50% to create a circle */
+    background: linear-gradient(45deg, #4389d4, rgb(255, 64, 0)); /* Use your desired gradient colors */
+    color: #ffffff; /* Customize the text color */
+    font-size: 40px; /* Customize the font size */
+    font-weight: bold; /* Customize the font weight */
+
+    /* Remove display: flex; */
+}
+
+.avatar-container {
+    text-align: center;
+}
+/* Search Bar */
+.container {
+    text-align: center;
+  }
+  
+  .form-control {
+    width: 300px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  /* User Cards */
+  .avatar-container {
+    text-align: center;
+  }
+  
