@@ -20,7 +20,7 @@ const Navbar = ({ userid }) => {
   useEffect(() => {
     const findUserById = async (userid) => {
       try {
-        const eventsData = await client.findAllEvents();
+        // const eventsData = await client.findAllEvents();
         const user = await client.findUserById(userid);
         setAccount(user);
         console.log("Fetched user:", user);
