@@ -37,6 +37,10 @@ const Profile = () => {
         setAccount(updatedDetails);
     };
 
+    const cancel = async () => {
+        fetchCurrentUserDetails(userid);
+    };
+
     useEffect(() => {
         // console.log()
         fetchCurrentUserDetails(userid);
@@ -125,7 +129,8 @@ const Profile = () => {
                                     <h1 className="p-display-2 p-text-white">Hello {account.username}</h1>
                                     <p className="p-text-white mt-0 mb-5">This is your profile page. You can see the events you've registered for and manage your schedule.</p>
                                     {/* <button href="#!" className="p-btn p-btn-info">Edit profile<button/> */}
-                                    <button className="p-btn p-btn-info" onClick={() => setIsEditMode(true)}>Edit profile</button>
+                                    {!isEditMode && (
+                                        <button className="p-btn p-btn-info" onClick={() => setIsEditMode(true)}>Edit profile</button>)}
                                 </div>
                             </div>
                         </div>
@@ -177,7 +182,7 @@ const Profile = () => {
                                                 <h3 className="mb-0">My account</h3>
                                             </div>
                                             <div className="col-4 text-right">
-                                                <a href="#!" className="p-btn p-btn-sm p-btn-info">Settings</a>
+                                                <a href="#!" className="p-btn p-btn-sm p-btn-info">Change Password</a>
                                             </div>
                                         </div>
                                     </div>
@@ -252,7 +257,7 @@ const Profile = () => {
                                                                 id="input-dob"
                                                                 className="p-form-control form-control-alternative"
                                                                 placeholder="Date of Birth"
-                                                                value={new Date(account.dob).toLocaleDateString('en-CA') || ''}
+                                                                value={new Date(account.dob).toISOString().split('T')[0] || ''}
                                                                 disabled={!isEditMode}
                                                                 onChange={(e) => setAccount({ ...account, dob: e.target.value })}
                                                             />
@@ -276,7 +281,7 @@ const Profile = () => {
                                                                 type="text"
                                                                 value={account.address?.address || ''}
                                                                 disabled={!isEditMode}
-                                                                onChange={(e) => setAccount({ ...account, address: { ...address, address: e.target.value } })}
+                                                                onChange={(e) => setAccount({ ...account, address: { ...account.address, address: e.target.value } })}
                                                             />
                                                         </div>
                                                     </div>
@@ -291,7 +296,7 @@ const Profile = () => {
                                                                 className="p-form-control form-control-alternative"
                                                                 placeholder="City" value={account.address?.city || ''}
                                                                 disabled={!isEditMode}
-                                                                onChange={(e) => setAccount({ ...account, address: { ...address, city: e.target.value } })}
+                                                                onChange={(e) => setAccount({ ...account, address: { ...account.address, city: e.target.value } })}
                                                             />
                                                         </div>
                                                     </div>
@@ -304,7 +309,7 @@ const Profile = () => {
                                                                 className="p-form-control form-control-alternative"
                                                                 placeholder="Country" value={account.address?.country || ''}
                                                                 disabled={!isEditMode}
-                                                                onChange={(e) => setAccount({ ...account, address: { ...address, country: e.target.value } })}
+                                                                onChange={(e) => setAccount({ ...account, address: { ...account.address, country: e.target.value } })}
                                                             />
                                                         </div>
                                                     </div>
@@ -317,7 +322,7 @@ const Profile = () => {
                                                                 className="p-form-control form-control-alternative"
                                                                 placeholder="Postal code" value={account.address?.postalCode || ''}
                                                                 disabled={!isEditMode}
-                                                                onChange={(e) => setAccount({ ...account, address: { ...address, postalCode: e.target.value } })}
+                                                                onChange={(e) => setAccount({ ...account, address: { ...account.address, postalCode: e.target.value } })}
                                                             />
                                                         </div>
                                                     </div>
@@ -354,9 +359,11 @@ const Profile = () => {
                                                         {/* {aboutMe} */}
                                                     </textarea>
                                                 </div>
-                                                <div class="col-12 text-right">
-                                                    <button className="p-btn p-btn-info" onClick={save}>Save</button>
-                                                </div>
+                                                {isEditMode && (
+                                                    <div class="col-12 text-right">
+                                                        <button className="p-btn p-btn-info mr-3" onClick={save}>Save</button>
+                                                        <button className="p-btn p-btn-info mr-3" onClick={cancel}>Cancel</button>
+                                                    </div>)}
                                             </div>
                                         </form>
                                     </div>
