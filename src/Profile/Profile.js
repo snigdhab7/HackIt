@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import profileImage from '../images/profile.jpeg';
 import coverImage from '../images/background.jpeg';
 import '../Profile/Profile.css';
 import * as client from "./client.js";
+import { signout } from '../Dashboard/client.js';
 import { useParams } from "react-router-dom";
+
 const Profile = () => {
+    const navigate = useNavigate();
     const bgImage = {
         backgroundImage: `url(${coverImage})`,
     };
@@ -38,6 +41,7 @@ const Profile = () => {
     };
 
     const cancel = async () => {
+        setIsEditMode(false);
         fetchCurrentUserDetails(userid);
     };
 
@@ -45,6 +49,12 @@ const Profile = () => {
         // console.log()
         fetchCurrentUserDetails(userid);
     }, [userid]);
+
+    const signOff = async () => {
+        await signout();
+        console.log("Sign out button clicked");
+        navigate("/");
+    };
 
     return (
 
@@ -64,58 +74,34 @@ const Profile = () => {
 
                             {/* <!-- Form --> */}
                             <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                                <div className="form-group mb-0">
+                                {/* <div className="form-group mb-0">
                                     <div className="input-group input-group-alternative">
                                         <div className="input-group-prepend">
                                             <span className="input-group-text"><i className="fas fa-search"></i></span>
                                         </div>
                                         <input className="form-control mt-0" placeholder="Search People" type="text" />
                                     </div>
-                                </div>
+                                </div> */}
                             </form>
                             {/* <!-- User --> */}
-                            <ul className="navbar-nav align-items-center d-none d-md-flex" style={{ color: 'white' }}>
-                                <li className="nav-item dropdown">
-
-                                    <a className="nav-link pr-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <div className="media align-items-center">
-                                            <span className="avatar avatar-sm rounded-circle">
-                                                <img alt="Image placeholder" src={profileImage} />
-                                            </span>
-                                            <div className="media-body ml-2 d-none d-lg-block">
-                                                <span className="mb-0 text-sm  font-weight-bold">{account.firstName || ''}{" "}{account.lastName || ''}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <div id="myDropdown" className="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                                        <div className=" dropdown-header noti-title">
-                                            <h6 className="text-overflow m-0">Welcome!</h6>
-                                        </div>
-                                        <a href="../examples/profile.html" className="dropdown-item">
-                                            <i className="ni ni-single-02"></i>
-                                            <span>My profile</span>
-                                        </a>
-                                        <a href="../examples/profile.html" className="dropdown-item">
-                                            <i className="ni ni-settings-gear-65"></i>
-                                            <span>Settings</span>
-                                        </a>
-                                        <a href="../examples/profile.html" className="dropdown-item">
-                                            <i className="ni ni-calendar-grid-58"></i>
-                                            <span>Activity</span>
-                                        </a>
-                                        <a href="../examples/profile.html" className="dropdown-item">
-                                            <i className="ni ni-support-16"></i>
-                                            <span>Support</span>
-                                        </a>
-                                        <div className="dropdown-divider"></div>
-                                        <a href="#!" className="dropdown-item">
-                                            <i className="ni ni-user-run"></i>
-                                            <span>Logout</span>
-                                        </a>
+                            <div className="nav-link pr-0" role="button" aria-haspopup="true" aria-expanded="false">
+                                <div className="media align-items-center">
+                                    <span className="avatar avatar-sm rounded-circle">
+                                        <img alt="Image placeholder" src={profileImage} />
+                                    </span>
+                                    <div className="media-body ml-2 d-none d-lg-block">
+                                        <span className="mb-0 text-sm  font-weight-bold">{account.firstName || ''}{" "}{account.lastName || ''}</span>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
+                            <div className="nav-link pr-0" role="button" aria-haspopup="true" aria-expanded="false" onClick={signOff}>
+                                <div className="media align-items-center">                            
+                                    <div className="media-body ml-2 d-none d-lg-block">
+                                        <span className="mb-0 text-sm  font-weight-bold">Sign out</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </nav>
                     {/* <!-- Header --> */}
@@ -181,45 +167,46 @@ const Profile = () => {
                                             <div className="col-8">
                                                 <h3 className="mb-0">My account</h3>
                                             </div>
-                                            <div className="col-4 text-right">
+                                            {/* <div className="col-4 text-right">
                                                 <a href="#!" className="p-btn p-btn-sm p-btn-info">Change Password</a>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                     <div className="p-card-body">
                                         <form className="userInfo">
                                             <h6 className="heading-small mb-4">User information</h6>
                                             <div className="pl-lg-4">
-                                                <div className="row">
-                                                    <div className="col-lg-6">
-                                                        <div className="form-group focused">
-                                                            <label className="form-control-label" for="input-username">Username</label>
-                                                            <input
-                                                                type="text"
-                                                                id="input-username"
-                                                                className="p-form-control form-control-alternative"
-                                                                placeholder="Username"
-                                                                value={account.username || ''}
-                                                                disabled={!isEditMode}
-                                                                onChange={(e) => setAccount({ ...account, firstName: e.target.value })}
+                                                {isEditMode && (
+                                                    <div className="row">
+                                                        <div className="col-lg-6">
+                                                            <div className="form-group focused">
+                                                                <label className="form-control-label" for="input-username">Username</label>
+                                                                <input
+                                                                    type="text"
+                                                                    id="input-username"
+                                                                    className="p-form-control form-control-alternative"
+                                                                    placeholder="Username"
+                                                                    value={account.username || ''}
+                                                                    disabled={!isEditMode}
+                                                                    onChange={(e) => setAccount({ ...account, username: e.target.value })}
 
-                                                            />
+                                                                />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="col-lg-6">
-                                                        <div className="form-group">
-                                                            <label className="form-control-label" for="input-email">Email address</label>
-                                                            <input
-                                                                type="email"
-                                                                id="input-email"
-                                                                className="p-form-control form-control-alternative"
-                                                                placeholder="email" value={account.email || ''}
-                                                                disabled={!isEditMode}
-                                                                onChange={(e) => setAccount({ ...account, email: e.target.value })}
-                                                            />
+                                                        <div className="col-lg-6">
+                                                            <div className="form-group focused">
+                                                                <label className="form-control-label" for="input-password">Password </label>
+                                                                <input
+                                                                    type="password"
+                                                                    id="input-password"
+                                                                    className="p-form-control form-control-alternative"
+                                                                    placeholder="password" value={account.password || ''}
+                                                                    disabled={!isEditMode}
+                                                                    onChange={(e) => setAccount({ ...account, password: e.target.value })}
+                                                                />
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    </div>)}
                                                 <div className="row">
                                                     <div className="col-lg-6">
                                                         <div className="form-group focused">
@@ -257,11 +244,24 @@ const Profile = () => {
                                                                 id="input-dob"
                                                                 className="p-form-control form-control-alternative"
                                                                 placeholder="Date of Birth"
-                                                                value={new Date(account.dob).toISOString().split('T')[0] || ''}
+                                                                value={account.dob ? new Date(account.dob).toISOString().split('T')[0] : ''}
                                                                 disabled={!isEditMode}
                                                                 onChange={(e) => setAccount({ ...account, dob: e.target.value })}
                                                             />
 
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-6">
+                                                        <div className="form-group focused">
+                                                            <label className="form-control-label" for="input-email">Email address</label>
+                                                            <input
+                                                                type="email"
+                                                                id="input-email"
+                                                                className="p-form-control form-control-alternative"
+                                                                placeholder="email" value={account.email || ''}
+                                                                disabled={!isEditMode}
+                                                                onChange={(e) => setAccount({ ...account, email: e.target.value })}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
