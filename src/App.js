@@ -10,6 +10,7 @@ import Profile from "./Profile/Profile";
 import SignInUser from "./Login/SignInUser/SignInUser";
 import Events from './ExternalApi/Events';
 import React, { useState } from "react";
+import Users from './Profile/Users/Users';
 
 function App() {
   
@@ -22,12 +23,9 @@ function App() {
           <Route path="/Dashboard/signIn" element={<LoginHome />}/>
           <Route path="/Dashboard/signUp" element={<LoginHome />} />
           <Route path="/signup" element={<SignUpUser />} />
-          <Route
-  path="/signin"
-  element={<SignInUser />}
-/>
-
+          <Route path="/signin" element={<SignInUser />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/users/:id" element={<Users />} />
           <Route path="/events/:userid/:eventId" element={<EventDetails/>}/>    {/* when user logged in */}
           <Route path="/events/:eventId" element={<EventDetails/>}/>          {/* when user not logged in */}
           //added below routes to just check external API events

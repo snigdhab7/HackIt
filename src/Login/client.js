@@ -11,9 +11,7 @@ export const signin = async (credentials) => {
   return response.data;
 };
 export const createUser = async (user) => {
-    const newUser = { ...user,
-        _id: new Date().getTime().toString() };
-    const response = await axios.post(`${USERS_API}`, newUser);
+    const response = await axios.post(`${USERS_API}`, user);
     return response.data;
   };
   
