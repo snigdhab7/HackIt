@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as client from "../client";
-import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
+import "../SignUpUser/SignUpUser.css"
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 function SignInOrganizer() {
