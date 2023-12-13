@@ -54,7 +54,7 @@ const LoginHome = (props) => {
       </div>
       <div className="user-selection-container">
         
-            <h1>Welcome to HackIt!</h1>
+            <h1 style={{color:'white'}}>Welcome to HackIt!</h1>
             <p>Which role suits you best?</p>
             <div className="role-buttons">
             <Link to={`${linkTo}/organizer`}>
