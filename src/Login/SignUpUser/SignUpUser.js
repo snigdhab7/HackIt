@@ -23,7 +23,7 @@ function SignUpUser() {
       console.log("API Response", userId);
       setUser({ id: userId, username: response.username });
       console.log("USERID_SIGNUP",userId)
-     navigate(`/${userId}`);
+     navigate(`/signup/details/${userId}`);
      // }
     } catch (error) {
       if (error.response && error.response.status === 400) {

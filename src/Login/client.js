@@ -35,4 +35,9 @@ export const createUser = async (user) => {
     return response.data;
   };
 
- 
+  export const updateUser = async (user) => {
+    console.log("update user", user);
+    const response = await request.put(`${USERS_API}/${user.id}`, user);
+    return response.data;
+  };
+  

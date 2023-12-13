@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import Users from './Profile/Users/Users';
 import SignInOrganizer from './Login/SignInOrganizer/SignInOrganizer';
 import SignUpOrganizer from './Login/SignUpOrganizer/SignUpOrganizer';
-
+import SignUpUserDetails from './Login/SignUpUserDetails/SignUpUserDetails';
 function App() {
   
   return (
@@ -29,6 +29,10 @@ function App() {
           <Route
   path="/signin/organizer"
   element={<SignInOrganizer />}
+/>
+<Route
+  path="/signup/details/:id"
+  element={<SignUpUserDetails />}
 />
 <Route
   path="/signin/user"
