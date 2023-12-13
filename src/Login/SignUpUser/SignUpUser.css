@@ -65,5 +65,15 @@ h1.signup-heading {
   }
   
 
-
+  .details-container {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust the alpha value for the desired lightness */
+    border-radius: 8px;
+    margin: auto;
+    width: 500px; /* Adjust the width as needed */
+    height: 500px;
+    margin-top: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
   

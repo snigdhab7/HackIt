@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import * as client from "../client";
-import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
+import "../SignUpUser/SignUpUser.css"
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 function SignUpUser() {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({ username: "", password: "" , role: "user"});
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState({ id: "", username: "" });
@@ -23,7 +23,7 @@ function SignUpUser() {
       console.log("API Response", userId);
       setUser({ id: userId, username: response.username });
       console.log("USERID_SIGNUP",userId)
-     navigate(`/${userId}`);
+     navigate(`/signup/details/${userId}`);
      // }
     } catch (error) {
       if (error.response && error.response.status === 400) {
