@@ -4,7 +4,7 @@ import "../SignUpUser.css"; // Make sure to adjust the path according to your pr
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 function SignUpUser() {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({ username: "", password: "" , role: "user"});
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState({ id: "", username: "" });

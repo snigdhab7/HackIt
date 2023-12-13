@@ -3,7 +3,7 @@ import * as client from "../client";
 import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
-function SignInUser() {
+function SignInOrganizer() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function SignInUser() {
     }
 
     try {
-      const response = await client.signin(credentials);
+      const response = await client.signinOrganizer(credentials);
       const userId = String(response._id);
       console.log("API Response", response);
       console.log("API Response", userId);
@@ -67,4 +67,4 @@ function SignInUser() {
   );
 }
 
-export default SignInUser;
+export default SignInOrganizer;

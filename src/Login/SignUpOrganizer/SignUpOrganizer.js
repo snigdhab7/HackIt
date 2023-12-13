@@ -3,13 +3,12 @@ import * as client from "../client";
 import "../SignUpUser.css"; // Make sure to adjust the path according to your project structure
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
-function SignInUser() {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+function SignUpOrganizer() {
+  const [credentials, setCredentials] = useState({ username: "", password: "" , role: "organizer"});
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [user, setUser] = useState({ id: "", username: "" });
-  const { attendee } = useParams();
-  const signin = async () => {
+  const signup = async () => {
     // Basic validation
     if (!credentials.username || !credentials.password) {
       setError("Username and password are required.");
@@ -17,24 +16,30 @@ function SignInUser() {
     }
 
     try {
-      const response = await client.signin(credentials);
+      const response=await client.signup(credentials);
+      console.log("respp",response)
+     // if(response.username){
       const userId = String(response._id);
-      console.log("API Response", response);
       console.log("API Response", userId);
-      console.log("API Response", response.username);
       setUser({ id: userId, username: response.username });
-      console.log("USERID_SIGNIN",userId)
+      console.log("USERID_SIGNUP",userId)
      navigate(`/${userId}`);
-      
-   } catch (error) {
-     // Handle sign-in failure (display error message, etc.)
-      setError("Invalid username or password. Please try again.");
+     // }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // Username already exists
+        setError("Username already taken.");
+      } else {
+        // Handle other sign-up failures
+        setError("Sign-up failed. Please try again.");
+      }
     }
   };
 
+
   return (
     <div className="signup-container">
-      <h1 class="signup-heading">Sign In</h1>
+      <h1 class="signup-heading">Sign Up</h1>
       <div className="input-container">
         <label htmlFor="username">Username:</label>
         <input
@@ -60,11 +65,11 @@ function SignInUser() {
 
       {error && <p className="error-message">{error}</p>}
      
-      <button className="signup-button" onClick={signin}>
-        Sign In
+      <button className="signup-button" onClick={signup}>
+        Sign Up
       </button>
     </div>
   );
 }
 
-export default SignInUser;
+export default SignUpOrganizer;
