@@ -15,8 +15,7 @@ export const findEventById = async (eventId) => {
 };
   
 export const findUserById = async (userId) => {
-  console.log("XXX",userId)
-    const response = await axios.get(`${USERS_API}/${userId}`);
+    const response = await axios.get(`${USEREVENTS_API}/${userId}`);
     return response.data;
 };
 
@@ -49,7 +48,5 @@ export const deRegisterUserForEvent = async (userId, eventId) => {
 export const registrationStatus =  async (userId, eventId) => {
   const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/registerstatus`);
   return response.data;
-  
-
 };
 

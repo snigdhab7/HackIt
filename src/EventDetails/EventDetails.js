@@ -73,10 +73,13 @@ function EventDetails() {
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
+       
         const eventData = await client.findEventById(eventId);
         setEvents(eventData);
+        if(userid!=null){
         const isUserRegistered = await client.registrationStatus(userid, eventId);
         setUserIsRegistered(isUserRegistered);
+        }
       } catch (error) {
         console.error("Error fetching event details:", error);
       }
@@ -95,10 +98,10 @@ function EventDetails() {
       {events && (
        <div>
       <div className="float-end">
-      <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered}>
+      <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered|| !userid}>
   Deregister
 </button>
-<button className="register-button" onClick={openModal} disabled={userIsRegistered}>
+<button className="register-button" onClick={openModal} disabled={userIsRegistered|| !userid}>
   Register
 </button>
         </div>
@@ -148,7 +151,7 @@ function EventDetails() {
               type="text"
               placeholder="First Name*"
               name="firstName"
-              value={users.firstName}
+              value={users?.firstName || ''}
             />
         
             <input
@@ -156,7 +159,7 @@ function EventDetails() {
               type="text"
               placeholder="Last Name*"
               name="lastName"
-              value={users.lastName}
+              value={users?.lastName || ''}
             />
         
             <input
@@ -164,7 +167,7 @@ function EventDetails() {
               type="email"
               placeholder="Email*"
               name="email"
-              value={users.email}
+              value={users?.email || ''}
             />
         
             <input
@@ -172,7 +175,7 @@ function EventDetails() {
               type="text"
               placeholder="Mobile number*"
               name="mobileNumber"
-              value={users.phoneNumber}
+              value={users?.phoneNumber || ''}
             />
             <button className="btn btn-danger mt-2" onClick={handleRegisterClick}>
               Confirm
