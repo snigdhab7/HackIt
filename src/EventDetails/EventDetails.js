@@ -14,10 +14,8 @@ function EventDetails() {
   const { userid, eventId } = useParams(); 
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
-  const [registrationConfirmed, setRegistrationConfirmed] = useState(false);
-  const [deregisterConfirmed, setDeregisterConfirmed] = useState(true);
+  const [userIsRegistered, setUserIsRegistered] = useState();
   const openModal = async () => {
-    // Fetch user data only when the modal is opened
     try {
       const userData = await client.findUserById(userid);
       setUsers(userData);
@@ -32,9 +30,11 @@ function EventDetails() {
     setShowConfirmation(false);
   };
 
-  const handleRegisterClick = () => {
-      closeModal();
-      setRegistrationConfirmed(true);
+  const handleRegisterClick = async () => {
+    closeModal();
+    await client.registerUserForEvent(userid, eventId);
+    const regstatus = await client.registrationStatus(userid, eventId);
+    setUserIsRegistered(regstatus);
   };
 
   const handleDeregisterClick = () => {
@@ -43,14 +43,19 @@ function EventDetails() {
 
   const handleConfirmationNo = () => {
     setShowConfirmation(false);
-    setDeregisterConfirmed(false); 
   };
 
-  const handleConfirmationYes = () => {
+  const handleConfirmationYes = async () => {
     setShowConfirmation(false);
-    setDeregisterConfirmed(true); 
-    setRegistrationConfirmed(false);
+    try {
+      await client.deRegisterUserForEvent(userid, eventId);
+      const regstatus = await client.registrationStatus(userid, eventId);
+      setUserIsRegistered(regstatus);
+    } catch (error) {
+      console.error("Error deregistering user for event:", error);
+    }
   };
+
   const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
@@ -69,18 +74,18 @@ function EventDetails() {
     const fetchEventDetails = async () => {
       try {
         const eventData = await client.findEventById(eventId);
-        setEvents(eventData); // 
+        setEvents(eventData);
+        const isUserRegistered = await client.registrationStatus(userid, eventId);
+        setUserIsRegistered(isUserRegistered);
       } catch (error) {
         console.error("Error fetching event details:", error);
       }
     };
- 
-    fetchEventDetails();
-    console.log("DeregisterConfirmed state:", deregisterConfirmed);
-    console.log("Regist",registrationConfirmed);
-  }, [eventId,deregisterConfirmed,registrationConfirmed]);
 
-  console.log("USERSSSSS",users);
+    fetchEventDetails();
+  }, [eventId, userid]);
+
+
 
   return (
     <div>
@@ -90,8 +95,12 @@ function EventDetails() {
       {events && (
        <div>
       <div className="float-end">
-          <button className="register-button me-2" onClick={handleDeregisterClick}>Deregister</button>
-        <button className="register-button" onClick={openModal} disabled={registrationConfirmed || !deregisterConfirmed} >Register</button>
+      <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered}>
+  Deregister
+</button>
+<button className="register-button" onClick={openModal} disabled={userIsRegistered}>
+  Register
+</button>
         </div>
         <div className="event-heading">
           <StarRating/>
