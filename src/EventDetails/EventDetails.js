@@ -1,4 +1,4 @@
-import { FaCalendar, FaLocationArrow, FaClock} from "react-icons/fa";
+import { FaCalendar, FaLocationArrow, FaClock, FaBookmark, FaHeart} from "react-icons/fa";
 import { useState } from "react";
 import React from "react";
 import "./EventDetails.css";
@@ -14,6 +14,7 @@ function EventDetails() {
   const { userid, eventId } = useParams(); 
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
+  const [isBookmarked, setBookmarked] = useState(false);
   const [userIsRegistered, setUserIsRegistered] = useState();
   const openModal = async () => {
     try {
@@ -56,6 +57,20 @@ function EventDetails() {
     }
   };
 
+  const bookmarkEvent = async() =>{
+    await client.bookmarkEvent(userid,eventId);
+    const isBookmarked = await client.bookmarkedStatus(userid,eventId);
+    setBookmarked(isBookmarked);
+  }
+
+  const deBookmarkEvent = async() =>{
+    await client.deBookmarkEvent(userid,eventId);
+    const isBookmarked = await client.bookmarkedStatus(userid,eventId);
+    setBookmarked(isBookmarked);
+  }
+
+
+
   const formatDate = (dateString) => {
     try {
       const date = new Date(dateString);
@@ -79,6 +94,9 @@ function EventDetails() {
         if(userid!=null){
         const isUserRegistered = await client.registrationStatus(userid, eventId);
         setUserIsRegistered(isUserRegistered);
+        const isBookmarked = await client.bookmarkedStatus(userid,eventId);
+        setBookmarked(isBookmarked);
+        console.log("Initial bookmark",isBookmarked)
         }
       } catch (error) {
         console.error("Error fetching event details:", error);
@@ -97,7 +115,17 @@ function EventDetails() {
       <div className="event-details">
       {events && (
        <div>
-      <div className="float-end">
+      <div className="buttons float-end">
+      <FaHeart
+    className={`me-3 fa-bookmark ${isBookmarked ? 'bookmarked' : ''}`}
+    onClick={() => {
+      if (!isBookmarked) {
+        bookmarkEvent();
+      } else {
+        deBookmarkEvent();
+      }
+    }}
+  />
       <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered|| !userid}>
   Deregister
 </button>

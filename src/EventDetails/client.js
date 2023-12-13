@@ -41,7 +41,6 @@ export const registerUserForEvent = async (userId, eventId) => {
 
 export const deRegisterUserForEvent = async (userId, eventId) => {
   const response = await axios.put(`${USEREVENTS_API}/${userId}/${eventId}/deregister`);
-  console.log("now user is registered?",response.data.isDeregistered);
   return response.data.isDeregistered
 }
 
@@ -49,4 +48,19 @@ export const registrationStatus =  async (userId, eventId) => {
   const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/registerstatus`);
   return response.data;
 };
+
+export const bookmarkedStatus =  async (userId, eventId) => {
+  const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/bookmarkstatus`);
+  return response.data;
+};
+
+export const bookmarkEvent = async (userId, eventId) => {
+  const response = await axios.post(`${USEREVENTS_API}/${userId}/${eventId}/bookmark`);
+  return response.data;
+}
+
+export const deBookmarkEvent = async (userId, eventId) => {
+  const response = await axios.put(`${USEREVENTS_API}/${userId}/${eventId}/debookmark`);
+  return response.data;
+}
 
