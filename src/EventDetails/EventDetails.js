@@ -139,7 +139,7 @@ function EventDetails() {
 </button>
         </div>
         <div className="event-heading">
-          <StarRating eventId={eventId}/>
+          <StarRating eventId={eventId} userid={userid}/>
           <h2 class="event-heading-color">{events.eventName}
           </h2>
           <p className="medium-text">{events.summary}</p>
