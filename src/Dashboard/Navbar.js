@@ -46,9 +46,9 @@ const Navbar = ({ userid }) => {
     <div className="navbar-content">
       {/* Left side of the navbar */}
       <div className="navbar-left">
-        <Link to={`/${userid}`} className="navbar-left-button">Home</Link>
+        <Link to={`/${userid}`} className="navbar-left-button" style={{ textDecoration: 'none' }}>Home</Link>
         {account && account.role === 'organizer' && (
-          <Link to={`/${userid}/myEvents`} className="navbar-left-button">
+          <Link to={`/${userid}/myEvents`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
             My Events
           </Link>
         )}
@@ -58,16 +58,16 @@ const Navbar = ({ userid }) => {
         {userid ? (
           <>
             <div className="navbar-right-button" onClick={signout}>
-              <Link className="link-style">Sign Out</Link>
+              <Link className="link-style" style={{ textDecoration: 'none' }}>Sign Out</Link>
             </div>
            
             {/* If user logged in only show the profile and signout button */}
-            <Link to={`/profile/${userid}`}>
+            <Link to={`/profile/${userid}`} style={{ textDecoration: 'none' }}>
               <span className="profile-icon">
-                <FiUser />
+                <FiUser />    {account && <span style={{fontSize:'18px'}}>{account.username}</span>}
               </span>
             </Link>
-            {account && <span>{account.username}</span>}
+         
           </>
         ) : (
           <>
