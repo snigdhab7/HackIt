@@ -63,6 +63,12 @@ function SignInUser() {
       <button className="signup-button" onClick={signin}>
         Sign In
       </button>
+
+      <Link to={`/Dashboard/signUp`}>
+              <p style={{ fontSize: "1em" }}>
+                Don't have an account yet? Sign Up.
+              </p>
+              </Link>
     </div>
   );
 }
