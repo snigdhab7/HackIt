@@ -14,11 +14,11 @@ function Events() {
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Events</h1>
+      <h1 style={{ textAlign: "center" }}>External Events</h1>
       <div>
         {events.map((event, index) => (
           <div key={index}>
-            <a href={event.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color:"white"}}>
+            <a href={event.link} target="_blank" rel="noopener noreferrer" style={{ color:"white"}}>
               <h2 className="external-events-title">{event.title}</h2>
             </a>
           </div>

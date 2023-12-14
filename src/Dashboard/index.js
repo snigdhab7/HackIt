@@ -14,14 +14,11 @@ import { useLocation } from "react-router-dom";
 import Events from "../ExternalApi/Events";
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState({ localEvents: [], externalEvents: [] });
   const location = useLocation();
   const [filteredEvents, setFilteredEvents] = useState([]);
-  // const [event, setEvent] = useState([]);
   const userid = useParams().id;
-  // console.log("id", userid);
   const id1 = useParams().id;
-  // console.log("id1", id1);
 
   const fetchEvents = async (searchTerm) => {
     const events = await client.findAllEvents();
