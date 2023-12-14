@@ -29,9 +29,18 @@ const MyEvents = () => {
     setFilteredEvents(events);
   };
 
+  const findAllEvents = async (userid) => {
+      const events = await client.findEventsByOrganizerId(userid);
+      console.log("response", events);
+  
+      setEvents(events);
+      setFilteredEvents(events);
+      console.log("filteredEvents", filteredEvents);
+  };
+  
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    findAllEvents(userid);
+  }, [userid]);
 
   const carouselSettings = {
     dots: true,

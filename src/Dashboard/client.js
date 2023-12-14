@@ -35,3 +35,8 @@ export const fetchCurrentUserDetails = async (userid) => {
   const response = await axios.post(`${USERS_API}/currentUser`, { userid: userid });
   return response.data;
 };
+
+export const findEventsByOrganizerId = async (organizerId) => {
+  const response = await axios.get(`${EVENTS_API}/organizer/${organizerId}`);
+  return response.data;
+};
