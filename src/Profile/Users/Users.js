@@ -31,11 +31,22 @@ const Users = () => {
     };
 
     const fetchUsers = async () => {
-        const users = await client.findAllUsers();
-        console.log("userrrrrrrrrrrr",users)
-        setUsers(users);
-        setFilteredUsers(users);
+        try {
+          const allUsers = await client.findAllUsers();
+      
+          // Assuming each user object has a 'role' property
+          const filteredUsers = allUsers.filter(user => user.role === 'user');
+      
+          console.log("Filtered Users:", filteredUsers);
+      
+          setUsers(filteredUsers);
+          setFilteredUsers(filteredUsers);
+        } catch (error) {
+          console.error("Error fetching users:", error);
+          // Handle error appropriately
+        }
       };
+      
 
   
     const getRandomTransparentGradientColor = () => {
