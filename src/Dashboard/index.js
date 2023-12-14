@@ -12,10 +12,13 @@ import * as client from "./client";
 import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Events from "../ExternalApi/Events";
+import * as externalClient from "../ExternalApi/Client"
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState([]);
   const location = useLocation();
+  const [externalEvents, setExternalEvents] = useState([]);
+  const [filteredExternalEvents, setFilteredExternalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   // const [event, setEvent] = useState([]);
   const userid = useParams().id;
@@ -29,8 +32,14 @@ const Dashboard = () => {
     setFilteredEvents(events);
   };
 
+  const fetchExternalEvents = async () => {
+    const events = await externalClient.fetchExternalEvents();
+    setExternalEvents(events);
+    setFilteredExternalEvents(events);
+  };
+
   useEffect(() => {
-    fetchEvents();
+    fetchEvents(); fetchExternalEvents();
   }, []);
 
   const carouselSettings = {
@@ -49,7 +58,12 @@ const Dashboard = () => {
     const filtered = events.filter((event) => {
       return event.eventName?.toLowerCase().includes(e.toLowerCase());
     });
+    const filteredExt = externalEvents.filter((event) => {
+      return event.title?.toLowerCase().includes(e.toLowerCase());
+    });
     setFilteredEvents(filtered);
+    setFilteredExternalEvents(filteredExt);
+
   };
 
   return (
@@ -121,6 +135,8 @@ const Dashboard = () => {
 
           {/* List of Events as Cards */}
           <div className="event-list">
+          <div className="row">
+          <div className="col-md-10">
             <div className="event-cards">
               {filteredEvents.map((event) => (
                 <Link
@@ -137,11 +153,18 @@ const Dashboard = () => {
                 </Link>
               ))}
 
-
+</div>
               
             </div>
+            <div className="col-md-2">
+              <h3 style={{color:'white'}}>Other Events ..</h3>
+            <br/><br/>
+            {filteredExternalEvents.map((event) => (
             <div className="external-events">
-              <Events />
+              <Events event={event} />
+            </div>
+            ))}
+            </div>
             </div>
           </div>
         </div>

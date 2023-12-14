@@ -336,8 +336,7 @@ body::-webkit-scrollbar-track {
 }
 
 .external-events{
-  flex: .25;
-  margin: 10px auto;
+ 
   justify-content: left;
   color: white;
   text-align: left;
