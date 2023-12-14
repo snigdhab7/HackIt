@@ -10,8 +10,8 @@ export const findAllEvents = async () => {
 };
 
 export const createEvent = async (event) => {
-  const newEvent = { ...event, id: new Date().getTime().toString() };
-  const response = await axios.post(`${EVENTS_API}`, newEvent);
+ // const newEvent = { ...event, id: new Date().getTime().toString() };
+  const response = await axios.post(`${EVENTS_API}/create`, event);
   return response.data;
 };
 

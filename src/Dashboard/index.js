@@ -132,12 +132,13 @@ const Dashboard = () => {
                   }
                   style={{ textDecoration: "none" }}
                 >
+                  
                   <EventCard event={event} />
                 </Link>
               ))}
 
-              {/* Organizer Card for Adding Events */}
-              <OrganizerCard isAddCard={false} />
+
+              
             </div>
             <div className="external-events">
               <Events />
