@@ -13,14 +13,13 @@ const Navbar = ({ userid }) => {
   };
   const fetchCurrentUserDetails = async (userid) => {
     try {
-        const account = await client.fetchCurrentUserDetails(userid);
-        
-        setAccount(account);
-    } catch (error) {
-        console.error("Error fetching user details:", error);
-    }
+      const account = await client.fetchCurrentUserDetails(userid);
 
-};
+      setAccount(account);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
   useEffect(() => {
     const findUserById = async (userid) => {
       try {
@@ -32,37 +31,60 @@ const Navbar = ({ userid }) => {
       }
     };
     fetchCurrentUserDetails(userid);
-   // findUserById(userid);
+    // findUserById(userid);
   }, [userid]);
-  
+
   const { username, role } = account || {};
-  //console.log("acc", role);
+  console.log("acc", role);
   return (
     <div className="navbar-content">
       {/* Left side of the navbar */}
       <div className="navbar-left">
-        <Link to={`/${userid}`} className="navbar-left-button" style={{ textDecoration: 'none' }}>Home</Link>
-        {account && account.role === 'organizer' && (
-          <Link to={`/${userid}/myEvents`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
+        <Link
+          to={`/${userid}`}
+          className="navbar-left-button"
+          style={{ textDecoration: "none" }}
+        >
+          Home
+        </Link>
+        {account && account.role === "admin" && (
+          <Link
+            to={`/${userid}/users`}
+            className="navbar-left-button"
+            style={{ textDecoration: "none" }}
+          >
+            Users
+          </Link>
+        )}
+        {account && account.role === "organizer" && (
+          <Link
+            to={`/${userid}/myEvents`}
+            className="navbar-left-button"
+            style={{ textDecoration: "none" }}
+          >
             My Events
           </Link>
         )}
       </div>
+
       {/* Right side of the navbar */}
       <div className="navbar-right">
         {userid ? (
           <>
             <div className="navbar-right-button" onClick={signout}>
-              <Link className="link-style" style={{ textDecoration: 'none' }}>Sign Out</Link>
+              <Link className="link-style" style={{ textDecoration: "none" }}>
+                Sign Out
+              </Link>
             </div>
-           
             {/* If user logged in only show the profile and signout button */}
-            <Link to={`/profile/${userid}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/profile/${userid}`} style={{ textDecoration: "none" }}>
               <span className="profile-icon">
-                <FiUser />    {account && <span style={{fontSize:'18px'}}>{account.username}</span>}
+                <FiUser />{" "}
+                {account && (
+                  <span style={{ fontSize: "18px" }}>{account.username}</span>
+                )}
               </span>
             </Link>
-         
           </>
         ) : (
           <>
