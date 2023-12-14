@@ -37,6 +37,7 @@ export const fetchCurrentUserDetails = async (userid) => {
 };
 
 export const findEventsByOrganizerId = async (organizerId) => {
+  console.log("orggggg",organizerId);
   const response = await axios.get(`${EVENTS_API}/organizer/${organizerId}`);
   return response.data;
 };
