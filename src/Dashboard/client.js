@@ -10,8 +10,8 @@ export const findAllEvents = async () => {
 };
 
 export const createEvent = async (event) => {
-  const newEvent = { ...event, id: new Date().getTime().toString() };
-  const response = await axios.post(`${EVENTS_API}`, newEvent);
+ // const newEvent = { ...event, id: new Date().getTime().toString() };
+  const response = await axios.post(`${EVENTS_API}/create`, event);
   return response.data;
 };
 
@@ -41,3 +41,10 @@ export const findEventsByOrganizerId = async (organizerId) => {
   const response = await axios.get(`${EVENTS_API}/organizer/${organizerId}`);
   return response.data;
 };
+
+
+export const editEventDetails = async(event) => {
+  console.log("event id",event.id);
+  const response = axios.get(`${EVENTS_API}/${event.id}/updateEvent`);
+  return (await response).data
+}

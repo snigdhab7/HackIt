@@ -12,16 +12,16 @@ import * as client from "./client";
 import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Events from "../ExternalApi/Events";
+import * as externalClient from "../ExternalApi/Client"
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState({ localEvents: [], externalEvents: [] });
   const location = useLocation();
+  const [externalEvents, setExternalEvents] = useState([]);
+  const [filteredExternalEvents, setFilteredExternalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  // const [event, setEvent] = useState([]);
   const userid = useParams().id;
-  // console.log("id", userid);
   const id1 = useParams().id;
-  // console.log("id1", id1);
 
   const fetchEvents = async (searchTerm) => {
     const events = await client.findAllEvents();
@@ -29,8 +29,14 @@ const Dashboard = () => {
     setFilteredEvents(events);
   };
 
+  const fetchExternalEvents = async () => {
+    const events = await externalClient.fetchExternalEvents();
+    setExternalEvents(events);
+    setFilteredExternalEvents(events);
+  };
+
   useEffect(() => {
-    fetchEvents();
+    fetchEvents(); fetchExternalEvents();
   }, []);
 
   const carouselSettings = {
@@ -49,7 +55,12 @@ const Dashboard = () => {
     const filtered = events.filter((event) => {
       return event.eventName?.toLowerCase().includes(e.toLowerCase());
     });
+    const filteredExt = externalEvents.filter((event) => {
+      return event.title?.toLowerCase().includes(e.toLowerCase());
+    });
     setFilteredEvents(filtered);
+    setFilteredExternalEvents(filteredExt);
+
   };
 
   return (
@@ -121,6 +132,8 @@ const Dashboard = () => {
 
           {/* List of Events as Cards */}
           <div className="event-list">
+          <div className="row">
+          <div className="col-md-10">
             <div className="event-cards">
               {filteredEvents.map((event) => (
                 <Link
@@ -132,15 +145,25 @@ const Dashboard = () => {
                   }
                   style={{ textDecoration: "none" }}
                 >
+                  
                   <EventCard event={event} />
                 </Link>
               ))}
 
-              {/* Organizer Card for Adding Events */}
-              <OrganizerCard isAddCard={false} />
+</div>
+              
             </div>
+            <div className="col-md-2">
+              <h3 style={{color:'white'}}>Other Events ..</h3>
+            <br/><br/>
             <div className="external-events">
-              <Events />
+            {filteredExternalEvents.map((event) => (
+           
+              <Events event={event} />
+            
+            ))}
+            </div>
+            </div>
             </div>
           </div>
         </div>
