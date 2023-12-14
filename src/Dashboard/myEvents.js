@@ -30,7 +30,8 @@ const MyEvents = () => {
   };
 
   const findAllEvents = async (userid) => {
-      const events = await client.findEventsByOrganizerId(userid);
+      //const events = await client.findEventsByOrganizerId(userid);  //giving UNDEFINED
+      const events = await client.findAllEvents();
       console.log("response", events);
   
       setEvents(events);
