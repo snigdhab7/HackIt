@@ -142,13 +142,13 @@ const MyEvents = () => {
                   }
                   style={{ textDecoration: "none" }}
                 >
-                  <EventCard event={event} />
+                  <EventCard event={event} userid={userid} />
                 </Link>
               ))}
-
               {/* Organizer Card for Adding Events */}
               <OrganizerCard isAddCard={false} />
             </div>
+           
             
           </div>
         </div>
