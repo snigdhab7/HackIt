@@ -41,7 +41,7 @@ const Navbar = ({ userid }) => {
   }, [userid]);
   
   const { username, role } = account || {};
-  console.log("acc", role);
+  //console.log("acc", role);
   return (
     <div className="navbar-content">
       {/* Left side of the navbar */}
