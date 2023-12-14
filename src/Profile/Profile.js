@@ -6,31 +6,25 @@ import '../Profile/Profile.css';
 import * as client from "./client.js";
 import { signout } from '../Dashboard/client.js';
 import { useParams } from "react-router-dom";
-import { fetchAllEvents } from '../EventDetails/client.js';
+// import { fetchAllEvents } from '../EventDetails/client.js';
 
 const Profile = () => {
     const navigate = useNavigate();
     const bgImage = {
         backgroundImage: `url(${coverImage})`,
     };
-    const firstName = "Jaehyun";
-    const lastName = "Jung";
-    const email = "Jaehyun@gmail.com";
     const userid = useParams().id;
     const [account, setAccount] = useState(null);
     const [registeredEvents, setRegisteredEvents] = useState(null);
     const [eventsList, setEventsList] = useState(null);
-    // const [address, setAddress] = useState(null);
+
     // State to manage whether the user is in "edit" mode
     const [isEditMode, setIsEditMode] = useState(false);
 
     const fetchCurrentUserDetails = async (userid) => {
-        // console.log("proile id", userid)
         try {
             const account = await client.fetchCurrentUserDetails(userid);
             setAccount(account);
-            
-            // console.log("client response", account);
         } catch (error) {
             console.error("Error fetching user details:", error);
         }
@@ -39,7 +33,6 @@ const Profile = () => {
 
     const save = async () => {
         setIsEditMode(false);
-        // console.log("after change :", account);
         const updatedDetails = await client.updateUser(account);
         setAccount(updatedDetails);
     };
@@ -50,11 +43,11 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        // console.log()
         fetchCurrentUserDetails(userid);
         fetchAllRegisteredEvents();
         displayUpcomingEvents();
     }, [userid]);
+
     useEffect(() => {        
         displayUpcomingEvents();
     }, registeredEvents);
@@ -68,8 +61,7 @@ const Profile = () => {
     const fetchAllRegisteredEvents = async () => {
         const events = await client.fetchAllRegisteredEvents(userid);
         console.log("All Events: ", events);
-        setRegisteredEvents(events);
-        
+        setRegisteredEvents(events);    
     };
 
     const displayAllRegisteredEvents = async () => {
@@ -80,12 +72,10 @@ const Profile = () => {
 
         if (registeredEvents) {
         const currentDate = new Date();
-        // Combine event details with user events
         const upcomingEvents = registeredEvents.filter((event) => {
             const eventDate = new Date( event.eventDetail.date);
             return eventDate >= currentDate;
         });
-        console.log("upcoming Events" ,upcomingEvents);
         setEventsList(upcomingEvents);
         }
 
@@ -97,7 +87,7 @@ const Profile = () => {
             return event.bookmarked;
         });
         setEventsList(bookMarkedEvents);
-        console.log("bookmarked events" ,bookMarkedEvents);
+
     };
 
 
@@ -115,20 +105,13 @@ const Profile = () => {
                             <Link to={`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
                             <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >User profile</Link>
                             <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >
-                                Users
+                                Search Users
                             </Link>
 
                             {/* <!-- Form --> */}
-                            <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                                {/* <div className="form-group mb-0">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"><i className="fas fa-search"></i></span>
-                                        </div>
-                                        <input className="form-control mt-0" placeholder="Search People" type="text" />
-                                    </div>
-                                </div> */}
-                            </form>
+                            <div className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                                
+                            </div>
                             {/* <!-- User --> */}
                             <div className="nav-link pr-0" role="button" aria-haspopup="true" aria-expanded="false">
                                 <div className="media align-items-center">
