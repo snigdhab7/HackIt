@@ -92,6 +92,7 @@ function EventDetails() {
         const eventData = await client.findEventById(eventId);
         setEvents(eventData);
         if(userid!=null){
+          console.log("User data",userid);
         const isUserRegistered = await client.registrationStatus(userid, eventId);
         setUserIsRegistered(isUserRegistered);
         const isBookmarked = await client.bookmarkedStatus(userid,eventId);
@@ -117,15 +118,19 @@ function EventDetails() {
        <div>
       <div className="buttons float-end">
       <FaHeart
-    className={`me-3 fa-bookmark ${isBookmarked ? 'bookmarked' : ''}`}
-    onClick={() => {
+  className={`me-3 fa-bookmark ${isBookmarked ? 'bookmarked' : ''}`}
+  onClick={() => {
+    if (userid) {
       if (!isBookmarked) {
         bookmarkEvent();
       } else {
         deBookmarkEvent();
       }
-    }}
-  />
+    }
+  }}
+  disabled={!userid} 
+/>
+
       <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered|| !userid}>
   Deregister
 </button>

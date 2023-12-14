@@ -4,7 +4,7 @@ export const USERS_API = `${BASE_API}/api/users`;
 const request =  axios.create({
   withCredentials: true,
 });
-
+ 
 export const signin = async (credentials) => {
   console.log("sign in creds,",credentials)
   const response = await request.post( `${USERS_API}/signin/user`, credentials );
@@ -34,10 +34,9 @@ export const createUser = async (user) => {
       
     return response.data;
   };
-
+ 
   export const updateUser = async (user) => {
     console.log("update user", user);
     const response = await request.put(`${USERS_API}/${user.id}`, user);
     return response.data;
   };
-  
