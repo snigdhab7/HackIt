@@ -6,27 +6,25 @@ import '../Profile/Profile.css';
 import * as client from "./client.js";
 import { signout } from '../Dashboard/client.js';
 import { useParams } from "react-router-dom";
+// import { fetchAllEvents } from '../EventDetails/client.js';
 
 const Profile = () => {
     const navigate = useNavigate();
     const bgImage = {
         backgroundImage: `url(${coverImage})`,
     };
-    const firstName = "Jaehyun";
-    const lastName = "Jung";
-    const email = "Jaehyun@gmail.com";
     const userid = useParams().id;
     const [account, setAccount] = useState(null);
-    const [address, setAddress] = useState(null);
+    const [registeredEvents, setRegisteredEvents] = useState(null);
+    const [eventsList, setEventsList] = useState(null);
+
     // State to manage whether the user is in "edit" mode
     const [isEditMode, setIsEditMode] = useState(false);
 
     const fetchCurrentUserDetails = async (userid) => {
-        // console.log("proile id", userid)
         try {
             const account = await client.fetchCurrentUserDetails(userid);
             setAccount(account);
-            // console.log("client response", account);
         } catch (error) {
             console.error("Error fetching user details:", error);
         }
@@ -35,7 +33,6 @@ const Profile = () => {
 
     const save = async () => {
         setIsEditMode(false);
-        // console.log("after change :", account);
         const updatedDetails = await client.updateUser(account);
         setAccount(updatedDetails);
     };
@@ -46,15 +43,54 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        // console.log()
         fetchCurrentUserDetails(userid);
+        fetchAllRegisteredEvents();
+        displayUpcomingEvents();
     }, [userid]);
+
+    useEffect(() => {        
+        displayUpcomingEvents();
+    }, registeredEvents);
 
     const signOff = async () => {
         await signout();
         console.log("Sign out button clicked");
         navigate("/");
     };
+
+    const fetchAllRegisteredEvents = async () => {
+        const events = await client.fetchAllRegisteredEvents(userid);
+        console.log("All Events: ", events);
+        setRegisteredEvents(events);    
+    };
+
+    const displayAllRegisteredEvents = async () => {
+        setEventsList(registeredEvents);
+    };
+
+    const displayUpcomingEvents = async () => {
+
+        if (registeredEvents) {
+        const currentDate = new Date();
+        const upcomingEvents = registeredEvents.filter((event) => {
+            const eventDate = new Date( event.eventDetail.date);
+            return eventDate >= currentDate;
+        });
+        setEventsList(upcomingEvents);
+        }
+
+    };
+
+    const displayAllBookmarkedEvents = async () => {
+
+        const bookMarkedEvents = registeredEvents.filter((event)=> {
+            return event.bookmarked;
+        });
+        setEventsList(bookMarkedEvents);
+
+    };
+
+
 
     return (
 
@@ -69,20 +105,13 @@ const Profile = () => {
                             <Link to={`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
                             <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >User profile</Link>
                             <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >
-                                Users
+                                Search Users
                             </Link>
 
                             {/* <!-- Form --> */}
-                            <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                                {/* <div className="form-group mb-0">
-                                    <div className="input-group input-group-alternative">
-                                        <div className="input-group-prepend">
-                                            <span className="input-group-text"><i className="fas fa-search"></i></span>
-                                        </div>
-                                        <input className="form-control mt-0" placeholder="Search People" type="text" />
-                                    </div>
-                                </div> */}
-                            </form>
+                            <div className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                                
+                            </div>
                             {/* <!-- User --> */}
                             <div className="nav-link pr-0" role="button" aria-haspopup="true" aria-expanded="false">
                                 <div className="media align-items-center">
@@ -95,13 +124,13 @@ const Profile = () => {
                                 </div>
                             </div>
                             <div className="nav-link pr-0" role="button" aria-haspopup="true" aria-expanded="false" onClick={signOff}>
-                                <div className="media align-items-center">                            
+                                <div className="media align-items-center">
                                     <div className="media-body ml-2 d-none d-lg-block">
                                         <span className="mb-0 text-sm  font-weight-bold">Sign out</span>
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </nav>
                     {/* <!-- Header --> */}
@@ -137,27 +166,23 @@ const Profile = () => {
                                 </div> */}
                                     <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                                         <div className="d-flex justify">
-                                            <a href="#" className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</a>
-                                            <a href="#" className="p-btn p-btn-sm p-btn-default">All Events</a>
+                                            <div onClick={displayUpcomingEvents} className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</div>
+                                            <div onClick={displayAllBookmarkedEvents} className="p-btn p-btn-sm p-btn-default  mr-4">Bookmarks</div>
+                                            <div onClick={displayAllRegisteredEvents} className="p-btn p-btn-sm p-btn-default">All Events</div>
                                         </div>
                                     </div>
-                                    <div className="p-card-body pt-0 pt-md-4">
-                                        <div className="row">
-                                            <div className="col">
-                                                Event 1
+                                    {eventsList && (<div>
+                                        {eventsList.map((event, index) => (
+                                            <div className="row" key={index}>
+                                                <div className="col">
+                                                    <Link to={`/events/${event.userId}/${event.eventId}`}>
+                                                        {event.eventDetail ? event.eventDetail.eventName : 'Event Details Unavailable'}
+                                                    </Link>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col">
-                                                Event 2
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col">
-                                                Event 3
-                                            </div>
-                                        </div>
-                                    </div>
+                                        ))}
+                                    </div>)}
+
                                 </div>
                             </div>
                             <div className="col-xl-8 order-xl-1">

@@ -14,6 +14,7 @@ import Users from './Profile/Users/Users';
 import SignInOrganizer from './Login/SignInOrganizer/SignInOrganizer';
 import SignUpOrganizer from './Login/SignUpOrganizer/SignUpOrganizer';
 import SignUpUserDetails from './Login/SignUpUserDetails/SignUpUserDetails';
+import MyEvents from './Dashboard/myEvents';
 function App() {
   
   return (
@@ -37,6 +38,10 @@ function App() {
 <Route
   path="/signin/user"
   element={<SignInUser />}
+/>
+<Route
+  path="/:id/myEvents"
+  element={<MyEvents />}
 />
 
           <Route path="/profile/:id" element={<Profile />} />

@@ -12,23 +12,32 @@ import * as client from "./client";
 import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Events from "../ExternalApi/Events";
-const Dashboard = () => {
+const MyEvents = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [events, setEvents] = useState({ localEvents: [], externalEvents: [] });
+  const [events, setEvents] = useState([]);
   const location = useLocation();
   const [filteredEvents, setFilteredEvents] = useState([]);
+  // const [event, setEvent] = useState([]);
   const userid = useParams().id;
+  // console.log("id", userid);
   const id1 = useParams().id;
+  // console.log("id1", id1);
 
-  const fetchEvents = async (searchTerm) => {
-    const events = await client.findAllEvents();
-    setEvents(events);
-    setFilteredEvents(events);
+
+
+  const findAllEvents = async (userid) => {
+      const events = await client.findEventsByOrganizerId(userid);  //giving UNDEFINED
+      //const events = await client.findAllEvents();
+      console.log("response", events);
+  
+      setEvents(events);
+      setFilteredEvents(events);
+      console.log("filteredEvents", filteredEvents);
   };
-
+  
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    findAllEvents(userid);
+  }, [userid]);
 
   const carouselSettings = {
     dots: true,
@@ -129,17 +138,15 @@ const Dashboard = () => {
                   }
                   style={{ textDecoration: "none" }}
                 >
-                  
-                  <EventCard event={event} />
+                  <EventCard event={event} userid={userid} />
                 </Link>
               ))}
 
 
-              
+          <OrganizerCard isAddCard={true} />
             </div>
-            <div className="external-events">
-              <Events />
-            </div>
+           
+            
           </div>
         </div>
       </div>
@@ -147,4 +154,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default MyEvents;
