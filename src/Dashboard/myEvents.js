@@ -23,11 +23,7 @@ const MyEvents = () => {
   const id1 = useParams().id;
   // console.log("id1", id1);
 
-  const fetchEvents = async (searchTerm) => {
-    const events = await client.findAllEvents();
-    setEvents(events);
-    setFilteredEvents(events);
-  };
+
 
   const findAllEvents = async (userid) => {
       const events = await client.findEventsByOrganizerId(userid);  //giving UNDEFINED
@@ -146,8 +142,8 @@ const MyEvents = () => {
                 </Link>
               ))}
 
-              {/* Organizer Card for Adding Events */}
-              <OrganizerCard isAddCard={false} />
+
+          <OrganizerCard isAddCard={true} />
             </div>
             
           </div>

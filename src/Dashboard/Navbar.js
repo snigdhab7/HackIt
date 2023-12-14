@@ -26,16 +26,7 @@ const Navbar = ({ userid }) => {
 
 };
   useEffect(() => {
-    const findUserById = async (userid) => {
-      try {
-        // const eventsData = await client.findAllEvents();
-        const user = await client.findUserById(userid);
-        setAccount(user);
-        console.log("Fetched user:", user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
+
     fetchCurrentUserDetails(userid);
    // findUserById(userid);
   }, [userid]);

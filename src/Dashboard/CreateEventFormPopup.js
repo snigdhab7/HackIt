@@ -4,19 +4,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as client from "./client";
 import "./Dashboard.css"; // Import the styles
-
+import { useParams } from "react-router-dom";
 const CreateEventFormPopup = ({ onCancel, onCreateEvent }) => {
+  const userid = useParams().id;
+  console.log("hahahahahahaah", userid);
+ 
   const navigate = useNavigate();
-  const [eventData, setEventData] = useState({
-    // Initialize with empty data or default values
-    // eventName: "",
-    // summary: "",
-    // description: "",
-    // date: "",
-    // duration: "",
-    // venue: "",
-    // photo: "", // Assume the photo is a URL; adjust as needed
-    // Add more fields as needed
+  const [eventData, setEventData] = useState({ organizerId: userid
   });
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -36,11 +30,13 @@ const CreateEventFormPopup = ({ onCancel, onCreateEvent }) => {
       await client.createEvent(eventData);
       setSuccessMessage("Event created successfully!");
       setErrorMessage(""); // Clear any previous error message
+      
       // Close the form after a brief delay
       setTimeout(() => {
         setSuccessMessage(""); // Clear the success message
         // onCreateEvent(); // Notify the parent component that an event has been created
         onCancel(); // Close the form
+        navigate(`/${userid}`);
       }, 1000); // Adjust the delay time as needed
     } catch (error) {
       console.error("Error creating event:", error);
