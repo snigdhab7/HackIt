@@ -12,14 +12,19 @@ export const findAllUsers = () => {
 };
 
 export const fetchCurrentUserDetails = async (userid) => {
-
   const response = await request.post(`${USERS_API}/currentUser`, { userid: userid });
   return response.data;
 };
 
 export const updateUser = async (user) => {
-  console.log("update user", user);
+  // console.log("update user", user);
   const response = await request.put(`${USERS_API}/${user._id}`, user);
   return response.data;
 };
+
+export const fetchAllRegisteredEvents = async (userid) => {
+    console.log("fetch events userid: ", userid);
+    const response = await request.get(`${USERS_API}/fetchAllRegisteredEvents/${userid}`);
+    return response.data;
+}
 
