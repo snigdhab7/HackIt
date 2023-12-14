@@ -335,13 +335,33 @@ body::-webkit-scrollbar-track {
   align-items: center;
 }
 
-.external-events{
- 
+.external-events {
+  flex: 0.25;
+  margin: 10px auto;
   justify-content: left;
   color: white;
-  text-align: left;
+  height: 100%;
+  /* text-align: left; */
+  background-color: #333; /* Set a background color for the external events container */
+  /* padding: 15px; */
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Add a subtle box shadow */
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+.external-events:hover {
+  background-color: #444; /* Darken the background color on hover */
+  transform: scale(1.05); /* Enlarge on hover */
+}
+
 .external-events-title {
   font-size: medium;
+  color: #fff;
+  margin-bottom: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+.external-events-title:hover {
+  color: #ee9595; /* Change text color on hover */
 }
 

@@ -41,3 +41,10 @@ export const findEventsByOrganizerId = async (organizerId) => {
   const response = await axios.get(`${EVENTS_API}/organizer/${organizerId}`);
   return response.data;
 };
+
+
+export const editEventDetails = async(event) => {
+  console.log("event id",event.id);
+  const response = axios.get(`${EVENTS_API}/${event.id}/updateEvent`);
+  return (await response).data
+}

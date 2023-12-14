@@ -15,16 +15,13 @@ import Events from "../ExternalApi/Events";
 import * as externalClient from "../ExternalApi/Client"
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState({ localEvents: [], externalEvents: [] });
   const location = useLocation();
   const [externalEvents, setExternalEvents] = useState([]);
   const [filteredExternalEvents, setFilteredExternalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  // const [event, setEvent] = useState([]);
   const userid = useParams().id;
-  // console.log("id", userid);
   const id1 = useParams().id;
-  // console.log("id1", id1);
 
   const fetchEvents = async (searchTerm) => {
     const events = await client.findAllEvents();
@@ -159,11 +156,13 @@ const Dashboard = () => {
             <div className="col-md-2">
               <h3 style={{color:'white'}}>Other Events ..</h3>
             <br/><br/>
-            {filteredExternalEvents.map((event) => (
             <div className="external-events">
+            {filteredExternalEvents.map((event) => (
+           
               <Events event={event} />
-            </div>
+            
             ))}
+            </div>
             </div>
             </div>
           </div>
