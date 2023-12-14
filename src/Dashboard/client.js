@@ -30,3 +30,8 @@ export const signout = async () => {
   const response = await axios.post(`${USERS_API}/signout`);
   return response.data;
 };
+export const fetchCurrentUserDetails = async (userid) => {
+
+  const response = await axios.post(`${USERS_API}/currentUser`, { userid: userid });
+  return response.data;
+};

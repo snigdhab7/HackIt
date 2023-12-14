@@ -13,10 +13,18 @@ const Navbar = ({ userid }) => {
     console.log("Sign out button clicked");
     navigate("/");
   };
-  const handleClick = () => {
-    // Call your function here
-    console.log("Sign In button clicked");
-  };
+  const fetchCurrentUserDetails = async (userid) => {
+    // console.log("proile id", userid)
+    try {
+        const account = await client.fetchCurrentUserDetails(userid);
+        
+        setAccount(account);
+        // console.log("client response", account);
+    } catch (error) {
+        console.error("Error fetching user details:", error);
+    }
+
+};
   useEffect(() => {
     const findUserById = async (userid) => {
       try {
@@ -28,17 +36,22 @@ const Navbar = ({ userid }) => {
         console.error("Error fetching user:", error);
       }
     };
-
-    findUserById(userid);
+    fetchCurrentUserDetails(userid);
+   // findUserById(userid);
   }, [userid]);
-  console.log("acc", account);
-  const { username } = account || {};
+  
+  const { username, role } = account || {};
+  console.log("acc", role);
   return (
     <div className="navbar-content">
       {/* Left side of the navbar */}
       <div className="navbar-left">
-        <Link className="navbar-left-button">Home</Link>
-        <Link className="navbar-left-button">About</Link>
+        <Link to={`/${userid}`} className="navbar-left-button">Home</Link>
+        {account && account.role === 'organizer' && (
+          <Link to={`/${userid}/myEvents`} className="navbar-left-button">
+            My Events
+          </Link>
+        )}
       </div>
       {/* Right side of the navbar */}
       <div className="navbar-right">
@@ -47,13 +60,14 @@ const Navbar = ({ userid }) => {
             <div className="navbar-right-button" onClick={signout}>
               <Link className="link-style">Sign Out</Link>
             </div>
-            {username && <span>{username}</span>}
+           
             {/* If user logged in only show the profile and signout button */}
             <Link to={`/profile/${userid}`}>
               <span className="profile-icon">
                 <FiUser />
               </span>
             </Link>
+            {account && <span>{account.username}</span>}
           </>
         ) : (
           <>
