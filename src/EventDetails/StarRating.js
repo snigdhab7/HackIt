@@ -44,8 +44,10 @@ function StarRating({ eventId , userid, account }) {
   
   useEffect(() => {
     const fetchData = async () => {
+      if(userid){
       await fetchEventRating();
       await getUserRating();
+      }
     };
 
     fetchData();
@@ -64,7 +66,7 @@ function StarRating({ eventId , userid, account }) {
             onClick={() => saveUserRating(index)} //setRating(index)
             onMouseEnter={() => setHover(index)}
             onMouseLeave={() => setHover(rating)}
-            disabled={account?.role === "organizer"}
+            disabled={account?.role === "organizer"||!userid}
           >
             <span className="star">&#9733;</span>
           </button>

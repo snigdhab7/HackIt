@@ -22,6 +22,7 @@ function EventDetails() {
         const account = await client.fetchCurrentUserDetails(userid);
         
         setAccount(account);
+        console.log("role",account);
     } catch (error) {
         console.error("Error fetching user details:", error);
     }
