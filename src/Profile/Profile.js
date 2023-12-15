@@ -114,7 +114,7 @@ const Profile = () => {
                         <div className="container-fluid">
                             {/* <!-- Brand --> */}
                             <Link to={`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
-                            <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >User profile</Link>
+                            <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >My profile</Link>
                             <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >
                                 Search Users
                             </Link>

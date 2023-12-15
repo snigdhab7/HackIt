@@ -16,6 +16,7 @@ import SignUpOrganizer from './Login/SignUpOrganizer/SignUpOrganizer';
 import SignUpUserDetails from './Login/SignUpUserDetails/SignUpUserDetails';
 import MyEvents from './Dashboard/myEvents';
 import About from './Dashboard/About';
+import PublicProfile from './publicProfile/PublicProfile';
 function App() {
   
   return (
@@ -48,6 +49,8 @@ function App() {
 />
 
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile/:id/publicProfile/:profileId" element={<PublicProfile />} />
+          <Route path="/profile/publicProfile/:profileId" element={<PublicProfile />} />
           <Route path="/users/:id" element={<Users />} />
           <Route path="/events/:userid/:eventId" element={<EventDetails/>}/>    {/* when user logged in */}
           <Route path="/events/:eventId" element={<EventDetails/>}/>          {/* when user not logged in */}

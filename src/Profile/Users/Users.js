@@ -80,7 +80,7 @@ const Users = () => {
                 <div className="container-fluid">
                     {/* <!-- Brand --> */}
                     <Link to = {`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
-                        <Link to = {`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >User profile</Link>
+                        <Link to = {`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >My profile</Link>
                         <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >
   Users
 </Link>
@@ -184,7 +184,7 @@ const Users = () => {
                                 <div className="row">
                                     {filteredUsers.map((user) => (
                                         <div key={user.id} className="col-lg-3 col-md-6 mb-4">
-                                           <Link to={`/profile/${user._id}`} className="text-center">
+                                           <Link to={`/profile/${userid}/publicProfile/${user._id}`} className="text-center">
 
                                                 <div className="avatar-container">
                                                 <span
