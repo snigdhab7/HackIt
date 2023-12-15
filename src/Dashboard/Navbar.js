@@ -47,6 +47,15 @@ const Navbar = ({ userid }) => {
             My Events
           </Link>
         )}
+         {userid ? (
+          <Link to={`/${userid}/about`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
+           About
+          </Link>
+        ) : (
+          <Link to="/about" className="navbar-left-button" style={{ textDecoration: 'none' }}>
+            About
+          </Link>
+        )}
       </div>
       {/* Right side of the navbar */}
       <div className="navbar-right">
