@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as client from "./client";
 
 const Navbar = ({ userid }) => {
+  const userId = userid;
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
   const signout = async () => {
@@ -12,29 +13,30 @@ const Navbar = ({ userid }) => {
     navigate("/");
   };
   const fetchCurrentUserDetails = async (userid) => {
+    console.log("userid navbar ", userid);
     try {
-        const account = await client.fetchCurrentUserDetails(userid);
-        
-        setAccount(account);
+      const account = await client.fetchCurrentUserDetails(userid);
+      console.log("account in navbar ", account);
+      setAccount(account);
     } catch (error) {
-        console.error("Error fetching user details:", error);
+      console.error("Error fetching user details:", error);
     }
 
-};
+  };
   useEffect(() => {
-    const findUserById = async (userid) => {
-      try {
-        const user = await client.findUserById(userid);
-        setAccount(user);
-        console.log("Fetched user:", user);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
-    fetchCurrentUserDetails(userid);
-   // findUserById(userid);
-  }, [userid]);
-  
+    // const findUserById = async (userid) => {
+    //   try {
+    //     const user = await client.findUserById(userid);
+    //     setAccount(user);
+    //     console.log("Fetched user:", user);
+    //   } catch (error) {
+    //     console.error("Error fetching user:", error);
+    //   }
+    // };
+    fetchCurrentUserDetails(userId);
+    // findUserById(userid);
+  }, [userId]);
+
   const { username, role } = account || {};
   //console.log("acc", role);
   return (
@@ -55,14 +57,14 @@ const Navbar = ({ userid }) => {
             <div className="navbar-right-button" onClick={signout}>
               <Link className="link-style" style={{ textDecoration: 'none' }}>Sign Out</Link>
             </div>
-           
+
             {/* If user logged in only show the profile and signout button */}
             <Link to={`/profile/${userid}`} style={{ textDecoration: 'none' }}>
               <span className="profile-icon">
-                <FiUser />    {account && <span style={{fontSize:'18px'}}>{account.username}</span>}
+                <FiUser />    {account && <span style={{ fontSize: '18px' }}>{account.username}</span>}
               </span>
             </Link>
-         
+
           </>
         ) : (
           <>

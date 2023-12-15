@@ -37,7 +37,7 @@ const CreateEventFormPopup = ({ onCancel, onCreateEvent }) => {
         // onCreateEvent(); // Notify the parent component that an event has been created
         onCancel(); // Close the form
         navigate(`/${userid}`);
-      }, 1000); // Adjust the delay time as needed
+      }, 600); // Adjust the delay time as needed
     } catch (error) {
       console.error("Error creating event:", error);
       setErrorMessage("Error creating event. Please try again.");
@@ -47,7 +47,7 @@ const CreateEventFormPopup = ({ onCancel, onCreateEvent }) => {
 
   const handleCancel = () => {
     onCancel();
-    navigate("/dashboard"); // Navigate back to the dashboard
+    navigate(`/${eventData.organizerId}/myEvents`); // Navigate back to the dashboard
   };
 
   return (
@@ -118,6 +118,32 @@ const CreateEventFormPopup = ({ onCancel, onCreateEvent }) => {
               required
             />
           </div>
+
+          <div className="mb-3">
+              <input
+                type="time"
+                placeholder="Event start time"
+                className="form-control"
+                id="timeStart"
+                name="timeStart"
+                onChange={handleInputChange}
+                value={eventData.timeStart} 
+                required
+              />
+            </div>
+
+            <div className="mb-3">
+              <input
+                type="time"
+                placeholder="Event end time"
+                className="form-control"
+                id="timeEnd"
+                name="timeEnd"
+                onChange={handleInputChange}
+                value={eventData.timeEnd}
+                required
+              />
+            </div>
 
           <div className="mb-3">
             <input

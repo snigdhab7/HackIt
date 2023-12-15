@@ -7,7 +7,7 @@ function SignInOrganizer() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [user, setUser] = useState({ id: "", username: "" });
+  // const [user, setUser] = useState({ id: "", username: "" });
   const { attendee } = useParams();
   const signin = async () => {
     // Basic validation
@@ -20,14 +20,14 @@ function SignInOrganizer() {
       const response = await client.signinOrganizer(credentials);
       const userId = String(response._id);
       console.log("API Response", response);
-      console.log("API Response", userId);
-      console.log("API Response", response.username);
-      setUser({ id: userId, username: response.username });
-      console.log("USERID_SIGNIN",userId)
-     navigate(`/${userId}`);
-      
-   } catch (error) {
-     // Handle sign-in failure (display error message, etc.)
+      // console.log("API Response", userId);
+      // console.log("API Response", response.username);
+      // setUser({ id: userId, username: response.username });
+      console.log("USERID_SIGNIN", userId)
+      navigate(`/${userId}`);
+
+    } catch (error) {
+      // Handle sign-in failure (display error message, etc.)
       setError("Invalid username or password. Please try again.");
     }
   };
@@ -59,16 +59,16 @@ function SignInOrganizer() {
       </div>
 
       {error && <p className="error-message">{error}</p>}
-     
+
       <button className="signup-button" onClick={signin}>
         Sign In
       </button>
 
       <Link to={`/Dashboard/signUp`}>
-              <p style={{ fontSize: "1em" }}>
-                Don't have an account yet? Sign Up.
-              </p>
-            </Link>
+        <p style={{ fontSize: "1em" }}>
+          Don't have an account yet? Sign Up.
+        </p>
+      </Link>
     </div>
   );
 }

@@ -73,8 +73,11 @@ const Profile = () => {
         if (events) {
             const currentDate = new Date();
             const upcomingEvents = events.filter((event) => {
-                const eventDate = new Date(event.eventDetail.date);
-                return eventDate >= currentDate;
+                if(event.eventDetail){
+                    const eventDate = new Date(event.eventDetail.date);
+                    return eventDate >= currentDate;
+                }
+                
             });
             setEventsList(upcomingEvents);
         }
@@ -423,6 +426,10 @@ const Profile = () => {
                     </div>
                 </div>
             )}
+            {!account && (<div>
+                    Account is not being loaded..
+                    <div>Account: {account}</div>
+            </div>)}
 
         </div>
 
