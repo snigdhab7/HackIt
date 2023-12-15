@@ -15,7 +15,7 @@ const Profile = () => {
     };
     const userid = useParams().id;
     const [account, setAccount] = useState(null);
-    const [registeredEvents, setRegisteredEvents] = useState(null);
+    const [events, setEvents] = useState(null);
     const [eventsList, setEventsList] = useState(null);
 
     // State to manage whether the user is in "edit" mode
@@ -48,9 +48,9 @@ const Profile = () => {
         displayUpcomingEvents();
     }, [userid]);
 
-    useEffect(() => {        
+    useEffect(() => {
         displayUpcomingEvents();
-    }, registeredEvents);
+    }, events);
 
     const signOff = async () => {
         await signout();
@@ -61,33 +61,44 @@ const Profile = () => {
     const fetchAllRegisteredEvents = async () => {
         const events = await client.fetchAllRegisteredEvents(userid);
         console.log("All Events: ", events);
-        setRegisteredEvents(events);    
+        setEvents(events);
     };
 
     const displayAllRegisteredEvents = async () => {
-        setEventsList(registeredEvents);
+        setEventsList(events);
     };
 
     const displayUpcomingEvents = async () => {
 
-        if (registeredEvents) {
-        const currentDate = new Date();
-        const upcomingEvents = registeredEvents.filter((event) => {
-            const eventDate = new Date( event.eventDetail.date);
-            return eventDate >= currentDate;
-        });
-        setEventsList(upcomingEvents);
+        if (events) {
+            const currentDate = new Date();
+            const upcomingEvents = events.filter((event) => {
+                const eventDate = new Date(event.eventDetail.date);
+                return eventDate >= currentDate;
+            });
+            setEventsList(upcomingEvents);
         }
 
     };
 
     const displayAllBookmarkedEvents = async () => {
 
-        const bookMarkedEvents = registeredEvents.filter((event)=> {
+        const bookMarkedEvents = events.filter((event) => {
             return event.bookmarked;
         });
         setEventsList(bookMarkedEvents);
 
+    };
+
+    const displayPastEvents = async () => {
+        if (events) {
+            const currentDate = new Date();
+            const pastEvents = events.filter((event) => {
+                const eventDate = new Date(event.eventDetail.date);
+                return eventDate < currentDate;
+            });
+            setEventsList(pastEvents);
+        }
     };
 
 
@@ -110,7 +121,7 @@ const Profile = () => {
 
                             {/* <!-- Form --> */}
                             <div className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-                                
+
                             </div>
                             {/* <!-- User --> */}
                             <div className="nav-link pr-0" role="button" aria-haspopup="true" aria-expanded="false">
@@ -155,33 +166,47 @@ const Profile = () => {
                         <div className="row">
                             <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                                 <div className="p-card card-profile shadow">
-                                    {/* <div className="row justify-content-center">
-                                    <div className="col-lg-3 order-lg-2">
-                                        <div className="card-profile-image">
-                                            <a href="#">
-                                                <img src={profileImage} className="rounded-circle" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div> */}
-                                    <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                                        <div className="d-flex justify">
-                                            <div onClick={displayUpcomingEvents} className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</div>
-                                            <div onClick={displayAllBookmarkedEvents} className="p-btn p-btn-sm p-btn-default  mr-4">Bookmarks</div>
-                                            <div onClick={displayAllRegisteredEvents} className="p-btn p-btn-sm p-btn-default">All Events</div>
-                                        </div>
-                                    </div>
-                                    {eventsList && (<div>
-                                        {eventsList.map((event, index) => (
-                                            <div className="row" key={index}>
-                                                <div className="col">
-                                                    <Link to={`/events/${event.userId}/${event.eventId}`}>
-                                                        {event.eventDetail ? event.eventDetail.eventName : 'Event Details Unavailable'}
-                                                    </Link>
-                                                </div>
+                            
+                                    {account && account.role === "user" && (<div>
+                                        <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                            <div className="d-flex justify">
+                                                <div onClick={displayUpcomingEvents} className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</div>
+                                                <div onClick={displayAllBookmarkedEvents} className="p-btn p-btn-sm p-btn-default  mr-4">Bookmarks</div>
+                                                <div onClick={displayAllRegisteredEvents} className="p-btn p-btn-sm p-btn-default">All Events</div>
                                             </div>
-                                        ))}
+                                        </div>
+                                        {eventsList && (<div className='mb-4'>
+                                            {eventsList.map((event, index) => (
+                                                <div className="row" key={index}>
+                                                    <div className="col">
+                                                        <Link to={`/events/${event.userId}/${event.eventId}`} className=' ml-2 text-white'>
+                                                            {event.eventDetail ? event.eventDetail.eventName : 'Event Details Unavailable'}
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>)}
                                     </div>)}
+                                    {account && account.role === "organizer" && (<div>
+                                        <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                            <div className="d-flex justify">
+                                                <div onClick={displayUpcomingEvents} className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</div>
+                                                <div onClick={displayPastEvents} className="p-btn p-btn-sm p-btn-default  mr-4">Past Events</div>                                                
+                                            </div>
+                                        </div>
+                                        {eventsList && (<div className='mb-4'>
+                                            {eventsList.map((event, index) => (
+                                                <div className="row" key={index}>
+                                                    <div className="col ml-2">
+                                                        <Link to={`/events/${event.userId}/${event.eventId}`} className=' ml-2 p-text-white'>
+                                                            {event.eventDetail ? event.eventDetail.eventName : 'Event Details Unavailable'}
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>)}
+                                    </div>)}
+
 
                                 </div>
                             </div>

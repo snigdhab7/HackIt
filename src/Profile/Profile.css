@@ -652,6 +652,10 @@ textarea.form-control {
   background-color: #5e72e4;
 }
 
+.text-white:hover {
+  color: #FF013C;
+}
+
 .btn-primary:focus {
   box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(94, 114, 228, .5);
 }
@@ -1320,10 +1324,15 @@ button.bg-white:focus {
   color: #fff !important;
 }
 
+.p-text-:hover {
+  color: #FF013C;
+}
 
-a.text-white:hover,
-a.text-white:focus {
-  color: #e6e6e6 !important;
+
+a.p-text-white:hover,
+a.p-text-white:focus {
+  /* color: #e6e6e6 !important; */
+  color: #FF013C;
 }
 
 .text-muted {
@@ -1469,14 +1478,16 @@ button.bg-white:focus {
   font-size: .875rem !important;
 }
 
-.text-white {
+/* .text-white {
   color: #fff !important;
 }
 
+
+
 a.text-white:hover,
 a.text-white:focus {
-  color: #e6e6e6 !important;
-}
+  color: #FF013C!important;
+} */
 
 .avatar {
   font-size: 1rem;
@@ -1645,7 +1656,7 @@ a.text-white:focus {
   color: #172b4d !important;
 }
 
-/* .footer {
+.footer {
   padding: 2.5rem 0;
   background: #f7fafc;
 }
@@ -1660,7 +1671,7 @@ a.text-white:focus {
 
 .footer .copyright {
   font-size: .875rem;
-} */
+}
 
 .form-control-label {
   font-size: .875rem;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as client from "./client";
 import "./StarRating.css";
 
-function StarRating({ eventId }) {
+function StarRating({ eventId , userid}) {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
@@ -25,6 +25,12 @@ function StarRating({ eventId }) {
     }
   };
 
+  const saveUserRating = async (index) => {
+    setRating(index);
+    const ratingResponse = client.saveUserRating(userid, eventId, rating);
+
+  }
+
   useEffect(() => {
     fetchEventRating();
   }, [eventId]);
@@ -39,7 +45,7 @@ function StarRating({ eventId }) {
             type="button"
             key={index}
             className={index <= (hover || rating) ? "on" : "off"}
-            onClick={() => setRating(index)}
+            onClick={() => saveUserRating(index)} //setRating(index)
             onMouseEnter={() => setHover(index)}
             onMouseLeave={() => setHover(rating)}
           >

@@ -17,6 +17,7 @@ import SignUpUserDetails from "./Login/SignUpUserDetails/SignUpUserDetails";
 import MyEvents from "./Dashboard/myEvents";
 import Admin from "./Dashboard/admin.js";
 import AdminUsers from "./Dashboard/AdminUsers.js";
+import About from "./Dashboard/About";
 function App() {
   return (
     <div className="App">
@@ -29,15 +30,16 @@ function App() {
           <Route path="/Dashboard/signUp" element={<LoginHome />} />
           <Route path="/signup/user" element={<SignUpUser />} />
           <Route path="/signup/organizer" element={<SignUpOrganizer />} />
-          <Route path="/signin/organizer" element={<SignInOrganizer />} />
           <Route path="/admin" element={<SignInAdmin />} />
           <Route path="/signup/details/:id" element={<SignUpUserDetails />} />
-          <Route path="/signin/user" element={<SignInUser />} />
           <Route path="/:id/myEvents" element={<MyEvents />} />
           <Route path="/:id/users" element={<AdminUsers />} />
+          <Route path="/:id/about" element={<About />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/signin/organizer" element={<SignInOrganizer />} />
+          <Route path="/signin/user" element={<SignInUser />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/users/:id" element={<Users />} />
-
           <Route
             path="/events/:userid/:eventId"
             element={<EventDetails />}
@@ -46,7 +48,7 @@ function App() {
           <Route path="/events/:eventId" element={<EventDetails />} />{" "}
           {/* when user not logged in */}
           <Route path="/getEvents" element={<Events />} />
-          <Route path="/admin/events" element={<Admin />} />
+          <Route path="/admin/events/:id" element={<Admin />} />
         </Routes>
       </HashRouter>
     </div>

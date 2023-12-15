@@ -13,6 +13,7 @@ export const findAllUsers = async () => {
 
 export const fetchCurrentUserDetails = async (userid) => {
   const response = await request.post(`${USERS_API}/currentUser`, { userid: userid });
+  console.log("response", response.data);
   return response.data;
 };
 
@@ -28,3 +29,7 @@ export const fetchAllRegisteredEvents = async (userid) => {
     return response.data;
 }
 
+export const deleteUser = async (userId) => {
+  const response = await axios.delete(`${USERS_API}/${userId}/deleteUser`);
+  return response.data;
+};
