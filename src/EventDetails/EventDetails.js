@@ -35,7 +35,7 @@ function EventDetails() {
 };
   const openModal = async () => {
       if(!userid){
-        navigate("/Dashboard/signIn/");
+        navigate("/signin/user");
       }
       else{
       const userData = await client.findUserById(userid);
@@ -58,7 +58,7 @@ function EventDetails() {
 
   const handleDeregisterClick = () => {
     if(!userid){
-      navigate("/Dashboard/signIn/");
+      navigate("/signin/user");
     }
     else{
     setShowConfirmation(true);
@@ -155,7 +155,7 @@ function EventDetails() {
   className={`me-3 fa-bookmark ${isBookmarked ? 'bookmarked' : ''}`}
   onClick={() => {
     if(!userid){
-      navigate("/Dashboard/signIn/");
+      navigate("/signin/user");
     }
     else{
     if (!(account?.role === "organizer")&& (!(account?.role === "admin"))) {

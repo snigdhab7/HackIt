@@ -11,18 +11,7 @@ function StarRating({ eventId , userid, account }) {
 
   const fetchEventRating = async () => {
     try {
-      // const event = await client.findEventById(eventId);
-
-      // const overallRating = event.ratings?.overallRating || 0;
-      // const numberOfRates = event.ratings?.numberOfRates || 1;
-
-      // const totalWeightedRating = overallRating * numberOfRates;
-      // const totalNumberOfRates = numberOfRates;
-
-      // const averageRating = totalNumberOfRates !== 0 ? totalWeightedRating / totalNumberOfRates : 0;
-      // const roundedAverageRating = averageRating.toFixed(2);
       const averageRating = await client.getOverallRating(userid,eventId);
-      console.log("called rating"); 
       const roundedAverageRating = averageRating.toFixed(2);
       setAverageRating(roundedAverageRating);
     } catch (error) {
@@ -32,14 +21,13 @@ function StarRating({ eventId , userid, account }) {
 
   const getUserRating = async () => {
     const value = await client.getUserrating(userid,eventId);
-    console.log("Rating:", value);
     setRating(value);
   }
 
 
   const saveUserRating = async (index) => {
     if(!userid){
-      navigate("/Dashboard/signIn/");
+      navigate("/signin/user");
     }
     else{
     setRating(index);
