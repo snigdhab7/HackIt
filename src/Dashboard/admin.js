@@ -130,7 +130,9 @@ const Admin = () => {
 
           <div>
             <ul className="event-list-admin">
-              {filteredEvents.map((event) => (
+          
+                         {filteredEvents.map((event) => (
+                            <Link to={`/events/${userid}/${event._id}`} style={{ textDecoration: 'none' }}>
                 <li key={event.id} className="event-item-admin">
                   {/* Event details */}
                   <h5>{event.eventName}</h5>
@@ -142,7 +144,10 @@ const Admin = () => {
                     Delete
                   </button>
                 </li>
+                </Link>
               ))}
+             
+
             </ul>
           </div>
         </div>

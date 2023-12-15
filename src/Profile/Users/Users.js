@@ -88,10 +88,7 @@ const Users = () => {
                     <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
                         <div className="form-group mb-0">
                             <div className="input-group input-group-alternative">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text"><i className="fas fa-search"></i></span>
-                                </div>
-                                <input className="form-control mt-0" placeholder="Search People" type="text"/>
+                               
                             </div>
                         </div>
                     </form>
@@ -183,7 +180,7 @@ const Users = () => {
                                 {/* Insert user icons here */}
                                 <div className="row">
                                     {filteredUsers.map((user) => (
-                                        <div key={user.id} className="col-lg-3 col-md-6 mb-4">
+                                        <div key={user._id} className="col-lg-3 col-md-6 mb-4">
                                            <Link to={`/profile/${userid}/publicProfile/${user._id}`} className="text-center">
 
                                                 <div className="avatar-container">

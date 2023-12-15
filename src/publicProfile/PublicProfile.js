@@ -19,7 +19,8 @@ const PublicProfile = () => {
     const userId = useParams().id;
     const [account, setAccount] = useState(null);
     const [signedInUser, setSignedInUser] = useState(null);
-
+    const [events, setEvents] = useState(null);
+    const [eventsList, setEventsList] = useState(null);
    
 console.log("public profile id",profileId)
 console.log("user id of logged in user", userId)
@@ -45,17 +46,56 @@ console.log("user id of logged in user", userId)
     };
 
     useEffect(() => {
+        fetchAllRegisteredEvents();
+       // displayUpcomingEvents();
         findUserById(profileId)
         if(userId){
         fetchCurrentUserDetails(userId);
         }
     
-    }, [profileId]);
+    }, [profileId,userId]);
 
    
+    const displayAllRegisteredEvents = async () => {
+        setEventsList(events);
+    };
 
+    const displayUpcomingEvents = async () => {
+console.log("display,",events)
+        if (events) {
+            const currentDate = new Date();
+            const upcomingEvents = events.filter((event) => {
+                const eventDate = new Date(event.eventDetail.date);
+                return eventDate >= currentDate;
+            });
+            setEventsList(upcomingEvents);
+        }
 
+    };
+    const displayAllBookmarkedEvents = async () => {
 
+        const bookMarkedEvents = events.filter((event) => {
+            return event.bookmarked;
+        });
+        setEventsList(bookMarkedEvents);
+
+    };
+    const fetchAllRegisteredEvents = async () => {
+        const events = await client.fetchAllRegisteredEvents(profileId);
+        console.log("All Events: ", events);
+        setEvents(events);
+        displayUpcomingEvents();
+    };
+    const displayPastEvents = async () => {
+        if (events) {
+            const currentDate = new Date();
+            const pastEvents = events.filter((event) => {
+                const eventDate = new Date(event.eventDetail.date);
+                return eventDate < currentDate;
+            });
+            setEventsList(pastEvents);
+        }
+    };
 
     return (
 
@@ -102,7 +142,38 @@ console.log("user id of logged in user", userId)
                     <div className="container-fluid mt--7">
                         <div className="row">
                         
-                            <div className="col-xl-12 order-xl-1">
+
+                        <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+                                <div className="p-card card-profile shadow">
+                            
+                                {signedInUser && signedInUser.role === "admin" && (<div>
+                                        <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                            <div className="d-flex justify">
+                                                <div onClick={displayUpcomingEvents} className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</div>
+                                                <div onClick={displayAllBookmarkedEvents} className="p-btn p-btn-sm p-btn-default  mr-4">Bookmarks</div>
+                                                <div onClick={displayAllRegisteredEvents} className="p-btn p-btn-sm p-btn-default">All Events</div>
+                                            </div>
+                                        </div>
+                                        {eventsList && (<div className='mb-4'>
+                                            {eventsList.map((event, index) => (
+                                                <div className="row" key={index}>
+                                                    <div className="col">
+                                                        <Link to={`/events/${userId}/${event.eventId}`} className=' ml-2 text-white'>
+                                                            {event.eventDetail ? event.eventDetail.eventName : 'Event Details Unavailable'}
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>)}
+                                    </div>)}
+                                   
+
+
+                                </div>
+                            </div>
+
+
+                            <div className="col-xl-8 order-xl-1">
                                 <div className="p-card shadow">
                                     <div className="p-card-header border-0">
                                         <div className="row align-items-center">
@@ -189,6 +260,73 @@ console.log("user id of logged in user", userId)
                                             <h6 className="heading-small mb-4">Contact information</h6>
                                             <div className="pl-lg-4">
                                             {userId ? (
+
+
+<>  
+        
+{signedInUser && signedInUser.role === "admin" && (
+  <>
+    <div className="row">
+      <div className="col-md-12">
+        <div className="form-group focused">
+          <label className="form-control-label" htmlFor="input-address">Address</label>
+          <input
+            id="input-address"
+            className="p-form-control form-control-alternative"
+            placeholder="Home Address"
+            type="text"
+            value={account.address?.address || ''}
+            disabled={true}
+          />
+        </div>
+      </div>
+    </div>
+    <div className="row">
+      <div className="col-lg-4">
+        <div className="form-group focused">
+          <label className="form-control-label" htmlFor="input-city">City</label>
+          <input
+            type="text"
+            id="input-city"
+            className="p-form-control form-control-alternative"
+            placeholder="City"
+            value={account.address?.city || ''}
+            disabled={true}
+          />
+        </div>
+      </div>
+      <div className="col-lg-4">
+        <div className="form-group focused">
+          <label className="form-control-label" htmlFor="input-country">Country</label>
+          <input
+            type="text"
+            id="input-country"
+            className="p-form-control form-control-alternative"
+            placeholder="Country"
+            value={account.address?.country || ''}
+            disabled={true}
+          />
+        </div>
+      </div>
+      <div className="col-lg-4">
+        <div className="form-group">
+          <label className="form-control-label" htmlFor="input-postal-code">Postal code</label>
+          <input
+            type="number"
+            id="input-postal-code"
+            className="p-form-control form-control-alternative"
+            placeholder="Postal code"
+            value={account.address?.postalCode || ''}
+            disabled={true}
+          />
+        </div>
+      </div>
+    </div>
+  </>
+)}
+
+
+
   <div className="row">
     <div className="col-lg-6">
       <div className="form-group focused">
@@ -203,7 +341,7 @@ console.log("user id of logged in user", userId)
         />
       </div>
     </div>
-  </div>
+  </div></>
 ) : (
   <Link to={`/Dashboard/signIn`}>
     <p style={{ fontSize: "1.5em" }}>

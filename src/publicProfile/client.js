@@ -19,3 +19,8 @@ export const findUserById = async (userId) => {
   const response = await axios.get(`${USERS_API}/${userId}`);
   return response.data;
 };
+export const fetchAllRegisteredEvents = async (userid) => {
+  console.log("fetch events userid: ", userid);
+  const response = await request.get(`${USERS_API}/fetchAllRegisteredEvents/${userid}`);
+  return response.data;
+}
