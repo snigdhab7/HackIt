@@ -15,6 +15,7 @@ import SignInOrganizer from './Login/SignInOrganizer/SignInOrganizer';
 import SignUpOrganizer from './Login/SignUpOrganizer/SignUpOrganizer';
 import SignUpUserDetails from './Login/SignUpUserDetails/SignUpUserDetails';
 import MyEvents from './Dashboard/myEvents';
+import About from './Dashboard/About';
 function App() {
   
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/Dashboard/signUp" element={<LoginHome />} />
           <Route path="/signup/user" element={<SignUpUser />} />
           <Route path="/signup/organizer" element={<SignUpOrganizer />} />
+          <Route path="/:id/about" element={<About />} />
+          <Route path="/about" element={<About />} />
           <Route
   path="/signin/organizer"
   element={<SignInOrganizer />}
