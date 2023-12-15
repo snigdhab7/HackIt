@@ -24,6 +24,13 @@ export const fetchAllEvents = async (eventId) => {
   return response.data;
 }
 
+export const fetchCurrentUserDetails = async (userid) => {
+
+  const response = await axios.post(`${USERS_API}/currentUser`, { userid: userid });
+  return response.data;
+};
+
+
 export const isUserRegisteredForEvent = async (userId, eventId) => {
   try {
     const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/isregistered`);
@@ -65,7 +72,17 @@ export const deBookmarkEvent = async (userId, eventId) => {
 }
 
 export const saveUserRating = async (userId, eventId, rating) => {
-  const response = await axios.put(`${USEREVENTS_API}/${userId}/${eventId}/ratings`, rating);
-  console.log("@@@@", response.data);
+  console.log("In client.js", rating);
+  const response = await axios.put(`${USEREVENTS_API}/${userId}/${eventId}/ratings`, {rating:rating});
+  return response.data;
+}
+
+export const getUserrating = async(userId,eventId) => {
+  const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/getrating`);
+  return response.data;
+}
+
+export const getOverallRating = async (userId,eventId) => {
+  const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/overallrating`);
   return response.data;
 }
