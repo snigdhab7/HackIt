@@ -7,6 +7,8 @@ import StarRating from "./StarRating";
 import * as client from "./client.js";
 import { useEffect } from "react";
 import { format } from "date-fns";
+import profileImage from '../images/eventorg.png';
+import { useNavigate } from "react-router-dom";
 
 function EventDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -17,6 +19,9 @@ function EventDetails() {
   const [isBookmarked, setBookmarked] = useState(false);
   const [userIsRegistered, setUserIsRegistered] = useState();
   const [account, setAccount] = useState(null);
+  const [organizer, setOrganizer] = useState(null);
+  const navigate = useNavigate();
+  //let organizerDetails =null;
   const fetchCurrentUserDetails = async (userid) => {
     try {
         const account = await client.fetchCurrentUserDetails(userid);
@@ -29,13 +34,14 @@ function EventDetails() {
 
 };
   const openModal = async () => {
-    try {
+      if(!userid){
+        navigate("/Dashboard/signIn/");
+      }
+      else{
       const userData = await client.findUserById(userid);
       setUsers(userData);
       setModalOpen(true);
-    } catch (error) {
-      console.error("Error fetching user details:", error);
-    }
+      }
   };
 
   const closeModal = () => {
@@ -44,14 +50,19 @@ function EventDetails() {
   };
 
   const handleRegisterClick = async () => {
-    closeModal();
-    await client.registerUserForEvent(userid, eventId);
-    const regstatus = await client.registrationStatus(userid, eventId);
-    setUserIsRegistered(regstatus);
+        closeModal();
+        await client.registerUserForEvent(userid, eventId);
+        const regstatus = await client.registrationStatus(userid, eventId);
+        setUserIsRegistered(regstatus);
   };
 
   const handleDeregisterClick = () => {
+    if(!userid){
+      navigate("/Dashboard/signIn/");
+    }
+    else{
     setShowConfirmation(true);
+    }
   };
 
   const handleConfirmationNo = () => {
@@ -100,9 +111,12 @@ function EventDetails() {
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
-       
         const eventData = await client.findEventById(eventId);
         setEvents(eventData);
+       const organizerDetails = await client.getOrganizerDetails(eventId);
+       setOrganizer(organizerDetails);
+
+        
         if(userid!=null){
           console.log("User data",userid);
         const isUserRegistered = await client.registrationStatus(userid, eventId);
@@ -115,9 +129,9 @@ function EventDetails() {
         console.error("Error fetching event details:", error);
       }
     };
-
+    
     fetchEventDetails();
-
+  
     const findUserById = async (userid) => {
       try {
         const user = await client.findUserById(userid);
@@ -128,7 +142,6 @@ function EventDetails() {
       }
     };
     fetchCurrentUserDetails(userid);
-
   }, [eventId, userid]);
   return (
     <div>
@@ -141,21 +154,26 @@ function EventDetails() {
       <FaBookmark
   className={`me-3 fa-bookmark ${isBookmarked ? 'bookmarked' : ''}`}
   onClick={() => {
-    if (userid && !(account?.role === "organizer")) {
+    if(!userid){
+      navigate("/Dashboard/signIn/");
+    }
+    else{
+    if (!(account?.role === "organizer")&& (!(account?.role === "admin"))) {
       if (!isBookmarked) {
         bookmarkEvent();
       } else {
         deBookmarkEvent();
       }
     }
+  }
   }}
   disabled={!userid || account?.role === "organizer"} 
 />
 
-      <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered|| !userid || account?.role === "organizer"}>
+      <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered|| account?.role === "admin" || account?.role === "organizer"}>
   Deregister
 </button>
-<button className="register-button" onClick={openModal} disabled={userIsRegistered|| !userid ||account?.role === "organizer"}>
+<button className="register-button" onClick={openModal} disabled={userIsRegistered|| account?.role === "admin" ||account?.role === "organizer"}>
   Register
 </button>
         </div>
@@ -189,13 +207,23 @@ function EventDetails() {
          {events.description}
          </p>
         </div>
+        <h5 class="event-heading-color">About the organizer</h5>
+    
+<div className="organized-by-box mb-3">
+  <div className="organizer-icon">
+    <img alt="Image placeholder" src={profileImage}/>
+  </div>
+  <Link
+    to={userid ? `/profile/${userid}/publicProfile/${organizer?._id}` : `/profile/publicProfile/${organizer?._id}`}
+    className="organizer-name"
+  >
+  {organizer?.firstName} {organizer?.lastName}
+  </Link>
+</div>
         </div>
       )}
       </div>
 
-      <footer>
-        &copy; 2023 Data and Tech Workshop
-      </footer>
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="registration-form" onClick={(e) => e.stopPropagation()}>
