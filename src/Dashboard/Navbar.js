@@ -101,12 +101,26 @@ const Navbar = ({ userid }) => {
         {account && account.role === "organizer" && (
           <>
             <Link
+          to={`/${userid}`}
+          className="navbar-left-button"
+          style={{ textDecoration: "none" }}
+        >
+          Home
+        </Link>
+            <Link
               to={`/${userid}/myEvents`}
               className="navbar-left-button"
               style={{ textDecoration: "none" }}
             >
               My Events
             </Link>
+            <Link
+          to={`/${userid}/about`}
+          className="navbar-left-button"
+          style={{ textDecoration: "none" }}
+        >
+          About
+        </Link>
           </>
         )}
       </div>

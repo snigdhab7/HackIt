@@ -37,7 +37,7 @@ function App() {
           <Route path="/admin" element={<SignInAdmin />} />
           <Route path="/signup/details/:id" element={<SignUpUserDetails />} />
           <Route path="/:id/myEvents" element={<MyEvents />} />
-          <Route path="/:id/users" element={<AdminUsers />} />
+          <Route path="/admin/users/:id" element={<AdminUsers />} />
           <Route path="/:id/about" element={<About />} />
           <Route path="/about" element={<About />} />
           <Route path="/signin/organizer" element={<SignInOrganizer />} />
@@ -55,6 +55,7 @@ function App() {
           {/* when user not logged in */}
           <Route path="/getEvents" element={<Events />} />
           <Route path="/admin/events/:id" element={<Admin />} />
+          
         </Routes>
       </HashRouter>
     </div>
