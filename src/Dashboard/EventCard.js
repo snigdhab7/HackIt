@@ -63,6 +63,7 @@ const EventCard = ({ event, userid, openPopup }) => {
         }
         style={{ textDecoration: "none" }}
       >
+
         <img src={event.photo} alt={event.eventName} />
         <div>
           <h2>{event.eventName}</h2>

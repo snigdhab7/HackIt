@@ -134,29 +134,12 @@ const Dashboard = () => {
           <div className="event-list">
             {/* <div className="row">
               <div className="col-md-10"> */}
-            console.log("U id************", userid);
+
             <div className="event-cards">
               {filteredEvents.map((event) => (
-
-                    <EventCard event={event} />
-                 
-
-
-
-
-                // <Link
-
-                //   key={event._id}
-                //   to={
-                //     userid ? `/events/${userid}/${event._id}` : `/events/${event._id}`
-                //   }
-                //   style={{ textDecoration: "none" }}
-                // >
-                //   <EventCard event={event} />
-                // </Link>
+                <EventCard userid={userid} event={event} />
               ))}
-              {/* </div> */}
-              {/* </div> */}
+
             </div>
             {filteredExternalEvents.length !== 0 ? <div className="external-list">
               <h3 style={{ color: "white", margin: "10px auto" }}>Other Events</h3>
