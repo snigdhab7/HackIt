@@ -29,7 +29,7 @@ function App() {
       <HashRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />            {/* when user logged in */}
-          <Route path="/:id" element={<Dashboard />} />          {/* when user not logged in */}
+          <Route path="/:id" element={<Dashboard />} /> {" "}         {/* when user not logged in */}
           <Route path="/Dashboard/signIn" element={<LoginHome />} />
           <Route path="/Dashboard/signUp" element={<LoginHome />} />
           <Route path="/signup/user" element={<SignUpUser />} />
@@ -46,12 +46,10 @@ function App() {
           <Route path="/profile/:id/publicProfile/:profileId" element={<PublicProfile />} />
           <Route path="/profile/publicProfile/:profileId" element={<PublicProfile />} />
           <Route path="/users/:id" element={<Users />} />
-          <Route
-            path="/events/:userid/:eventId"
-            element={<EventDetails />}
-          />
+          <Route path="/events/:userid/:eventId" element={<EventDetails />} />
           {/* when user logged in */}
           <Route path="/events/:eventId" element={<EventDetails />} />
+          
           {/* when user not logged in */}
           <Route path="/getEvents" element={<Events />} />
           <Route path="/admin/events/:id" element={<Admin />} />

@@ -34,14 +34,21 @@ function EventDetails() {
 
   };
   const openModal = async () => {
-    if (!userid) {
-      navigate("/signin/user");
+    try {
+      if (!userid) {
+        // navigate("/Dashboard/signIn/");
+        navigate("/signin/user");
+      }
+      else {
+        const userData = await client.findUserById(userid);
+        setUsers(userData);
+        setModalOpen(true);
+      }
     }
-    else {
-      const userData = await client.findUserById(userid);
-      setUsers(userData);
-      setModalOpen(true);
+    catch (error) {
+      console.error("Error fetching user details:", error);
     }
+
   };
 
   const closeModal = () => {
@@ -58,6 +65,7 @@ function EventDetails() {
 
   const handleDeregisterClick = () => {
     if (!userid) {
+      // navigate("/Dashboard/signIn/");
       navigate("/signin/user");
     }
     else {
@@ -108,8 +116,7 @@ function EventDetails() {
     }
   };
 
-  useEffect(() => {
-    const fetchEventDetails = async () => {
+  const fetchEventDetails = async () => {
       try {
         const eventData = await client.findEventById(eventId);
         setEvents(eventData);
@@ -130,8 +137,6 @@ function EventDetails() {
       }
     };
 
-    fetchEventDetails();
-
     const findUserById = async (userid) => {
       try {
         const user = await client.findUserById(userid);
@@ -141,6 +146,13 @@ function EventDetails() {
         console.error("Error fetching user:", error);
       }
     };
+
+  useEffect(() => {
+    console.log("&&&&&&&   ", userid);
+
+    fetchEventDetails();
+
+    
     fetchCurrentUserDetails(userid);
   }, [eventId, userid]);
   return (
@@ -151,29 +163,35 @@ function EventDetails() {
         {events && (
           <div>
             <div className="buttons float-end">
-              <FaHeart
+              <FaBookmark
                 className={`me-3 fa-bookmark ${isBookmarked ? 'bookmarked' : ''}`}
                 onClick={() => {
-                  if (userid) {
-                    if (!isBookmarked) {
-                      bookmarkEvent();
-                    } else {
-                      deBookmarkEvent();
+                  if (!userid) {
+                    // navigate("/Dashboard/signIn/");
+                    navigate("/signin/user");
+                  }
+                  else {
+                    if (!(account?.role === "organizer") && (!(account?.role === "admin"))) {
+                      if (!isBookmarked) {
+                        bookmarkEvent();
+                      } else {
+                        deBookmarkEvent();
+                      }
                     }
                   }
                 }}
-                disabled={!userid}
+                disabled={!userid || account?.role === "organizer"}
               />
 
-              <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered || !userid}>
+              <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered || account?.role === "admin" || account?.role === "organizer"}>
                 Deregister
               </button>
-              <button className="register-button" onClick={openModal} disabled={userIsRegistered || !userid}>
+              <button className="register-button" onClick={openModal} disabled={userIsRegistered || account?.role === "admin" || account?.role === "organizer"}>
                 Register
               </button>
             </div>
             <div className="event-heading">
-              <StarRating eventId={eventId} userid={userid} />
+              <StarRating eventId={eventId} userid={userid} account={account} />
               <h2 class="event-heading-color">{events.eventName}
               </h2>
               <p className="medium-text">{events.summary}</p>
@@ -192,6 +210,16 @@ function EventDetails() {
                 {events.venue}
               </p>
             </div>
+            {/* <div className="event-heading">
+              <h5 class="event-heading-color">About this event</h5>
+              <p className="medium-text">
+                <p className="medium-text">
+                  <FaClock className="color-palette me-2" />
+                  {events.timeStart}
+                </p>
+                {events.description}
+              </p>
+            </div> */}
             <div className="event-heading">
               <h5 class="event-heading-color">About this event</h5>
               <p className="medium-text">
@@ -207,14 +235,22 @@ function EventDetails() {
                   </div>
 
                 </p>
-                {/* <p className="medium-text">
-          
-          </p>
-          <p className="medium-text">
-          
-          </p> */}
+
                 {events.description}
               </p>
+            </div>
+            <h5 class="event-heading-color">About the organizer</h5>
+
+            <div className="organized-by-box mb-3">
+              <div className="organizer-icon">
+                <img alt="Image placeholder" src={profileImage} />
+              </div>
+              <Link
+                to={userid ? `/profile/${userid}/publicProfile/${organizer?._id}` : `/profile/publicProfile/${organizer?._id}`}
+                className="organizer-name"
+              > 
+                {organizer?.firstName} {organizer?.lastName}
+              </Link>
             </div>
           </div>
         )}

@@ -47,10 +47,10 @@ const EventCard = ({ event, userid, openPopup }) => {
     // findUserById(userid);
   }, [userid]);
 
- const deleteEvent = async () => {
-  await client.deleteEvent(event._id);
+  const deleteEvent = async () => {
+    await client.deleteEvent(event._id);
 
- };
+  };
 
   return (
     <div key={event.id} className="event-card" style={{ margin: "10px" }}>
