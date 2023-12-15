@@ -46,7 +46,7 @@ function App() {
           <Route path="/events/:eventId" element={<EventDetails />} />{" "}
           {/* when user not logged in */}
           <Route path="/getEvents" element={<Events />} />
-          <Route path="/admin/events" element={<Admin />} />
+          <Route path="/admin/events/:id" element={<Admin />} />
         </Routes>
       </HashRouter>
     </div>

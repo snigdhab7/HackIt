@@ -64,3 +64,8 @@ export const deBookmarkEvent = async (userId, eventId) => {
   return response.data;
 }
 
+export const saveUserRating = async (userId, eventId, rating) => {
+  const response = await axios.put(`${USEREVENTS_API}/${userId}/${eventId}/ratings`, rating);
+  console.log("@@@@", response.data);
+  return response.data;
+}

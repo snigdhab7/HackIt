@@ -21,7 +21,7 @@ function SignInOrganizer() {
       const userId = String(response._id);
       setUser({ id: userId, username: response.username });
       console.log("USERID_SIGNIN",userId)
-      navigate(`/${userId}`);
+      navigate(`/admin/events/${userId}`);
       
    } catch (error) {
      // Handle sign-in failure (display error message, etc.)

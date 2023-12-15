@@ -28,3 +28,8 @@ export const fetchAllRegisteredEvents = async (userid) => {
     return response.data;
 }
 
+export const deleteUser = async (userId) => {
+  const response = await axios.delete(`${USERS_API}/${userId}/deleteUser`);
+  return response.data;
+};
+

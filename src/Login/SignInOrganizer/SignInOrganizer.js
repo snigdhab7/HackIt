@@ -24,7 +24,7 @@ function SignInOrganizer() {
       console.log("API Response", response.username);
       setUser({ id: userId, username: response.username });
       console.log("USERID_SIGNIN",userId)
-     navigate(`/${userId}`);
+     navigate(`admin/events/${userId}`);
       
    } catch (error) {
      // Handle sign-in failure (display error message, etc.)
@@ -63,6 +63,12 @@ function SignInOrganizer() {
       <button className="signup-button" onClick={signin}>
         Sign In
       </button>
+
+      <Link to={`/Dashboard/signUp`}>
+              <p style={{ fontSize: "1em" }}>
+                Don't have an account yet? Sign Up.
+              </p>
+            </Link>
     </div>
   );
 }

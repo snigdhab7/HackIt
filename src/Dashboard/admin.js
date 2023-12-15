@@ -13,7 +13,6 @@ import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Events from "../ExternalApi/Events";
 
-
 // import "./Dashboard.css";
 
 const Admin = () => {
@@ -38,7 +37,7 @@ const Admin = () => {
     const response = await client.deleteEvent(eventID);
     console.log("response", response);
     fetchEvents();
-  }
+  };
 
   const carouselSettings = {
     dots: true,
@@ -59,7 +58,6 @@ const Admin = () => {
     setFilteredEvents(filtered);
   };
   return (
-    
     <div className="entire-page">
       <div>
         {/* Main Content */}
@@ -129,23 +127,21 @@ const Admin = () => {
           {/* List of Events as Cards */}
 
           <div>
-            {filteredEvents.map((event) => (
-              <Link
-                key={event.id}
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                <div
-                  style={{
-                    margin: "10px",
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <h2>{event.eventName}</h2>
-                  <button className="btn btn-primary" onClick={() => deleteEvent(event._id)}> Delete </button>
-                </div>
-              </Link>
-            ))}
+            <ul className="event-list-admin">
+              {filteredEvents.map((event) => (
+                <li key={event.id} className="event-item-admin">
+                  {/* Event details */}
+                  <h5>{event.eventName}</h5>
+                  {/* <h5>{event.eventName}</h5> */}
+                  <button
+                    className="btn-delete"
+                    onClick={() => deleteEvent(event._id)}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

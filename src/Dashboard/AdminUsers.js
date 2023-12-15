@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import "./Dashboard.css";
 import * as client from "../Profile/client";
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -67,14 +66,29 @@ const AdminUsers = () => {
     );
     setFilteredUsers(filtered);
   };
-  // const aboutMe;
-  // const phoneNumber;
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      console.log("user id", userId);
+      // Call your delete user API endpoint
+      await client.deleteUser(userId);
+
+      // After successful deletion, update the users state
+      const updatedUsers = users.filter((user) => user._id !== userId);
+      setUsers(updatedUsers);
+      setFilteredUsers(updatedUsers);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      // Handle error appropriately
+    }
+  };
 
   useEffect(() => {
     fetchUsers();
     fetchCurrentUserDetails(userid);
   }, [userid]);
 
+  console.log(users);
   return (
     <div className="profile">
       {/* <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"></link> */}
@@ -85,15 +99,9 @@ const AdminUsers = () => {
           id="navbar-main"
         >
           <div className="container-fluid">
-            {/* <!-- Brand --> */}
-            
-            {/* <!-- Form --> */}
-            <form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-              <div className="form-group mb-0">
-                
-              </div>
+            <form className="navbar-search navbar-search-dark form-inline  d-none d-md-flex ml-lg-auto">
+              <div className="form-group mb-0"></div>
             </form>
-            {/* <!-- User --> */}
             <ul
               className="navbar-nav align-items-center d-none d-md-flex"
               style={{ color: "white" }}
@@ -105,9 +113,7 @@ const AdminUsers = () => {
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >
-                 
-                </a>
+                ></a>
 
                 <div
                   id="myDropdown"
@@ -142,22 +148,11 @@ const AdminUsers = () => {
             </ul>
           </div>
         </nav>
-        {/* <!-- Header --> */}
-        <div
-          className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center cover-image"
-          style={bgImage}
-        >
-          {/* <!-- Mask --> */}
-          
-          {/* <!-- Header container --> */}
-          
-        </div>
-        {/* <!-- Page content --> */}
-        <div className="container-fluid mt--7">
+        <div className="container-fluid">
           <div className="row">
             <div className="col-xl-12 order-xl-1">
               <div className="p-card shadow">
-                <div className="p-card-header border-0">
+                <div className="p-card-header border-0 mt-7">
                   <div className="row align-items-center">
                     <div className="col-md-8">
                       <h3>Users</h3>
@@ -175,40 +170,37 @@ const AdminUsers = () => {
                 </div>
 
                 <div className="p-card-body">
-                  {/* insert user icons here */}
-                  <div className="p-card-body">
-                    {/* Insert user icons here */}
-                    <div className="row">
-                      {filteredUsers.map((user) => (
-                        <div key={user.id} className="col-lg-3 col-md-6 mb-4">
-                          <Link
-                            to={`/profile/${user._id}`}
-                            className="text-center"
-                          >
-                            <div className="avatar-container">
-                              <span
-                                className="avatar avatar-lg rounded-circle"
-                                style={{
-                                  background:
-                                    getRandomTransparentGradientColor(),
-                                }}
-                              >
-                                {user.username.charAt(0)}
-                              </span>
-                              <p
-                                style={{ color: "white" }}
-                                className="mt-2 mb-0"
-                              >
-                                {user.username}
-                              </p>
-                            </div>
-                          </Link>
+                  <div className="row">
+                    {filteredUsers.map((user) => (
+                      <div key={user.id} className="col-lg-3 col-md-6 mb-4">
+                        <div className="user-card">
+                          <div className="user-details">
+                            <span className="user-avatar">
+                              {/* You can add a different icon or styling here */}
+                              {user.username.charAt(0)}
+                            </span>
+                            <p className="user-username">{user.username}</p>
+                          </div>
+                          <div className="user-actions">
+                            <Link
+                              to={`/profile/${user._id}`}
+                              className="btn btn-info"
+                            >
+                              View Profile
+                            </Link>
+                            <button
+                              className="btn btn-danger ml-2"
+                              onClick={() => handleDeleteUser(user._id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                    <br />
-                    <br />
+                      </div>
+                    ))}
                   </div>
+                  <br />
+                  <br />
                 </div>
               </div>
             </div>
