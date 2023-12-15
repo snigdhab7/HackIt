@@ -1,18 +1,19 @@
 import React from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "./Dashboard.css";
 import logoImage from '../images/Screenshot 2023-12-14 at 6.55.24 PM.png';
 import eventImage from '../images/Event-planning-software-infographic.png'
 import community from '../images/All-You-Need-to-Know-For-Creating-a-Tech-Team-From-Scratch.jpg'
 const About = () => {
-    
+    const userid = useParams().id;
   return (
     <div className="entire-page">
       <div>
         {/* Horizontal Navbar */}
         <div className="navbar-horizontal">
-          <Navbar />
+        <Navbar userid={userid} />
         </div>
         <div  className="about-container">
         <img
