@@ -1,4 +1,4 @@
-import { FaCalendar, FaLocationArrow, FaClock, FaBookmark, FaHeart} from "react-icons/fa";
+import { FaCalendar, FaLocationArrow, FaClock, FaBookmark, FaHeart, FaBook} from "react-icons/fa";
 import { useState } from "react";
 import React from "react";
 import "./EventDetails.css";
@@ -16,6 +16,17 @@ function EventDetails() {
   const [users, setUsers] = useState([]);
   const [isBookmarked, setBookmarked] = useState(false);
   const [userIsRegistered, setUserIsRegistered] = useState();
+  const [account, setAccount] = useState(null);
+  const fetchCurrentUserDetails = async (userid) => {
+    try {
+        const account = await client.fetchCurrentUserDetails(userid);
+        
+        setAccount(account);
+    } catch (error) {
+        console.error("Error fetching user details:", error);
+    }
+
+};
   const openModal = async () => {
     try {
       const userData = await client.findUserById(userid);
@@ -105,10 +116,19 @@ function EventDetails() {
     };
 
     fetchEventDetails();
+
+    const findUserById = async (userid) => {
+      try {
+        const user = await client.findUserById(userid);
+        setAccount(user);
+        console.log("Fetched user:", user);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchCurrentUserDetails(userid);
+
   }, [eventId, userid]);
-
-
-
   return (
     <div>
       <header className="header-background">
@@ -117,10 +137,10 @@ function EventDetails() {
       {events && (
        <div>
       <div className="buttons float-end">
-      <FaHeart
+      <FaBookmark
   className={`me-3 fa-bookmark ${isBookmarked ? 'bookmarked' : ''}`}
   onClick={() => {
-    if (userid) {
+    if (userid && !(account?.role === "organizer")) {
       if (!isBookmarked) {
         bookmarkEvent();
       } else {
@@ -128,18 +148,18 @@ function EventDetails() {
       }
     }
   }}
-  disabled={!userid} 
+  disabled={!userid || account?.role === "organizer"} 
 />
 
-      <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered|| !userid}>
+      <button className="register-button me-2" onClick={handleDeregisterClick} disabled={!userIsRegistered|| !userid || account?.role === "organizer"}>
   Deregister
 </button>
-<button className="register-button" onClick={openModal} disabled={userIsRegistered|| !userid}>
+<button className="register-button" onClick={openModal} disabled={userIsRegistered|| !userid ||account?.role === "organizer"}>
   Register
 </button>
         </div>
         <div className="event-heading">
-          <StarRating eventId={eventId} userid={userid}/>
+          <StarRating eventId={eventId} userid={userid} account={account}/>
           <h2 class="event-heading-color">{events.eventName}
           </h2>
           <p className="medium-text">{events.summary}</p>
