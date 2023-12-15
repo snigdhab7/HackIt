@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FiUser } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import * as client from "./client";
-
+import logoImage from '../images/Screenshot 2023-12-14 at 6.55.24 PM.png';
 const Navbar = ({ userid }) => {
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
@@ -41,20 +41,31 @@ const Navbar = ({ userid }) => {
     <div className="navbar-content">
       {/* Left side of the navbar */}
       <div className="navbar-left">
-        <Link to={`/${userid}`} className="navbar-left-button" style={{ textDecoration: 'none' }}>Home</Link>
-        {account && account.role === 'organizer' && (
-          <Link to={`/${userid}/myEvents`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
-            My Events
-          </Link>
-        )}
-         {userid ? (
+        
+      <img
+  style={{ width: '3%' , marginLeft:'20px'}}
+  src={logoImage}
+
+/>
+       
+       
+         {userid ? (<>
+           <Link to={`/${userid}`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
+           Home</Link>
           <Link to={`/${userid}/about`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
            About
           </Link>
-        ) : (
+          {account && account.role === 'organizer' && (
+          <Link to={`/${userid}/myEvents`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
+            My Events
+          </Link>
+        )}</>
+        ) : (<>
+        <Link to={`/`} className="navbar-left-button" style={{ textDecoration: 'none' }}>
+        Home</Link>
           <Link to="/about" className="navbar-left-button" style={{ textDecoration: 'none' }}>
             About
-          </Link>
+          </Link></>
         )}
       </div>
       {/* Right side of the navbar */}
@@ -77,10 +88,10 @@ const Navbar = ({ userid }) => {
           <>
             {/* If user not logged in  show the sign in and sign out button */}
 
-            <Link className="navbar-right-button" to={`/Dashboard/signIn`}>
+            <Link className="navbar-right-button" to={`/Dashboard/signIn`}  style={{ textDecoration: 'none' }}>
               Sign In
             </Link>
-            <Link className="navbar-right-button" to={`/Dashboard/signUp`}>
+            <Link className="navbar-right-button" to={`/Dashboard/signUp`}  style={{ textDecoration: 'none' }}>
               Sign Up
             </Link>
           </>

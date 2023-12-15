@@ -69,7 +69,7 @@ const Dashboard = () => {
         {/* Main Content */}
         <div className="main-content">
           {/* Horizontal Navbar */}
-          <div className="navbar-horizontal">
+          <div className="navbar-horizontal" style={{marginBottom:'50px'}}>
             <Navbar userid={userid} />
           </div>
 
@@ -128,7 +128,7 @@ const Dashboard = () => {
           <br />
 
           {/* Search Bar */}
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerms} />
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerms}  />
 
           {/* List of Events as Cards */}
           <div className="event-list">
