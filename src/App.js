@@ -9,16 +9,20 @@ import Profile from "./Profile/Profile";
 import SignInUser from "./Login/SignInUser/SignInUser";
 import Events from "./ExternalApi/Events";
 import React, { useState } from "react";
-import Users from "./Profile/Users/Users";
-import SignInOrganizer from "./Login/SignInOrganizer/SignInOrganizer";
+
+import Users from './Profile/Users/Users';
+import SignInOrganizer from './Login/SignInOrganizer/SignInOrganizer';
+import SignUpOrganizer from './Login/SignUpOrganizer/SignUpOrganizer';
+import SignUpUserDetails from './Login/SignUpUserDetails/SignUpUserDetails';
+import MyEvents from './Dashboard/myEvents';
+import About from './Dashboard/About';
+import PublicProfile from './publicProfile/PublicProfile';
 import SignInAdmin from "./Login/SignInAdmin/SignInAdmin";
-import SignUpOrganizer from "./Login/SignUpOrganizer/SignUpOrganizer";
-import SignUpUserDetails from "./Login/SignUpUserDetails/SignUpUserDetails";
-import MyEvents from "./Dashboard/myEvents";
 import Admin from "./Dashboard/admin.js";
 import AdminUsers from "./Dashboard/AdminUsers.js";
-import About from "./Dashboard/About";
+
 import EditEventFormPopup from './Dashboard/EditEventFormPopup';
+
 function App() {
   return (
     <div className="App">
@@ -39,6 +43,8 @@ function App() {
           <Route path="/signin/organizer" element={<SignInOrganizer />} />
           <Route path="/signin/user" element={<SignInUser />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile/:id/publicProfile/:profileId" element={<PublicProfile />} />
+          <Route path="/profile/publicProfile/:profileId" element={<PublicProfile />} />
           <Route path="/users/:id" element={<Users />} />
           <Route
             path="/events/:userid/:eventId"

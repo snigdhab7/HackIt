@@ -37,6 +37,29 @@ const Navbar = ({ userid }) => {
     <div className="navbar-content">
       {/* Left side of the navbar */}
       <div className="navbar-left">
+      
+      {account ? (
+  <>
+    {account.role === "admin" && (
+      <>
+        <Link
+          to={`/admin/events/${userid}`}
+          className="navbar-left-button"
+          style={{ textDecoration: "none" }}
+        >
+          Home
+        </Link>
+        <Link
+          to={`/admin/users/${userid}`}
+          className="navbar-left-button"
+          style={{ textDecoration: "none" }}
+        >
+          Users
+        </Link>
+      </>
+    )}
+    {account.role === "user" && (
+      <>
         <Link
           to={`/${userid}`}
           className="navbar-left-button"
@@ -44,15 +67,36 @@ const Navbar = ({ userid }) => {
         >
           Home
         </Link>
-        {account && account.role === "admin" && (
-          <Link
-            to={`/${userid}/users`}
-            className="navbar-left-button"
-            style={{ textDecoration: "none" }}
-          >
-            Users
-          </Link>
-        )}
+        <Link
+          to={`/${userid}/about`}
+          className="navbar-left-button"
+          style={{ textDecoration: "none" }}
+        >
+          About
+        </Link>
+      </>
+    )}
+  </>
+) : (
+  <>
+  <Link
+    to={`/`}
+    className="navbar-left-button"
+    style={{ textDecoration: "none" }}
+  >
+    Home
+  </Link>
+  <Link
+    to={`/about`}
+    className="navbar-left-button"
+    style={{ textDecoration: "none" }}
+  >
+    About
+  </Link>
+</>
+)}
+
+
         
         {account && account.role === "organizer" && (
           <>
