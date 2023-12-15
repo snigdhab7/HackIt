@@ -16,6 +16,7 @@ const Navbar = ({ userid }) => {
   };
 
   const fetchCurrentUserDetails = async (userid) => {
+    console.log("userid navbar ", userid);
     try {
       // console.log("userid", userid);
       const account = await client.fetchCurrentUserDetails(userid);

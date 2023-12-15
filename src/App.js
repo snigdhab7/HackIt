@@ -21,14 +21,15 @@ import SignInAdmin from "./Login/SignInAdmin/SignInAdmin";
 import Admin from "./Dashboard/admin.js";
 import AdminUsers from "./Dashboard/AdminUsers.js";
 
+import EditEventFormPopup from './Dashboard/EditEventFormPopup';
+
 function App() {
   return (
     <div className="App">
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Dashboard />} /> {/* when user logged in */}
-          <Route path="/:id" element={<Dashboard />} />{" "}
-          {/* when user not logged in */}
+          <Route path="/" element={<Dashboard />} />            {/* when user logged in */}
+          <Route path="/:id" element={<Dashboard />} />          {/* when user not logged in */}
           <Route path="/Dashboard/signIn" element={<LoginHome />} />
           <Route path="/Dashboard/signUp" element={<LoginHome />} />
           <Route path="/signup/user" element={<SignUpUser />} />
@@ -48,9 +49,9 @@ function App() {
           <Route
             path="/events/:userid/:eventId"
             element={<EventDetails />}
-          />{" "}
+          />
           {/* when user logged in */}
-          <Route path="/events/:eventId" element={<EventDetails />} />{" "}
+          <Route path="/events/:eventId" element={<EventDetails />} />
           {/* when user not logged in */}
           <Route path="/getEvents" element={<Events />} />
           <Route path="/admin/events/:id" element={<Admin />} />

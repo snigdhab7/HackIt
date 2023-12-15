@@ -31,8 +31,9 @@ export const signout = async () => {
   return response.data;
 };
 export const fetchCurrentUserDetails = async (userid) => {
-
+  // console.log("navbar fetch user ", userid);
   const response = await axios.post(`${USERS_API}/currentUser`, { userid: userid });
+  // console.log("navbar fetch user response ", response.data);
   return response.data;
 };
 
@@ -43,13 +44,14 @@ export const findEventsByOrganizerId = async (organizerId) => {
 };
 
 
-export const editEventDetails = async(event) => {
-  console.log("event id",event.id);
-  const response = axios.get(`${EVENTS_API}/${event}/updateEvent`);
-  return (await response).data
-}
+export const updateEventDetails = async(eventId, event) => {
+  console.log("updateEventDetails event id*******",eventId);
+  const response = await axios.put(`${EVENTS_API}/${event._id}/updateEvent`, event);
+  return response.data
+};
 
 export const deleteEvent = async(eventId) => {
-  const response = axios.delete(`http://localhost:4000/api/${eventId}/deleteEvent`);
-  return (await response).data
-}
+  console.log("updateEventDetails event id*******",eventId);
+  await axios.delete(`${EVENTS_API}/${eventId}/deleteEvent`);
+  
+};

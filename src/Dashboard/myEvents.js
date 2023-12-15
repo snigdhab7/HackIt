@@ -25,7 +25,7 @@ const MyEvents = () => {
   // console.log("id1", id1);
 
   const findAllEvents = async (userid) => {
-    const events = await client.findEventsByOrganizerId(userid); //giving UNDEFINED
+    const events = await client.findEventsByOrganizerId(userid);  //giving UNDEFINED
     //const events = await client.findAllEvents();
     console.log("response", events);
 
@@ -34,29 +34,42 @@ const MyEvents = () => {
     console.log("filteredEvents", filteredEvents);
   };
 
-  useEffect(() => {
-    findAllEvents(userid);
-  }, [userid]);
-
-  const carouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    arrows: false,
-    autoplaySpeed: 3000,
-  };
-
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const openPopup = () => {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  const openPopup = (event) => {
+    setSelectedEvent(event);
     setPopupOpen(true);
   };
 
   const closePopup = () => {
+    setSelectedEvent(null);
     setPopupOpen(false);
   };
+
+  useEffect(() => {
+    findAllEvents(userid);
+  }, [userid]);
+
+  // const carouselSettings = {
+  //   dots: true,
+  //   infinite: true,
+  //   speed: 500,
+  //   slidesToShow: 1,
+  //   slidesToScroll: 1,
+  //   autoplay: true,
+  //   arrows: false,
+  //   autoplaySpeed: 3000,
+  // };
+
+  // const [isPopupOpen, setPopupOpen] = useState(false);
+  // const openPopup = () => {
+  //   setPopupOpen(true);
+  // };
+
+  // const closePopup = () => {
+  //   setPopupOpen(false);
+  // };
 
   const setSearchTerms = (e) => {
     setSearchTerm(e);
@@ -76,59 +89,6 @@ const MyEvents = () => {
             <Navbar userid={userid} />
           </div>
 
-          {/* Slider Carousel */}
-          <Slider {...carouselSettings}>
-            <div>
-              <img
-                src="https://www.aami.org/images/default-source/htm/htm-week/htm24emailheader.jpg?sfvrsn=aebdf854_3"
-                alt="Event Management 1"
-                className="display-photo1"
-              />
-            </div>
-            <div>
-              {/* Add more images for the carousel */}
-              <img
-                src="https://creative-europe-desk.de/files/styles/slider_1400x735_exakt/public/images/vrdayseurope_immersive_tech.jpg"
-                alt="Event Management 2"
-                className="display-photo1"
-              />
-            </div>
-            <div>
-              {/* Add more images for the carousel */}
-              <img
-                src="https://theblackwomenintech.com/wp-content/uploads/2022/12/July-Events-Eventbrite-Title-Template-4.jpg"
-                alt="Event Management 2"
-                className="display-photo1"
-              />
-            </div>
-            <div>
-              {/* Add more images for the carousel */}
-              <img
-                src="https://eventbrowse.com/wp-content/uploads/2023/07/643489949a8e96bb996e787a_Tech20Week20Meta-JsVY83.tmp_.jpg"
-                alt="Event Management 2"
-                className="display-photo1"
-              />
-            </div>
-            <div>
-              {/* Add more images for the carousel */}
-              <img
-                src="https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F563913089%2F496415951365%2F1%2Foriginal.20230728-093246?h=230&w=460&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C241%2C1080%2C540&s=8de3ab39266095120b7ad8f334bd9eb3"
-                alt="Event Management 2"
-                className="display-photo1"
-              />
-            </div>
-            <div>
-              {/* Add more images for the carousel */}
-              <img
-                src="https://saeindia.org/jbframework/uploads/2023/03/Banner-2023-03-23T184459.521-1365x384.jpg"
-                alt="Event Management 2"
-                className="display-photo1"
-              />
-            </div>
-            {/* Add more slides as needed */}
-          </Slider>
-          <br />
-          <br />
 
           {/* Search Bar */}
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerms} />
@@ -146,18 +106,20 @@ const MyEvents = () => {
                 //   }
                 //   style={{ textDecoration: "none" }}
                 // >
-                  <EventCard event={event} userid={userid} openPopup={openPopup}/>
+                <EventCard key={event._id} event={event} userid={userid} openPopup={openPopup} />
                 // </Link>
               ))}
-              {isPopupOpen && (
-          <EditEventFormPopup
-            onCancel={closePopup}
-          />
-        )}
-
               <OrganizerCard isAddCard={true} />
             </div>
+
+
           </div>
+
+          {isPopupOpen && (
+            <EditEventFormPopup onCancel={closePopup} event={selectedEvent} />
+          )}
+
+
         </div>
       </div>
     </div>

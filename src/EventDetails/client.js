@@ -86,3 +86,18 @@ export const getOverallRating = async (userId,eventId) => {
   const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/overallrating`);
   return response.data;
 }
+
+export const getOrganizerDetails = async (eventId) => {
+  try {
+    // Fetch event details to get the organizerId
+    const eventDetails = await findEventById(eventId);
+    const organizerId = eventDetails.organizerId;
+    // Fetch user details using the organizerId
+    const organizerDetails = await findUserById(organizerId);
+console.log(organizerDetails,"orgdetails");
+    return organizerDetails;
+  } catch (error) {
+    console.error('Error getting organizer details:', error);
+    throw error;
+  }
+};
