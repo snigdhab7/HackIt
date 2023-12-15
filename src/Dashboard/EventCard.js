@@ -3,7 +3,7 @@ import EditEventFormPopup from "./EditEventFormPopup";
 import * as client from "./client";
 import { useEffect } from "react";
 
-const EventCard = ({ event, userid }) => {
+const EventCard = ({ event, userid, openPopup }) => {
   const [account, setAccount] = useState(null);
   const fetchCurrentUserDetails = async (userid) => {
     try {
@@ -41,14 +41,7 @@ useEffect(() => {
  // findUserById(userid);
 }, [userid]);
   
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const openPopup = () => {
-    setPopupOpen(true);
-  };
 
-  const closePopup = () => {
-    setPopupOpen(false);
-  };
 
   return (
     <div key={event.id} className="event-card" style={{ margin: "10px" }}>
@@ -65,11 +58,7 @@ useEffect(() => {
          {account && account.role === 'organizer' && (
           <button className="btn btn-primary"> Delete </button>
         )}
-       {isPopupOpen && (
-          <EditEventFormPopup
-            onCancel={closePopup}
-          />
-        )}
+       
 
     </div>
   );

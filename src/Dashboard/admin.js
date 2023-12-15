@@ -12,31 +12,33 @@ import * as client from "./client";
 import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Events from "../ExternalApi/Events";
-import EditEventFormPopup from "./EditEventFormPopup";
-const MyEvents = () => {
+
+
+// import "./Dashboard.css";
+
+const Admin = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState({ localEvents: [], externalEvents: [] });
   const location = useLocation();
   const [filteredEvents, setFilteredEvents] = useState([]);
-  // const [event, setEvent] = useState([]);
   const userid = useParams().id;
-  // console.log("id", userid);
   const id1 = useParams().id;
-  // console.log("id1", id1);
 
-  const findAllEvents = async (userid) => {
-    const events = await client.findEventsByOrganizerId(userid); //giving UNDEFINED
-    //const events = await client.findAllEvents();
-    console.log("response", events);
-
+  const fetchEvents = async (searchTerm) => {
+    const events = await client.findAllEvents();
     setEvents(events);
     setFilteredEvents(events);
-    console.log("filteredEvents", filteredEvents);
   };
 
   useEffect(() => {
-    findAllEvents(userid);
-  }, [userid]);
+    fetchEvents();
+  }, []);
+
+  const deleteEvent = async (eventID) => {
+    const response = await client.deleteEvent(eventID);
+    console.log("response", response);
+    fetchEvents();
+  }
 
   const carouselSettings = {
     dots: true,
@@ -49,15 +51,6 @@ const MyEvents = () => {
     autoplaySpeed: 3000,
   };
 
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const openPopup = () => {
-    setPopupOpen(true);
-  };
-
-  const closePopup = () => {
-    setPopupOpen(false);
-  };
-
   const setSearchTerms = (e) => {
     setSearchTerm(e);
     const filtered = events.filter((event) => {
@@ -65,8 +58,8 @@ const MyEvents = () => {
     });
     setFilteredEvents(filtered);
   };
-
   return (
+    
     <div className="entire-page">
       <div>
         {/* Main Content */}
@@ -134,29 +127,23 @@ const MyEvents = () => {
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerms} />
 
           {/* List of Events as Cards */}
-          <div className="event-list">
-            <div className="event-cards">
-              {filteredEvents.map((event) => (
-                // <Link
-                //   key={event._id}
-                //   to={
-                //     userid
-                //       ? `/events/${userid}/${event._id}`
-                //       : `/events/${event._id}`
-                //   }
-                //   style={{ textDecoration: "none" }}
-                // >
-                  <EventCard event={event} userid={userid} openPopup={openPopup}/>
-                // </Link>
-              ))}
-              {isPopupOpen && (
-          <EditEventFormPopup
-            onCancel={closePopup}
-          />
-        )}
 
-              <OrganizerCard isAddCard={true} />
-            </div>
+          <div>
+            <ul className="event-list-admin">
+              {filteredEvents.map((event) => (
+                <li key={event.id} className="event-item-admin">
+                  {/* Event details */}
+                  <h5>{event.eventName}</h5>
+                  {/* <h5>{event.eventName}</h5> */}
+                  <button
+                    className="btn-delete"
+                    onClick={() => deleteEvent(event._id)}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
@@ -164,4 +151,4 @@ const MyEvents = () => {
   );
 };
 
-export default MyEvents;
+export default Admin;

@@ -15,6 +15,11 @@ export const signinOrganizer = async (credentials) => {
   const response = await request.post( `${USERS_API}/signin/organizer`, credentials );
   return response.data;
 };
+export const signinAdmin = async (credentials) => {
+  console.log("sign in creds,",credentials)
+  const response = await request.post( `${USERS_API}/admin`, credentials );
+  return response.data;
+};
 export const createUser = async (user) => {
     const response = await axios.post(`${USERS_API}`, user);
     return response.data;

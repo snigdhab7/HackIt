@@ -45,6 +45,11 @@ export const findEventsByOrganizerId = async (organizerId) => {
 
 export const editEventDetails = async(event) => {
   console.log("event id",event.id);
-  const response = axios.get(`${EVENTS_API}/${event.id}/updateEvent`);
+  const response = axios.get(`${EVENTS_API}/${event}/updateEvent`);
+  return (await response).data
+}
+
+export const deleteEvent = async(eventId) => {
+  const response = axios.delete(`http://localhost:4000/api/${eventId}/deleteEvent`);
   return (await response).data
 }
