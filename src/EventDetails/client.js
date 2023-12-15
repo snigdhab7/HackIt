@@ -24,6 +24,13 @@ export const fetchAllEvents = async (eventId) => {
   return response.data;
 }
 
+export const fetchCurrentUserDetails = async (userid) => {
+
+  const response = await axios.post(`${USERS_API}/currentUser`, { userid: userid });
+  return response.data;
+};
+
+
 export const isUserRegisteredForEvent = async (userId, eventId) => {
   try {
     const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/isregistered`);
@@ -65,7 +72,32 @@ export const deBookmarkEvent = async (userId, eventId) => {
 }
 
 export const saveUserRating = async (userId, eventId, rating) => {
-  const response = await axios.put(`${USEREVENTS_API}/${userId}/${eventId}/ratings`, rating);
-  console.log("@@@@", response.data);
+  console.log("In client.js", rating);
+  const response = await axios.put(`${USEREVENTS_API}/${userId}/${eventId}/ratings`, {rating:rating});
   return response.data;
 }
+
+export const getUserrating = async(userId,eventId) => {
+  const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/getrating`);
+  return response.data;
+}
+
+export const getOverallRating = async (userId,eventId) => {
+  const response = await axios.get(`${USEREVENTS_API}/${userId}/${eventId}/overallrating`);
+  return response.data;
+}
+
+export const getOrganizerDetails = async (eventId) => {
+  try {
+    // Fetch event details to get the organizerId
+    const eventDetails = await findEventById(eventId);
+    const organizerId = eventDetails.organizerId;
+    // Fetch user details using the organizerId
+    const organizerDetails = await findUserById(organizerId);
+console.log(organizerDetails,"orgdetails");
+    return organizerDetails;
+  } catch (error) {
+    console.error('Error getting organizer details:', error);
+    throw error;
+  }
+};

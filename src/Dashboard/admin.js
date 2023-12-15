@@ -12,13 +12,14 @@ import * as client from "./client";
 import { Link, useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Events from "../ExternalApi/Events";
-import * as externalClient from "../ExternalApi/Client";
-const Dashboard = () => {
+
+
+// import "./Dashboard.css";
+
+const Admin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [events, setEvents] = useState({ localEvents: [], externalEvents: [] });
   const location = useLocation();
-  const [externalEvents, setExternalEvents] = useState([]);
-  const [filteredExternalEvents, setFilteredExternalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const userid = useParams().id;
   const id1 = useParams().id;
@@ -29,16 +30,15 @@ const Dashboard = () => {
     setFilteredEvents(events);
   };
 
-  const fetchExternalEvents = async () => {
-    const events = await externalClient.fetchExternalEvents();
-    setExternalEvents(events);
-    setFilteredExternalEvents(events);
-  };
-
   useEffect(() => {
     fetchEvents();
-    fetchExternalEvents();
   }, []);
+
+  const deleteEvent = async (eventID) => {
+    const response = await client.deleteEvent(eventID);
+    console.log("response", response);
+    fetchEvents();
+  }
 
   const carouselSettings = {
     dots: true,
@@ -56,20 +56,16 @@ const Dashboard = () => {
     const filtered = events.filter((event) => {
       return event.eventName?.toLowerCase().includes(e.toLowerCase());
     });
-    const filteredExt = externalEvents.filter((event) => {
-      return event.title?.toLowerCase().includes(e.toLowerCase());
-    });
     setFilteredEvents(filtered);
-    setFilteredExternalEvents(filteredExt);
   };
-
   return (
+    
     <div className="entire-page">
       <div>
         {/* Main Content */}
         <div className="main-content">
           {/* Horizontal Navbar */}
-          <div className="navbar-horizontal" style={{ marginBottom: "50px" }}>
+          <div className="navbar-horizontal">
             <Navbar userid={userid} />
           </div>
 
@@ -131,34 +127,23 @@ const Dashboard = () => {
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerms} />
 
           {/* List of Events as Cards */}
-          <div className="event-list">
-            {/* <div className="row">
-              <div className="col-md-10"> */}
-            <div className="event-cards">
+
+          <div>
+            <ul className="event-list-admin">
               {filteredEvents.map((event) => (
-                <Link
-                  key={event._id}
-                  to={
-                    userid
-                      ? `/events/${userid}/${event._id}`
-                      : `/events/${event._id}`
-                  }
-                  style={{ textDecoration: "none" }}
-                >
-                  <EventCard event={event} />
-                </Link>
+                <li key={event.id} className="event-item-admin">
+                  {/* Event details */}
+                  <h5>{event.eventName}</h5>
+                  {/* <h5>{event.eventName}</h5> */}
+                  <button
+                    className="btn-delete"
+                    onClick={() => deleteEvent(event._id)}
+                  >
+                    Delete
+                  </button>
+                </li>
               ))}
-              {/* </div> */}
-              {/* </div> */}
-            </div>
-            {filteredExternalEvents.length!==0?<div className="external-list">
-              <h3 style={{ color: "white", margin:"10px auto" }}>Other Events</h3>
-              <div className="external-events">
-                {filteredExternalEvents.map((event) => (
-                  <Events event={event} />
-                ))}
-              </div>
-            </div>:null}
+            </ul>
           </div>
         </div>
       </div>
@@ -166,4 +151,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Admin;

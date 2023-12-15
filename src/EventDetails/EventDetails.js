@@ -1,4 +1,4 @@
-import { FaCalendar, FaLocationArrow, FaClock, FaBookmark, FaHeart } from "react-icons/fa";
+import { FaCalendar, FaLocationArrow, FaClock, FaBookmark, FaHeart, FaBook } from "react-icons/fa";
 import { useState } from "react";
 import React from "react";
 import "./EventDetails.css";
@@ -7,6 +7,8 @@ import StarRating from "./StarRating";
 import * as client from "./client.js";
 import { useEffect } from "react";
 import { format } from "date-fns";
+import profileImage from '../images/eventorg.png';
+import { useNavigate } from "react-router-dom";
 
 function EventDetails() {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -16,13 +18,29 @@ function EventDetails() {
   const [users, setUsers] = useState([]);
   const [isBookmarked, setBookmarked] = useState(false);
   const [userIsRegistered, setUserIsRegistered] = useState();
-  const openModal = async () => {
+  const [account, setAccount] = useState(null);
+  const [organizer, setOrganizer] = useState(null);
+  const navigate = useNavigate();
+  //let organizerDetails =null;
+  const fetchCurrentUserDetails = async (userid) => {
     try {
+      const account = await client.fetchCurrentUserDetails(userid);
+
+      setAccount(account);
+      console.log("role", account);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+
+  };
+  const openModal = async () => {
+    if (!userid) {
+      navigate("/signin/user");
+    }
+    else {
       const userData = await client.findUserById(userid);
       setUsers(userData);
       setModalOpen(true);
-    } catch (error) {
-      console.error("Error fetching user details:", error);
     }
   };
 
@@ -39,7 +57,12 @@ function EventDetails() {
   };
 
   const handleDeregisterClick = () => {
-    setShowConfirmation(true);
+    if (!userid) {
+      navigate("/signin/user");
+    }
+    else {
+      setShowConfirmation(true);
+    }
   };
 
   const handleConfirmationNo = () => {
@@ -88,9 +111,12 @@ function EventDetails() {
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
-
         const eventData = await client.findEventById(eventId);
         setEvents(eventData);
+        const organizerDetails = await client.getOrganizerDetails(eventId);
+        setOrganizer(organizerDetails);
+
+
         if (userid != null) {
           console.log("User data", userid);
           const isUserRegistered = await client.registrationStatus(userid, eventId);
@@ -105,10 +131,18 @@ function EventDetails() {
     };
 
     fetchEventDetails();
+
+    const findUserById = async (userid) => {
+      try {
+        const user = await client.findUserById(userid);
+        setAccount(user);
+        console.log("Fetched user:", user);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+    fetchCurrentUserDetails(userid);
   }, [eventId, userid]);
-
-
-
   return (
     <div>
       <header className="header-background">
@@ -164,7 +198,7 @@ function EventDetails() {
                 <p className="medium-text">
 
                   <div class="row">
-                    <div class="col-1 pr-0" style={{width: "25px"}} ><FaClock className="color-palette"/></div>
+                    <div class="col-1 pr-0" style={{ width: "25px" }} ><FaClock className="color-palette" /></div>
                     <div class="col-2">
                       <div>Start time: {events.timeStart}</div>
                       <div>End time: {events.timeEnd}</div>
@@ -186,9 +220,6 @@ function EventDetails() {
         )}
       </div>
 
-      <footer>
-        &copy; 2023 Data and Tech Workshop
-      </footer>
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="registration-form" onClick={(e) => e.stopPropagation()}>

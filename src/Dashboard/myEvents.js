@@ -24,8 +24,6 @@ const MyEvents = () => {
   const id1 = useParams().id;
   // console.log("id1", id1);
 
-
-
   const findAllEvents = async (userid) => {
     const events = await client.findEventsByOrganizerId(userid);  //giving UNDEFINED
     //const events = await client.findAllEvents();
@@ -64,6 +62,15 @@ const MyEvents = () => {
   //   autoplaySpeed: 3000,
   // };
 
+  // const [isPopupOpen, setPopupOpen] = useState(false);
+  // const openPopup = () => {
+  //   setPopupOpen(true);
+  // };
+
+  // const closePopup = () => {
+  //   setPopupOpen(false);
+  // };
+
   const setSearchTerms = (e) => {
     setSearchTerm(e);
     const filtered = events.filter((event) => {
@@ -81,7 +88,6 @@ const MyEvents = () => {
           <div className="navbar-horizontal">
             <Navbar userid={userid} />
           </div>
-
 
 
           {/* Search Bar */}
