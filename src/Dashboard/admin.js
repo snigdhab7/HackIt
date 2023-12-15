@@ -59,7 +59,7 @@ const Admin = () => {
     setFilteredEvents(filtered);
   };
   return (
-    
+
     <div className="entire-page">
       <div>
         {/* Main Content */}
@@ -130,12 +130,14 @@ const Admin = () => {
 
           <div>
             <ul className="event-list-admin">
-          
-                         {filteredEvents.map((event) => (
-                            <Link to={`/events/${userid}/${event._id}`} style={{ textDecoration: 'none' }}>
+
+              {filteredEvents.map((event) => (
+
                 <li key={event.id} className="event-item-admin">
                   {/* Event details */}
-                  <h5>{event.eventName}</h5>
+                  <Link to={`/events/${userid}/${event._id}`} style={{ textDecoration: 'none' }}>
+                    <h5>{event.eventName}</h5>
+                  </Link>
                   {/* <h5>{event.eventName}</h5> */}
                   <button
                     className="btn-delete"
@@ -144,9 +146,9 @@ const Admin = () => {
                     Delete
                   </button>
                 </li>
-                </Link>
+
               ))}
-             
+
 
             </ul>
           </div>
