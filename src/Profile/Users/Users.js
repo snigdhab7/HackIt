@@ -188,7 +188,7 @@ const Users = () => {
                                                         className="avatar avatar-lg rounded-circle"
                                                         style={{ background: getRandomTransparentGradientColor() }}
                                                     >
-                                                        {user.username.charAt(0)} 
+                                                        {user.username.charAt(0).toUpperCase()} 
                                                     </span>
                                                     <p style={{color:'white'}} className="mt-2 mb-0">{user.username}</p>
                                                 </div>
