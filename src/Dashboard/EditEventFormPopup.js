@@ -66,7 +66,8 @@ const EditEventFormPopup = ({onCancel, event }) => {
 
   const handleCancel = () => {
     onCancel();
-    navigate(`/${eventToEdit.organizerId}/myEvents`); // Navigate back to the dashboard
+    // navigate(`/${eventToEdit.organizerId}/myEvents`); // Navigate back to the dashboard
+    navigate(`/${eventToEdit.organizerId}`);
   };
 
   // const fetchEventDetails = async (eventId) => {

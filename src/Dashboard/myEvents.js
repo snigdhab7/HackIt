@@ -97,17 +97,7 @@ const MyEvents = () => {
           <div className="event-list">
             <div className="event-cards">
               {filteredEvents.map((event) => (
-                // <Link
-                //   key={event._id}
-                //   to={
-                //     userid
-                //       ? `/events/${userid}/${event._id}`
-                //       : `/events/${event._id}`
-                //   }
-                //   style={{ textDecoration: "none" }}
-                // >
-                <EventCard key={event._id} event={event} userid={userid} openPopup={openPopup} />
-                // </Link>
+                <EventCard key={event._id} event={event} userid={userid} openPopup={openPopup} isOrganizer={true}/>
               ))}
               <OrganizerCard isAddCard={true} />
             </div>

@@ -17,7 +17,6 @@ const Profile = () => {
     const [account, setAccount] = useState(null);
     const [events, setEvents] = useState(null);
     const [eventsList, setEventsList] = useState(null);
-
     // State to manage whether the user is in "edit" mode
     const [isEditMode, setIsEditMode] = useState(false);
 
@@ -44,9 +43,22 @@ const Profile = () => {
 
     useEffect(() => {
         fetchCurrentUserDetails(userid);
-        fetchAllRegisteredEvents();
-        displayUpcomingEvents();
     }, [userid]);
+
+    useEffect(() => {
+        // fetchCurrentUserDetails(userid);
+        if (account) {
+            if (account.role === "user") {
+                fetchAllRegisteredEvents();
+                displayUpcomingEvents();
+            };
+            if (account.role === "organizer") {
+                fetchAllOrganizerEvents();
+                displayUpcomingEvents();
+            };
+        }
+
+    }, account);
 
     useEffect(() => {
         displayUpcomingEvents();
@@ -58,10 +70,19 @@ const Profile = () => {
         navigate("/");
     };
 
+    const fetchAllOrganizerEvents = async () => {
+        const events = await client.fetchAllOrganizerEvents(userid);
+        console.log("All Events: ", events);
+        setEvents(events);
+        // displayUpcomingEvents();
+    };
+
+
     const fetchAllRegisteredEvents = async () => {
         const events = await client.fetchAllRegisteredEvents(userid);
         console.log("All Events: ", events);
         setEvents(events);
+        // displayUpcomingEvents();
     };
 
     const displayAllRegisteredEvents = async () => {
@@ -69,15 +90,34 @@ const Profile = () => {
     };
 
     const displayUpcomingEvents = async () => {
-
+        console.log("display eve ",events);
         if (events) {
             const currentDate = new Date();
             const upcomingEvents = events.filter((event) => {
-                if(event.eventDetail){
+                console.log("display eve**** ",event);
+                if (event.eventDetail) {
                     const eventDate = new Date(event.eventDetail.date);
-                    return eventDate >= currentDate;
+                    if (account.role === "user") {
+                        console.log("1");
+                        return eventDate >= currentDate && event.registered == true;
+                    }
+                    if (account.role === "organizer") {
+                        console.log("2");
+                        return eventDate >= currentDate;
+                    }
                 }
-                
+                else {
+                    const eventDate = new Date(event.date);
+                    if (account.role === "user") {
+                        console.log("1");
+                        return eventDate >= currentDate && event.registered == true;
+                    }
+                    if (account.role === "organizer") {
+                        console.log("2");
+                        return eventDate >= currentDate;
+                    }
+                }
+
             });
             setEventsList(upcomingEvents);
         }
@@ -97,8 +137,14 @@ const Profile = () => {
         if (events) {
             const currentDate = new Date();
             const pastEvents = events.filter((event) => {
-                const eventDate = new Date(event.eventDetail.date);
-                return eventDate < currentDate;
+                if (event.eventDetail) {
+                    const eventDate = new Date(event.eventDetail.date);
+                    return eventDate < currentDate;
+                }
+                if (event) {
+                    const eventDate = new Date(event.date);
+                    return eventDate < currentDate;
+                }
             });
             setEventsList(pastEvents);
         }
@@ -117,17 +163,17 @@ const Profile = () => {
                         <div className="container-fluid">
                             {/* <!-- Brand --> */}
                             {account && account.role === "admin" ? (
-  <>
-    <Link to={`/admin/events/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
-    <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >My profile</Link>
-  </>
-) : (
-  <> <Link to={`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
-  <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >My profile</Link>
-  <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >
-      Users
-    </Link></>
-)}
+                                <>
+                                    <Link to={`/admin/events/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
+                                    <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >My profile</Link>
+                                </>
+                            ) : (
+                                <> <Link to={`/${userid}`} className="p-h4 mb-0 mr-2 p-text-white text-uppercase d-none d-lg-inline-block" >Home</Link>
+                                    <Link to={`/profile/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >My profile</Link>
+                                    <Link to={`/users/${userid}`} className="p-h4 ml-2 mb-0 p-text-white text-uppercase d-none d-lg-inline-block" >
+                                        Users
+                                    </Link></>
+                            )}
 
                             {/* <!-- Form --> */}
                             <div className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
@@ -176,7 +222,7 @@ const Profile = () => {
                         <div className="row">
                             <div className="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                                 <div className="p-card card-profile shadow">
-                            
+
                                     {account && account.role === "user" && (<div>
                                         <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                                             <div className="d-flex justify">
@@ -189,9 +235,11 @@ const Profile = () => {
                                             {eventsList.map((event, index) => (
                                                 <div className="row" key={index}>
                                                     <div className="col">
-                                                        <Link to={`/events/${event.userId}/${event.eventId}`} className=' ml-2 text-white'>
-                                                            {event.eventDetail ? event.eventDetail.eventName : 'Event Details Unavailable'}
-                                                        </Link>
+                                                        {event.eventDetail && (
+                                                            <Link to={`/events/${event.userId}/${event.eventId}`} className=' ml-2 text-white'>
+                                                                {event.eventDetail.eventName}
+                                                            </Link>
+                                                        )}
                                                     </div>
                                                 </div>
                                             ))}
@@ -201,16 +249,18 @@ const Profile = () => {
                                         <div className="p-card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                                             <div className="d-flex justify">
                                                 <div onClick={displayUpcomingEvents} className="p-btn p-btn-sm p-btn-info mr-4">Upcoming Events</div>
-                                                <div onClick={displayPastEvents} className="p-btn p-btn-sm p-btn-default  mr-4">Past Events</div>                                                
+                                                <div onClick={displayPastEvents} className="p-btn p-btn-sm p-btn-default  mr-4">Past Events</div>
                                             </div>
                                         </div>
                                         {eventsList && (<div className='mb-4'>
                                             {eventsList.map((event, index) => (
                                                 <div className="row" key={index}>
                                                     <div className="col ml-2">
+                                                    {event && (
                                                         <Link to={`/events/${event.userId}/${event.eventId}`} className=' ml-2 p-text-white'>
-                                                            {event.eventDetail ? event.eventDetail.eventName : 'Event Details Unavailable'}
+                                                            {event.eventName}
                                                         </Link>
+                                                    )}
                                                     </div>
                                                 </div>
                                             ))}
@@ -434,8 +484,8 @@ const Profile = () => {
                 </div>
             )}
             {!account && (<div>
-                    Account is not being loaded..
-                    <div>Account: {account}</div>
+                Account is not being loaded..
+                <div>Account: {account}</div>
             </div>)}
 
         </div>

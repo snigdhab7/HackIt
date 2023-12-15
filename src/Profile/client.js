@@ -33,3 +33,10 @@ export const deleteUser = async (userId) => {
   const response = await axios.delete(`${USERS_API}/${userId}/deleteUser`);
   return response.data;
 };
+
+// /api/events/organizer/:organizerId
+export const fetchAllOrganizerEvents = async (userid) => {
+    console.log("fetch events userid: ", userid);
+    const response = await request.get(`${BASE_API}/api/events/organizer/${userid}`);
+    return response.data;
+}

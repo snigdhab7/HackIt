@@ -5,6 +5,6 @@ const request = axios.create({
   withCredentials: true,
 });
 export const fetchExternalEvents = async () => {
-    const response = await request.get(`http://localhost:4000/api/getEvents`);
+    const response = await request.get(`${BASE_API}/api/getEvents`);
     return response.data;
 };

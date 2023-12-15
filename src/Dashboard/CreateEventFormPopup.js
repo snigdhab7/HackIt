@@ -47,7 +47,8 @@ const CreateEventFormPopup = ({ onCancel, onCreateEvent }) => {
 
   const handleCancel = () => {
     onCancel();
-    navigate(`/${eventData.organizerId}/myEvents`); // Navigate back to the dashboard
+    // navigate(`/${eventData.organizerId}/myEvents`); // Navigate back to the dashboard
+    navigate(`/${eventData.organizerId}`);
   };
 
   return (

@@ -47,7 +47,7 @@ console.log("user id of logged in user", userId)
 
     useEffect(() => {
         fetchAllRegisteredEvents();
-       // displayUpcomingEvents();
+    //    displayUpcomingEvents();
         findUserById(profileId)
         if(userId){
         fetchCurrentUserDetails(userId);

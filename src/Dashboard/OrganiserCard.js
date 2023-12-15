@@ -5,7 +5,7 @@ import { useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 
-const EventCard = ({ event, userid, openPopup, isOrganizer }) => {
+const OrganizerCard = ({ event, userid, openPopup }) => {
   const [account, setAccount] = useState(null);
   const navigate = useNavigate();
   const fetchCurrentUserDetails = async (userid) => {
@@ -72,7 +72,7 @@ const EventCard = ({ event, userid, openPopup, isOrganizer }) => {
           <p>{event.venue}</p>
         </div>
       </Link>
-      {isOrganizer && (
+      {account && account.role === 'organizer' && (
         <div>
           <button className="btn btn-primary" onClick={() => openPopup(event)}> Edit </button>
           {/* <button className="btn btn-primary" onClick={<EditEventFormPopup event = {event}/>}> EditTest </button> */}
